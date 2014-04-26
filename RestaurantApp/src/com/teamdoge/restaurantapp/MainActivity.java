@@ -1,11 +1,11 @@
 package com.teamdoge.restaurantapp;
 
 import android.app.Activity;
-
 import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -96,8 +96,12 @@ public class MainActivity extends Activity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_settings) 
             return true;
+        if (id == R.id.logout) {
+		Intent intent = new Intent(this, LoginActivity.class);
+		startActivity(intent);
+       // }
         }
         return super.onOptionsItemSelected(item);
     }
