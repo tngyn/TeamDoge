@@ -27,7 +27,8 @@ public class LoginActivity extends Activity {
 	 */
 	private static final String[] DUMMY_CREDENTIALS = new String[] {
 			"hello:hello", "world:world","vivek:myapp" };
-
+    private String username;
+    private String password;
 	/**
 	 * The default email to populate the email field with.
 	 */
@@ -77,12 +78,22 @@ public class LoginActivity extends Activity {
 		mLoginFormView = findViewById(R.id.login_form);
 		mLoginStatusView = findViewById(R.id.login_status);
 		mLoginStatusMessageView = (TextView) findViewById(R.id.login_status_message);
-
+        Intent intent = getIntent();
+        username = intent.getStringExtra(SignUpActivity.USERNAME);
+        password = intent.getStringExtra(SignUpActivity.PASSWORD);
 		findViewById(R.id.sign_in_button).setOnClickListener(
 				new View.OnClickListener() {
 					@Override
 					public void onClick(View view) {
 						attemptLogin();
+					}
+				});
+		findViewById(R.id.sign_up_button).setOnClickListener(
+				new View.OnClickListener() {
+					@Override
+					public void onClick(View view) {
+						Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+						startActivity(intent);
 					}
 				});
 	}
@@ -201,7 +212,8 @@ public class LoginActivity extends Activity {
 			} catch (InterruptedException e) {
 				return false;
 			}
-
+            if (username.equals(mEmail) && password.equals(mPassword))
+            	return true;
 			for (String credential : DUMMY_CREDENTIALS) {
 				String[] pieces = credential.split(":");
 				if (pieces[0].equals(mEmail)) {
