@@ -26,13 +26,13 @@ public class LoginActivity extends Activity {
 	 * TODO: remove after connecting to a real authentication system.
 	 */
 	private static String[] DUMMY_CREDENTIALS = new String[] {
-			"hello:hello", "world:world","vivek:myapp" };
-    private String username;
-    private String password;
+			"hello:hello:hello", "world:world:world" };
+    private String credential;
+	private String type;
 	/**
 	 * The default email to populate the email field with.
 	 */
-	public static final String EXTRA_EMAIL = "com.example.android.authenticatordemo.extra.EMAIL";
+	public static final String EXTRA_EMAIL = "com.teamdoge.restaurantapp.EXTRA_EMAIL";
 
 	/**
 	 * Keep track of the login task to ensure we can cancel it if requested.
@@ -40,11 +40,11 @@ public class LoginActivity extends Activity {
 	private UserLoginTask mAuthTask = null;
 	
 	// Values for email and password at the time of the login attempt.
-	private String mEmail;
+	private String mUsername;
 	private String mPassword;
 
 	// UI references.
-	private EditText mEmailView;
+	private EditText mUsernameView;
 	private EditText mPasswordView;
 	private View mLoginFormView;
 	private View mLoginStatusView;
@@ -57,9 +57,9 @@ public class LoginActivity extends Activity {
 		setContentView(R.layout.activity_login);
 
 		// Set up the login form.
-		mEmail = getIntent().getStringExtra(EXTRA_EMAIL);
-		mEmailView = (EditText) findViewById(R.id.email);
-		mEmailView.setText(mEmail);
+		mUsername = getIntent().getStringExtra(EXTRA_EMAIL);
+		mUsernameView = (EditText) findViewById(R.id.email);
+		mUsernameView.setText(mUsername);
 
 		mPasswordView = (EditText) findViewById(R.id.password);
 		mPasswordView
@@ -79,17 +79,16 @@ public class LoginActivity extends Activity {
 		mLoginStatusView = findViewById(R.id.login_status);
 		mLoginStatusMessageView = (TextView) findViewById(R.id.login_status_message);
         Intent intent = getIntent();
-        username = intent.getStringExtra(SignUpActivity.USERNAME);
-        password = intent.getStringExtra(SignUpActivity.PASSWORD);
-        if (this.getCallingActivity() == null) {
+        credential = intent.getStringExtra(SignUpActivity.CREDENTIALS);
+        type = intent.getStringExtra(SignUpActivity.TYPE);
+        if (credential != null) {
         	int i = 0;
             String[] newWords=new String[DUMMY_CREDENTIALS.length + 1];
             for(; i<DUMMY_CREDENTIALS.length; i++){
                  newWords[i]=DUMMY_CREDENTIALS[i];
             }
             DUMMY_CREDENTIALS = newWords;
-            String dummy = username + ":" + password;
-            DUMMY_CREDENTIALS[i] = dummy;
+            DUMMY_CREDENTIALS[i] = credential;
         }
 		findViewById(R.id.sign_in_button).setOnClickListener(
 				new View.OnClickListener() {
@@ -114,7 +113,6 @@ public class LoginActivity extends Activity {
 		getMenuInflater().inflate(R.menu.login, menu);
 		return true;
 	}
-
 	/**
 	 * Attempts to sign in or register the account specified by the login form.
 	 * If there are form errors (invalid email, missing fields, etc.), the
@@ -126,11 +124,11 @@ public class LoginActivity extends Activity {
 		}
 
 		// Reset errors.
-		mEmailView.setError(null);
+		mUsernameView.setError(null);
 		mPasswordView.setError(null);
 
 		// Store values at the time of the login attempt.
-		mEmail = mEmailView.getText().toString();
+		mUsername = mUsernameView.getText().toString();
 		mPassword = mPasswordView.getText().toString();
 
 		boolean cancel = false;
@@ -144,9 +142,9 @@ public class LoginActivity extends Activity {
 		}
 
 		// Check for a valid email address.
-		if (TextUtils.isEmpty(mEmail)) {
-			mEmailView.setError(getString(R.string.error_field_required));
-			focusView = mEmailView;
+		if (TextUtils.isEmpty(mUsername)) {
+			mUsernameView.setError(getString(R.string.error_field_required));
+			focusView = mUsernameView;
 			cancel = true;
 		}
 
@@ -223,9 +221,9 @@ public class LoginActivity extends Activity {
 				return false;
 			}
 
-			for (String credential : DUMMY_CREDENTIALS) {
-				String[] pieces = credential.split(":");
-				if (pieces[0].equals(mEmail)) {
+			for (String temp : DUMMY_CREDENTIALS) {
+				String[] pieces = temp.split(":");
+				if (pieces[0].equals(mUsername) || pieces[2].equals(mUsername)) {
 					// Account exists, return true if the password matches.
 					return pieces[1].equals(mPassword);
 				}

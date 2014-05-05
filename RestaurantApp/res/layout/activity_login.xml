@@ -35,12 +35,24 @@
         android:id="@+id/login_form"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
+        <FrameLayout
+            android:layout_width="match_parent"
+         	android:layout_height="wrap_content">
 
         <LinearLayout
             style="@style/LoginFormContainer"
             android:layout_width="match_parent"
-            android:layout_height="21dp"
+            android:layout_height="wrap_content"
             android:orientation="vertical" >
+            
+            <TextView
+                android:id="@+id/text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/sign_in"
+                android:textSize="40sp"
+                android:layout_marginBottom= "10dp"
+                android:gravity="center"/>
 
             <EditText
                 android:id="@+id/email"
@@ -61,20 +73,29 @@
                 android:inputType="textPassword"
                 android:maxLines="1"
                 android:singleLine="true" />
-
+        <LinearLayout
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+            
             <Button
                 android:id="@+id/sign_in_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/sign_in" />
+                android:text="@string/sign_in" 
+                android:layout_weight="0.5"/>
 
             <Button
                 android:id="@+id/sign_up_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/sign_up" />
+                android:text="@string/sign_up"
+                android:layout_weight="0.5" />
+            </LinearLayout>
 
         </LinearLayout>
+        </FrameLayout>
 
     </ScrollView>
 
