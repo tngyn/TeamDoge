@@ -25,7 +25,7 @@ public class LoginActivity extends Activity {
 	 * A dummy authentication store containing known user names and passwords.
 	 * TODO: remove after connecting to a real authentication system.
 	 */
-	private static final String[] DUMMY_CREDENTIALS = new String[] {
+	private static String[] DUMMY_CREDENTIALS = new String[] {
 			"hello:hello", "world:world","vivek:myapp" };
     private String username;
     private String password;
@@ -81,6 +81,16 @@ public class LoginActivity extends Activity {
         Intent intent = getIntent();
         username = intent.getStringExtra(SignUpActivity.USERNAME);
         password = intent.getStringExtra(SignUpActivity.PASSWORD);
+        if (this.getCallingActivity() == null) {
+        	int i = 0;
+            String[] newWords=new String[DUMMY_CREDENTIALS.length + 1];
+            for(; i<DUMMY_CREDENTIALS.length; i++){
+                 newWords[i]=DUMMY_CREDENTIALS[i];
+            }
+            DUMMY_CREDENTIALS = newWords;
+            String dummy = username + ":" + password;
+            DUMMY_CREDENTIALS[i] = dummy;
+        }
 		findViewById(R.id.sign_in_button).setOnClickListener(
 				new View.OnClickListener() {
 					@Override
@@ -212,8 +222,7 @@ public class LoginActivity extends Activity {
 			} catch (InterruptedException e) {
 				return false;
 			}
-            if (username.equals(mEmail) && password.equals(mPassword))
-            	return true;
+
 			for (String credential : DUMMY_CREDENTIALS) {
 				String[] pieces = credential.split(":");
 				if (pieces[0].equals(mEmail)) {
