@@ -1,7 +1,11 @@
 package com.teamdoge.restaurantapp;
 
-import android.app.Activity;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
+import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -16,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.ArrayAdapter;
+import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 public class MainActivity extends Activity
@@ -30,12 +35,28 @@ public class MainActivity extends Activity
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
-
+    
+    /***************ExpandableView for Inventory***********************/
+    List<String> groupList;
+    List<String> childList;
+    Map<String, List<String>> InventoryList;
+    ExpandableListView expListView;
+    /*****************************************************************/
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+     /***************ExpandableView for Inventory***********************/
+        createGroupList();
+        
+        createCollection();
+ 
+        expListView = (ExpandableListView) findViewById(R.id.categoryList);
+        final ExpandableListAdapter expListAdapter = new ExpandableListAdapter(
+                this, groupList, InventoryList);
+        expListView.setAdapter(expListAdapter);
+     /*****************************************************************/
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
@@ -45,7 +66,39 @@ public class MainActivity extends Activity
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
     }
+    /***************ExpandableView for Inventory***********************/
+    private void createGroupList() {
+        groupList = new ArrayList<String>();
+        groupList.add(getString(R.string.category1));
+        groupList.add(getString(R.string.category2));
+    }
+    
+    private void createCollection() {
+        // preparing items in category(child)
+        String[] category1 = { getString(R.string.item), getString(R.string.item),
+        		getString(R.string.item) };
+        String[] category2 = { getString(R.string.item), getString(R.string.item),
+        		getString(R.string.item) };
+ 
+        InventoryList = new LinkedHashMap<String, List<String>>();
+ 
+        for (String category : groupList) {
+            if (category.equals("Category One")) {
+                loadChild(category1);
+            } else if (category.equals("Category Two"))
+                loadChild(category2);
+            
+ 
+            InventoryList.put(category, childList);
+        }
+    }
+    private void loadChild(String[] itemList) {
+        childList = new ArrayList<String>();
+        for (String Citem : itemList)
+            childList.add(Citem);
+    }
 
+    /*****************************************************************/   
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
