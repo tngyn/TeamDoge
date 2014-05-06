@@ -13,5 +13,10 @@
     <string name="item">item</string>
     <string name="action_settings">Settings</string>
     <string name="category2">Category Two</string>
-
+    <string name="itemName">Item Name</string>
+	<string name="itemQuantity">Quantity</string>
+	<string name="itemNotes">Notes</string>
+	<string name="Cancel">Cancel</string>
+	<string name="Save">Save</string>
+	<string name="Category">Category</string>
 </resources>
