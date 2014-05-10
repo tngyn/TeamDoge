@@ -148,33 +148,44 @@ containing a value of this type.
         public static final int venus=0x7f02000c;
     }
     public static final class id {
-        public static final int action_example=0x7f0a0012;
-        public static final int action_forgot_password=0x7f0a0010;
-        public static final int action_settings=0x7f0a000f;
-        public static final int colors=0x7f0a000e;
-        public static final int content=0x7f0a0009;
-        public static final int drawer_layout=0x7f0a0008;
-        public static final int email=0x7f0a0003;
-        public static final int image=0x7f0a000b;
-        public static final int left_drawer=0x7f0a000a;
-        public static final int login=0x7f0a0005;
-        public static final int login_form=0x7f0a0002;
-        public static final int login_status=0x7f0a0000;
-        public static final int login_status_message=0x7f0a0001;
-        public static final int logout=0x7f0a0011;
-        public static final int pager=0x7f0a000d;
-        public static final int password=0x7f0a0004;
-        public static final int sign_in_button=0x7f0a0006;
-        public static final int sign_up_button=0x7f0a0007;
-        public static final int tabs=0x7f0a000c;
+        public static final int action_example=0x7f0a001c;
+        public static final int action_forgot_password=0x7f0a001a;
+        public static final int action_settings=0x7f0a0019;
+        public static final int categories_dropdown=0x7f0a0007;
+        public static final int categoryLabelText=0x7f0a0006;
+        public static final int colors=0x7f0a0018;
+        public static final int content=0x7f0a0013;
+        public static final int descriptionLabelText=0x7f0a0008;
+        public static final int description_box=0x7f0a0009;
+        public static final int drawer_layout=0x7f0a0012;
+        public static final int email=0x7f0a000d;
+        public static final int image=0x7f0a0015;
+        public static final int itemNameLabelText=0x7f0a0000;
+        public static final int item_name_box=0x7f0a0001;
+        public static final int left_drawer=0x7f0a0014;
+        public static final int login=0x7f0a000f;
+        public static final int login_form=0x7f0a000c;
+        public static final int login_status=0x7f0a000a;
+        public static final int login_status_message=0x7f0a000b;
+        public static final int logout=0x7f0a001b;
+        public static final int pager=0x7f0a0017;
+        public static final int password=0x7f0a000e;
+        public static final int quantLabelText=0x7f0a0002;
+        public static final int quant_box=0x7f0a0004;
+        public static final int sign_in_button=0x7f0a0010;
+        public static final int sign_up_button=0x7f0a0011;
+        public static final int tabs=0x7f0a0016;
+        public static final int unitsLabelText=0x7f0a0003;
+        public static final int units_dropdown=0x7f0a0005;
     }
     public static final class layout {
-        public static final int activity_login=0x7f030000;
-        public static final int activity_main=0x7f030001;
-        public static final int drawer_list_item=0x7f030002;
-        public static final int fragment_page_sliding_tab_strip=0x7f030003;
-        public static final int fragment_planet=0x7f030004;
-        public static final int pager=0x7f030005;
+        public static final int activity_inventory_screen=0x7f030000;
+        public static final int activity_login=0x7f030001;
+        public static final int activity_main=0x7f030002;
+        public static final int drawer_list_item=0x7f030003;
+        public static final int fragment_page_sliding_tab_strip=0x7f030004;
+        public static final int fragment_planet=0x7f030005;
+        public static final int pager=0x7f030006;
     }
     public static final class menu {
         public static final int global=0x7f090000;
@@ -183,27 +194,44 @@ containing a value of this type.
     }
     public static final class string {
         public static final int action_example=0x7f060006;
-        public static final int action_forgot_password=0x7f06000d;
+        public static final int action_forgot_password=0x7f06001a;
         public static final int action_settings=0x7f060007;
         public static final int app_name=0x7f060000;
+        public static final int button_cancel=0x7f060011;
+        public static final int button_submit=0x7f060010;
+        public static final int categoryLabel=0x7f060015;
+        public static final int descriptionBoxLabel=0x7f060016;
+        public static final int description_hint=0x7f06000f;
         public static final int drawer_close=0x7f060005;
         public static final int drawer_open=0x7f060004;
-        public static final int error_field_required=0x7f060011;
-        public static final int error_incorrect_password=0x7f060010;
-        public static final int error_invalid_username=0x7f06000f;
+        public static final int error_field_required=0x7f06001e;
+        public static final int error_incorrect_password=0x7f06001d;
+        public static final int error_invalid_username=0x7f06001c;
         public static final int hello_blank_fragment=0x7f060009;
-        public static final int login_progress_signing_in=0x7f06000e;
+        public static final int inv_item_page=0x7f06000c;
+        /**           Names of the labels go here           
+         */
+        public static final int itemNameLabel=0x7f060012;
+        /**  activity_inventory_screen string id's are here 
+         */
+        public static final int item_label=0x7f06000a;
+        public static final int item_name_hint=0x7f06000b;
+        public static final int login_progress_signing_in=0x7f06001b;
         public static final int logout=0x7f060008;
-        public static final int prompt_password=0x7f06000c;
+        public static final int prompt_password=0x7f060019;
         /**  Strings related to login 
          */
-        public static final int prompt_username=0x7f06000b;
-        public static final int sign_in=0x7f060012;
-        public static final int sign_up=0x7f060013;
-        public static final int title_activity_login=0x7f06000a;
+        public static final int prompt_username=0x7f060018;
+        public static final int quantityLabel=0x7f060013;
+        public static final int quantity_hint=0x7f06000d;
+        public static final int sign_in=0x7f06001f;
+        public static final int sign_up=0x7f060020;
+        public static final int title_activity_login=0x7f060017;
         public static final int title_section1=0x7f060001;
         public static final int title_section2=0x7f060002;
         public static final int title_section3=0x7f060003;
+        public static final int unit_hint=0x7f06000e;
+        public static final int unitsLabel=0x7f060014;
     }
     public static final class style {
         /** 

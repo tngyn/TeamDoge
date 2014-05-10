@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.teamdoge.restaurantapp"
     android:versionCode="1"
@@ -26,6 +27,10 @@
             android:name="com.teamdoge.restaurantapp.MainActivity"
             android:label="@string/title_activity_login"
             android:windowSoftInputMode="adjustResize|stateVisible" >
+        </activity>
+        <activity
+            android:name="com.teamdoge.restaurantapp.adding_inventory_item_page"
+            android:label="@string/inv_item_page">
         </activity>
     </application>
 

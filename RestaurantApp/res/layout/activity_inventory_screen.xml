@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+    
+    <TextView
+        android:id="@+id/itemNameLabelText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/itemNameLabel" />
+    
+    <EditText android:id="@+id/item_name_box"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/item_name_hint" 
+        android:paddingTop="10dp"/>
+    
+    <LinearLayout 
+        	android:layout_width="fill_parent"
+    		android:layout_height="wrap_content"
+    		android:orientation="horizontal" 
+    		android:paddingTop="10dp">
+        
+        <TextView
+        	android:id="@+id/quantLabelText"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:layout_weight="1"
+        	android:text="@string/quantityLabel" />
+        
+        <TextView
+        	android:id="@+id/unitsLabelText"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:layout_weight="1"
+        	android:text="@string/unitsLabel" />
+        
+    </LinearLayout>
+    
+    <LinearLayout
+    		android:layout_width="fill_parent"
+    		android:layout_height="wrap_content"
+    		android:orientation="horizontal" 
+    		android:paddingTop="10dp">
+    
+        <EditText android:id="@+id/quant_box"
+        	android:layout_width="fill_parent"
+       		android:layout_height="wrap_content"
+        	android:layout_weight="1"
+        	android:inputType="phone"
+        	android:hint="@string/quantity_hint" />
+    	
+    	<Spinner android:id="@+id/units_dropdown"
+    		android:layout_width="fill_parent"
+    		android:layout_height="wrap_content" 
+    		android:layout_weight="1"
+    		android:spinnerMode="dropdown"/>
+    
+    	<!-- <EditText android:id="@+id/units_box"
+        	android:layout_width="fill_parent"
+        	android:layout_height="wrap_content"
+        	android:layout_weight="1"
+        	android:hint="@string/unit_hint" /> -->
+    </LinearLayout>
+    
+    <TextView
+        	android:id="@+id/categoryLabelText"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:text="@string/categoryLabel" />
+    
+    <Spinner android:id="@+id/categories_dropdown"
+    	android:layout_width="fill_parent"
+    	android:layout_height="wrap_content" 
+    	android:spinnerMode="dropdown"
+    	android:paddingTop="5dp"/>
+    
+    <TextView
+        	android:id="@+id/descriptionLabelText"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:text="@string/descriptionBoxLabel" 
+        	android:paddingTop = "10dp"/>
+    
+    <EditText android:id="@+id/description_box"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:lines="4"
+        android:hint="@string/description_hint" 
+        android:paddingTop="5dp"/>
+    
+    	<LinearLayout
+    		android:layout_width="fill_parent"
+    		android:layout_height="wrap_content"
+    		android:orientation="horizontal" 
+    		android:paddingTop="20dp">
+   	
+			<Button
+        		android:layout_width="100dp"
+        		android:layout_height="wrap_content"
+        		android:text="@string/button_submit" 
+        		android:layout_weight="1"
+        		android:onClick="submit"
+        		style="?android:attr/borderlessButtonStyle"/>
+    
+    		<Button
+        		android:layout_width="100dp"
+        		android:layout_height="wrap_content"
+        		android:text="@string/button_cancel"
+        		android:layout_weight="1" 
+        		android:onClick="cancel"
+        		style="?android:attr/borderlessButtonStyle"/>
+
+		</LinearLayout>
+
+</LinearLayout>
