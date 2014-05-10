@@ -1,5 +1,8 @@
 package com.teamdoge.restaurantapp;
 
+
+import com.parse.Parse;
+import com.parse.ParseAnalytics;
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
@@ -99,7 +102,7 @@ public class MainActivity extends Activity
         if (id == R.id.action_settings) 
             return true;
         if (id == R.id.logout) {
-		Intent intent = new Intent(this, LoginActivity.class);
+		Intent intent = new Intent(this, LoginActivity.class);			
 		startActivity(intent);
        // }
         }

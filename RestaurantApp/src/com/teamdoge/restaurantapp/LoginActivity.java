@@ -16,6 +16,10 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.parse.Parse;
+import com.parse.ParseAnalytics;
+import com.parse.ParseObject;
+
 /**
  * Activity which displays a login screen to the user, offering registration as
  * well.
@@ -51,6 +55,9 @@ public class LoginActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		
+		Parse.initialize(this, "fb0rPJ5AFeAx5JNdMV7Yxlcw3paruRc2XNPjOUWo", "fDpkgdVM4vwTTjYdQSq5kMRyuoEQzt6JCuI3ivWC");
+		
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_login);
@@ -85,6 +92,10 @@ public class LoginActivity extends Activity {
 						attemptLogin();
 					}
 				});
+		
+		ParseObject testObject = new ParseObject("TestObject");
+		testObject.put("foo", "bar");
+		testObject.saveInBackground();
 	}
 
 	@Override

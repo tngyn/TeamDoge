@@ -33,28 +33,39 @@ public final class R {
         public static final int ic_launcher=0x7f020002;
     }
     public static final class id {
-        public static final int action_example=0x7f08000f;
-        public static final int action_forgot_password=0x7f08000d;
-        public static final int action_settings=0x7f08000c;
-        public static final int container=0x7f080009;
-        public static final int drawer_layout=0x7f080008;
-        public static final int email=0x7f080003;
-        public static final int login=0x7f080005;
-        public static final int login_form=0x7f080002;
-        public static final int login_status=0x7f080000;
-        public static final int login_status_message=0x7f080001;
-        public static final int logout=0x7f08000e;
-        public static final int navigation_drawer=0x7f08000a;
-        public static final int password=0x7f080004;
-        public static final int section_label=0x7f08000b;
-        public static final int sign_in_button=0x7f080006;
-        public static final int sign_up_button=0x7f080007;
+        public static final int action_example=0x7f080019;
+        public static final int action_forgot_password=0x7f080017;
+        public static final int action_settings=0x7f080016;
+        public static final int categories_dropdown=0x7f080007;
+        public static final int categoryLabelText=0x7f080006;
+        public static final int container=0x7f080013;
+        public static final int descriptionLabelText=0x7f080008;
+        public static final int description_box=0x7f080009;
+        public static final int drawer_layout=0x7f080012;
+        public static final int email=0x7f08000d;
+        public static final int itemNameLabelText=0x7f080000;
+        public static final int item_name_box=0x7f080001;
+        public static final int login=0x7f08000f;
+        public static final int login_form=0x7f08000c;
+        public static final int login_status=0x7f08000a;
+        public static final int login_status_message=0x7f08000b;
+        public static final int logout=0x7f080018;
+        public static final int navigation_drawer=0x7f080014;
+        public static final int password=0x7f08000e;
+        public static final int quantLabelText=0x7f080002;
+        public static final int quant_box=0x7f080004;
+        public static final int section_label=0x7f080015;
+        public static final int sign_in_button=0x7f080010;
+        public static final int sign_up_button=0x7f080011;
+        public static final int unitsLabelText=0x7f080003;
+        public static final int units_dropdown=0x7f080005;
     }
     public static final class layout {
-        public static final int activity_login=0x7f030000;
-        public static final int activity_main=0x7f030001;
-        public static final int fragment_main=0x7f030002;
-        public static final int fragment_navigation_drawer=0x7f030003;
+        public static final int activity_inventory_screen=0x7f030000;
+        public static final int activity_login=0x7f030001;
+        public static final int activity_main=0x7f030002;
+        public static final int fragment_main=0x7f030003;
+        public static final int fragment_navigation_drawer=0x7f030004;
     }
     public static final class menu {
         public static final int global=0x7f070000;
@@ -63,26 +74,43 @@ public final class R {
     }
     public static final class string {
         public static final int action_example=0x7f050006;
-        public static final int action_forgot_password=0x7f05000c;
+        public static final int action_forgot_password=0x7f050019;
         public static final int action_settings=0x7f050007;
         public static final int app_name=0x7f050000;
-        public static final int error_field_required=0x7f050010;
-        public static final int error_incorrect_password=0x7f05000f;
-        public static final int error_invalid_username=0x7f05000e;
-        public static final int login_progress_signing_in=0x7f05000d;
+        public static final int button_cancel=0x7f050010;
+        public static final int button_submit=0x7f05000f;
+        public static final int categoryLabel=0x7f050014;
+        public static final int descriptionBoxLabel=0x7f050015;
+        public static final int description_hint=0x7f05000e;
+        public static final int error_field_required=0x7f05001d;
+        public static final int error_incorrect_password=0x7f05001c;
+        public static final int error_invalid_username=0x7f05001b;
+        public static final int inv_item_page=0x7f05000b;
+        /**           Names of the labels go here           
+         */
+        public static final int itemNameLabel=0x7f050011;
+        /**  activity_inventory_screen string id's are here 
+         */
+        public static final int item_label=0x7f050009;
+        public static final int item_name_hint=0x7f05000a;
+        public static final int login_progress_signing_in=0x7f05001a;
         public static final int logout=0x7f050008;
         public static final int navigation_drawer_close=0x7f050005;
         public static final int navigation_drawer_open=0x7f050004;
-        public static final int prompt_password=0x7f05000b;
+        public static final int prompt_password=0x7f050018;
         /**  Strings related to login 
          */
-        public static final int prompt_username=0x7f05000a;
-        public static final int sign_in=0x7f050011;
-        public static final int sign_up=0x7f050012;
-        public static final int title_activity_login=0x7f050009;
+        public static final int prompt_username=0x7f050017;
+        public static final int quantityLabel=0x7f050012;
+        public static final int quantity_hint=0x7f05000c;
+        public static final int sign_in=0x7f05001e;
+        public static final int sign_up=0x7f05001f;
+        public static final int title_activity_login=0x7f050016;
         public static final int title_section1=0x7f050001;
         public static final int title_section2=0x7f050002;
         public static final int title_section3=0x7f050003;
+        public static final int unit_hint=0x7f05000d;
+        public static final int unitsLabel=0x7f050013;
     }
     public static final class style {
         /** 
