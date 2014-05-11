@@ -1,6 +1,10 @@
 package com.teamdoge.restaurantapp;
 
+
 import android.content.res.Configuration;
+import com.parse.ParseUser;
+
+
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
@@ -157,4 +161,3 @@ public class MainActivity extends FragmentActivity {
 		mDrawerLayout.closeDrawer(mDrawerList);
 	}
 }
-
