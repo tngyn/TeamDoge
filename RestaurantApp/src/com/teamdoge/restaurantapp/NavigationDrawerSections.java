@@ -11,7 +11,7 @@ import android.widget.ImageView;
 
 
 public class NavigationDrawerSections extends Fragment {
-	public static final String ARG_PLANET_NUMBER = "planet_number";
+	public static final String ARG_SECTION_NUMBER = "planet_number";
 
 	public NavigationDrawerSections() {
 		// Empty constructor required for fragment subclasses
@@ -22,8 +22,8 @@ public class NavigationDrawerSections extends Fragment {
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_planet, container,
 				false);
-		int i = getArguments().getInt(ARG_PLANET_NUMBER);
-		String planet = getResources().getStringArray(R.array.planets_array)[i];
+		int i = getArguments().getInt(ARG_SECTION_NUMBER);
+		String planet = getResources().getStringArray(R.array.drawer_sections_array)[i];
 
 		int imageId = getResources().getIdentifier(
 				planet.toLowerCase(Locale.getDefault()), "drawable",

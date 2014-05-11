@@ -29,7 +29,7 @@ public class MainActivity extends FragmentActivity {
 	ActionBarDrawerToggle mDrawerToggle;
 
 	private CharSequence mDrawerTitle;
-	private String[] mPlanetTitles;
+	private String[] mDrawerSections;
 	
 
 	@Override
@@ -38,7 +38,7 @@ public class MainActivity extends FragmentActivity {
 		setContentView(R.layout.activity_main);
 
 		mTitle = mDrawerTitle = getTitle();
-		mPlanetTitles = getResources().getStringArray(R.array.planets_array);
+		mDrawerSections = getResources().getStringArray(R.array.drawer_sections_array);
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
@@ -48,7 +48,7 @@ public class MainActivity extends FragmentActivity {
 				GravityCompat.START);
 		// set up the drawer's list view with items and click listener
 		mDrawerList.setAdapter(new ArrayAdapter<String>(this,
-				R.layout.drawer_list_item, mPlanetTitles));
+				R.layout.drawer_list_item, mDrawerSections));
 		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
 		// enable ActionBar app icon to behave as action to toggle nav drawer
@@ -144,9 +144,9 @@ public class MainActivity extends FragmentActivity {
 			break;
 		default:
 
-			Fragment fragment = new PlanetFragment();
+			Fragment fragment = new NavigationDrawerSections();
 			Bundle args = new Bundle();
-			args.putInt(PlanetFragment.ARG_PLANET_NUMBER, position);
+			args.putInt(NavigationDrawerSections.ARG_SECTION_NUMBER, position);
 			fragment.setArguments(args);
 
 			getSupportFragmentManager().beginTransaction()
