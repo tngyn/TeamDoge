@@ -1,5 +1,7 @@
 package com.teamdoge.restaurantapp;
 
+import com.parse.ParseUser;
+
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
@@ -99,8 +101,10 @@ public class MainActivity extends Activity
         if (id == R.id.action_settings) 
             return true;
         if (id == R.id.logout) {
+        ParseUser.logOut();
 		Intent intent = new Intent(this, LoginActivity.class);
 		startActivity(intent);
+		finish();
        // }
         }
         return super.onOptionsItemSelected(item);

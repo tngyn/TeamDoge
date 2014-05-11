@@ -1,5 +1,10 @@
 package com.teamdoge.restaurantapp;
 
+import com.parse.Parse;
+import com.parse.ParseException;
+import com.parse.LogInCallback;
+import com.parse.ParseUser;
+
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
@@ -8,27 +13,23 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Activity which displays a login screen to the user, offering registration as
  * well.
  */
 public class LoginActivity extends Activity {
-	/**
-	 * A dummy authentication store containing known user names and passwords.
-	 * TODO: remove after connecting to a real authentication system.
-	 */
-	private static String[] DUMMY_CREDENTIALS = new String[] {
-			"hello:hello:hello", "world:world:world" };
-    private String credential;
-	private String type;
 	/**
 	 * The default email to populate the email field with.
 	 */
@@ -53,11 +54,14 @@ public class LoginActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+		StrictMode.setThreadPolicy(policy); 
+		this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        //Initialize Parse
+		Parse.initialize(this, "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8", "k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF");
 		setContentView(R.layout.activity_login);
 
 		// Set up the login form.
-		mUsername = getIntent().getStringExtra(EXTRA_EMAIL);
 		mUsernameView = (EditText) findViewById(R.id.email);
 		mUsernameView.setText(mUsername);
 
@@ -78,18 +82,7 @@ public class LoginActivity extends Activity {
 		mLoginFormView = findViewById(R.id.login_form);
 		mLoginStatusView = findViewById(R.id.login_status);
 		mLoginStatusMessageView = (TextView) findViewById(R.id.login_status_message);
-        Intent intent = getIntent();
-        credential = intent.getStringExtra(SignUpActivity.CREDENTIALS);
-        type = intent.getStringExtra(SignUpActivity.TYPE);
-        if (credential != null) {
-        	int i = 0;
-            String[] newWords=new String[DUMMY_CREDENTIALS.length + 1];
-            for(; i<DUMMY_CREDENTIALS.length; i++){
-                 newWords[i]=DUMMY_CREDENTIALS[i];
-            }
-            DUMMY_CREDENTIALS = newWords;
-            DUMMY_CREDENTIALS[i] = credential;
-        }
+		//Attempt Login when sing in button is clicked
 		findViewById(R.id.sign_in_button).setOnClickListener(
 				new View.OnClickListener() {
 					@Override
@@ -97,6 +90,7 @@ public class LoginActivity extends Activity {
 						attemptLogin();
 					}
 				});
+		//Link to Sign Up page when sign up is clicked
 		findViewById(R.id.sign_up_button).setOnClickListener(
 				new View.OnClickListener() {
 					@Override
@@ -210,43 +204,38 @@ public class LoginActivity extends Activity {
 	 * the user.
 	 */
 	public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
+
+		public boolean success = false;
 		@Override
 		protected Boolean doInBackground(Void... params) {
-			// TODO: attempt authentication against a network service.
-
-			try {
-				// Simulate network access.
-				Thread.sleep(2000);
-			} catch (InterruptedException e) {
-				return false;
-			}
-
-			for (String temp : DUMMY_CREDENTIALS) {
-				String[] pieces = temp.split(":");
-				if (pieces[0].equals(mUsername) || pieces[2].equals(mUsername)) {
-					// Account exists, return true if the password matches.
-					return pieces[1].equals(mPassword);
-				}
-			}
+			// Check the username and the password with Parse database
+			ParseUser.logInInBackground(mUsername, mPassword, new LogInCallback() {
+				  @Override
+				  public void done(ParseUser user, ParseException e) {
+					//If Successful then go to the main Activity
+				    if (user != null) {
+				      //Toast.makeText(getApplicationContext(),"Success", Toast.LENGTH_SHORT).show();
+						Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+						startActivity(intent);
+						finish();
+						showProgress(false);
+					//Else show incorrect password error
+				    } else {
+						mPasswordView.setError(getString(R.string.error_incorrect_password));
+				        mPasswordView.requestFocus();
+				        showProgress(false);
+				    }
+				  }
+				});
 
 			// TODO: register the new account here.
-			return false;
+			return success;
 		}
 
 		@Override
+		//Get rid of the loading animation
 		protected void onPostExecute(final Boolean success) {
 			mAuthTask = null;
-			showProgress(false);
-
-			if (success) {
-				Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-				startActivity(intent);
-				finish();
-			} else {
-				mPasswordView
-						.setError(getString(R.string.error_incorrect_password));
-				mPasswordView.requestFocus();
-			}
 		}
 
 		@Override
