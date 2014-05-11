@@ -107,7 +107,7 @@ public class MainActivity extends FragmentActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	// The click listener for ListView in the navigation drawer
+	// The click listener for ListView in the navigation drawer :)
 	private class DrawerItemClickListener implements
 			ListView.OnItemClickListener {
 		@Override
