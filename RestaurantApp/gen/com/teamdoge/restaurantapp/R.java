@@ -11,7 +11,7 @@ public final class R {
     public static final class array {
         /**  Navigation drawer items 
          */
-        public static final int planets_array=0x7f070000;
+        public static final int drawer_sections_array=0x7f070000;
     }
     public static final class attr {
         /** <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
