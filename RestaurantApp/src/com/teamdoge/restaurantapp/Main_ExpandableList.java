@@ -10,6 +10,7 @@ import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -20,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
@@ -35,7 +37,7 @@ public class Main_ExpandableList extends Activity
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
-    
+
     /***************ExpandableView for Inventory***********************/
     List<String> groupList;
     List<String> childList;
@@ -56,6 +58,7 @@ public class Main_ExpandableList extends Activity
         final ExpandableListAdapter expListAdapter = new ExpandableListAdapter(
                 this, groupList, InventoryList);
         expListView.setAdapter(expListAdapter);
+        
      /*****************************************************************/
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -66,6 +69,7 @@ public class Main_ExpandableList extends Activity
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
     }
+    
     /***************ExpandableView for Inventory***********************/
     private void createGroupList() {
         groupList = new ArrayList<String>();
@@ -195,6 +199,13 @@ public class Main_ExpandableList extends Activity
             ((Main_ExpandableList) activity).onSectionAttached(
                     getArguments().getInt(ARG_SECTION_NUMBER));
         }
+        /** Called when the user clicks an item in the Inventory list */
+       /* public void ClickItem(View view) {
+            // Do something in response to button
+        	Intent intent = getIntent();
+        	EditText editText = (EditText) findViewById(R.id.categoryList);
+        	startActivity(intent);
+        }*/
     }
 
 }

@@ -11,5 +11,6 @@
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:paddingLeft="25sp" 
-        android:textSize="15sp"/>
+        android:textSize="15sp"
+        android:onClick="ClickItem"/>
 </RelativeLayout>

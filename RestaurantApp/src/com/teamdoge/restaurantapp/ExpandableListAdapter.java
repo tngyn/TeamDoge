@@ -8,10 +8,12 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
 	 
@@ -46,6 +48,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
          
         TextView item = (TextView) convertView.findViewById(R.id.categoryList);
         item.setText(Citem);
+        
         return convertView;
     }
  
