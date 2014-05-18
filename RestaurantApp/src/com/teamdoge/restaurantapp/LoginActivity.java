@@ -53,6 +53,9 @@ public class LoginActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		
+		getActionBar().setTitle("Sign Infffff");  
+		
 		super.onCreate(savedInstanceState);
 		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 		StrictMode.setThreadPolicy(policy); 
@@ -99,13 +102,14 @@ public class LoginActivity extends Activity {
 						startActivity(intent);
 					}
 				});
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		super.onCreateOptionsMenu(menu);
-		getMenuInflater().inflate(R.menu.login, menu);
-		return true;
+		findViewById(R.id.forgot_password_button).setOnClickListener(
+				new View.OnClickListener() {
+					@Override
+					public void onClick(View view) {
+						Intent intent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
+						startActivity(intent);
+					}
+				});
 	}
 	/**
 	 * Attempts to sign in or register the account specified by the login form.

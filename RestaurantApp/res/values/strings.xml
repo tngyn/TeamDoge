@@ -2,9 +2,6 @@
 <resources>
 
     <string name="app_name">RestaurantApp</string>
-    <string name="title_section1">Inventory</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
@@ -17,6 +14,7 @@
         <item>Schedule</item>
         <item>Inventory</item>
         <item>Profile</item>
+        <item>Log Out</item>
     </string-array>
     
      <!-- activity_inventory_screen string id's are here -->

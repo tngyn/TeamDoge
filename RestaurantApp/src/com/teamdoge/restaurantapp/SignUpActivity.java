@@ -51,6 +51,9 @@ public class SignUpActivity extends Activity {
 	private boolean signup;
 	ParseUser user = new ParseUser();
 	protected void onCreate(Bundle savedInstanceState) {
+		
+		getActionBar().setTitle("Sign Up");  
+		
 		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 		StrictMode.setThreadPolicy(policy); 
 		Parse.initialize(this, "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8", "k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF");
@@ -163,14 +166,6 @@ public class SignUpActivity extends Activity {
 						}
 					}
 				});
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.sign_up, menu);
-		return true;
 	}
 
 
