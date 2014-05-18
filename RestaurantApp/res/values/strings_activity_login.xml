@@ -12,5 +12,6 @@
     <string name="error_field_required">This field is required</string>
     <string name="sign_in">Sign In</string>
     <string name="sign_up">Sign up</string>
+    <string name="forgot">Forgot Password</string>
 
 </resources>

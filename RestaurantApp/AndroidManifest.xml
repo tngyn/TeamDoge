@@ -39,6 +39,10 @@
             android:name="com.teamdoge.restaurantapp.adding_inventory_item_page"
             android:label="@string/inv_item_page">
         </activity>
+        <activity
+            android:name="com.teamdoge.restaurantapp.ForgotPasswordActivity"
+            android:label="Forgot Password" >
+        </activity>
     </application>
 
 </manifest>
