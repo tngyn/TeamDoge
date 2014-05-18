@@ -49,9 +49,11 @@ public class PageSlidingTabStripFragment extends Fragment {
 				.findViewById(R.id.tabs);
 		ViewPager pager = (ViewPager) view.findViewById(R.id.pager);
 		MyPagerAdapter adapter = new MyPagerAdapter(getChildFragmentManager());
+		
+		tabs.setShouldExpand(true);
+		
 		pager.setAdapter(adapter);
 		tabs.setViewPager(pager);
-
 	}
 
 	public class MyPagerAdapter extends FragmentPagerAdapter {
@@ -61,10 +63,14 @@ public class PageSlidingTabStripFragment extends Fragment {
 		}
 		
 		// Added spaces in titles to even out in tab bar.
-		private final String[] TITLES = { "   My Shifts   ",
-				"    Schedule    ",
-				"Open Shifts" };
+//		private final String[] TITLES = { "  My Shifts   ",
+//				"    Schedule    ",
+//				"Open Shifts" };
 
+		private final String[] TITLES = { "My Shifts",
+				"Schedule",
+				"Open Shifts" };
+		
 		@Override
 		public CharSequence getPageTitle(int position) {
 			return TITLES[position];
