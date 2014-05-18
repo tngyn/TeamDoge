@@ -73,6 +73,14 @@
                 android:inputType="textPassword"
                 android:maxLines="1"
                 android:singleLine="true" />
+             <CheckBox
+            android:id="@+id/remember_me"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            android:text="@string/remember"
+            android:textColor="#024d94"
+            android:textSize="12sp" />
         <LinearLayout
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="match_parent"

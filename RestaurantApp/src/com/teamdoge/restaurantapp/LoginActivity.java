@@ -21,6 +21,8 @@ import android.view.Menu;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,6 +52,7 @@ public class LoginActivity extends Activity {
 	private View mLoginFormView;
 	private View mLoginStatusView;
 	private TextView mLoginStatusMessageView;
+	private boolean remember;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +66,14 @@ public class LoginActivity extends Activity {
         //Initialize Parse
 		Parse.initialize(this, "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8", "k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF");
 		setContentView(R.layout.activity_login);
+		ParseUser user = ParseUser.getCurrentUser();
+		if (user != null)
+			remember = user.getBoolean("Remember_Me");
+		if (user != null && remember) {
+			Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+			startActivity(intent);
+			finish();
+		}
 
 		// Set up the login form.
 		mUsernameView = (EditText) findViewById(R.id.email);
@@ -90,6 +101,9 @@ public class LoginActivity extends Activity {
 				new View.OnClickListener() {
 					@Override
 					public void onClick(View view) {
+						InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+					    imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+				    	remember = ((CheckBox)findViewById(R.id.remember_me)).isChecked();
 						attemptLogin();
 					}
 				});
@@ -219,6 +233,8 @@ public class LoginActivity extends Activity {
 					//If Successful then go to the main Activity
 				    if (user != null) {
 				      //Toast.makeText(getApplicationContext(),"Success", Toast.LENGTH_SHORT).show();
+				    	user.put("Remember_Me", remember);
+				    	user.saveInBackground();
 						Intent intent = new Intent(LoginActivity.this, MainActivity.class);
 						startActivity(intent);
 						finish();
@@ -239,6 +255,7 @@ public class LoginActivity extends Activity {
 		@Override
 		//Get rid of the loading animation
 		protected void onPostExecute(final Boolean success) {
+			
 			mAuthTask = null;
 		}
 

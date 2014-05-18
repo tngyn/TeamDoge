@@ -1,7 +1,10 @@
 package com.teamdoge.restaurantapp;
 
 
+import android.content.Intent;
 import android.content.res.Configuration;
+
+import com.parse.Parse;
 import com.parse.ParseUser;
 
 
@@ -11,6 +14,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +22,10 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
+
+
+
 
 public class MainActivity extends FragmentActivity {
 
@@ -35,12 +43,30 @@ public class MainActivity extends FragmentActivity {
 
 	private CharSequence mDrawerTitle;
 	private String[] mDrawerSections;
-	
 
+	ParseUser user;
+	private String accountType;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		
+		Parse.initialize(this, "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8", "k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF");
+		
+		user = ParseUser.getCurrentUser();
+	    accountType = user.getString("Acc_Type");
+		
+		if (accountType.equals("Owner")) {
+			Toast.makeText(getApplicationContext(),"it works", Toast.LENGTH_LONG).show();
+			Log.d("works", "works");
+		}
+		else {
+			Toast.makeText(getApplicationContext(),accountType, Toast.LENGTH_LONG).show();
+		}
+		
+		
 		
 		getWindow().setSoftInputMode(
 			      WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
@@ -151,13 +177,26 @@ public class MainActivity extends FragmentActivity {
 
 		switch (position) {
 		case 0:
+			
 			getSupportFragmentManager()
-					.beginTransaction()
-					.replace(R.id.content,
-							PageSlidingTabStripFragment.newInstance(),
-							PageSlidingTabStripFragment.TAG).commit();
-		    getActionBar().setTitle("Schedule");
+			.beginTransaction()
+			.replace(R.id.content,
+					PageSlidingTabStripFragment.newInstance(),
+					PageSlidingTabStripFragment.TAG).commit();
+			getActionBar().setTitle("Schedule");
 			break;
+			
+		case 3:
+			
+			Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+	    	startActivity(intent);
+	    	user.put("Remember_Me", false);
+	    	user.saveInBackground();
+	    	ParseUser.logOut();
+	    	user = ParseUser.getCurrentUser();
+	    	finish();
+	    	break;
+	    	
 		default:
 
 			Fragment fragment = new NavigationDrawerSections();

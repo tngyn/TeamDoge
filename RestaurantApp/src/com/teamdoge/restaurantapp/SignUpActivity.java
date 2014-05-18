@@ -50,6 +50,7 @@ public class SignUpActivity extends Activity {
 	private boolean keepGoing;
 	private boolean signup;
 	ParseUser user = new ParseUser();
+	
 	protected void onCreate(Bundle savedInstanceState) {
 		
 		getActionBar().setTitle("Sign Up");  
@@ -133,13 +134,13 @@ public class SignUpActivity extends Activity {
 						  //Show loading animation
 						  showProgress(true);
 						  //Set all the parameters
-						  signup = true;;
+						  signup = true;
 						  user.setUsername(username);
 						  user.setEmail(email);
 						  user.setPassword(password);
 						  user.put("Acc_Type", String.valueOf(spinner.getSelectedItem()));
 						  user.put("Name", name + " " + lastName);
-						  
+						  user.put("Remember_Me", false);
 						  //Upload the information
 						  user.signUpInBackground(new SignUpCallback() {
 							  public void done(ParseException e) {

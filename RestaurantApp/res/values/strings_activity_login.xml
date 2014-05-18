@@ -13,5 +13,6 @@
     <string name="sign_in">Sign In</string>
     <string name="sign_up">Sign up</string>
     <string name="forgot">Forgot Password</string>
+    <string name="remember">Remember Me</string>
 
 </resources>

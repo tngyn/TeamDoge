@@ -22,14 +22,6 @@ import android.view.ViewGroup;
  */
 public class PageSlidingTabStripFragment extends Fragment {
 	
-	
-	
-	
-	
-	
-	
-	
-	
 	public static final String TAG = PageSlidingTabStripFragment.class
 			.getSimpleName();
 
