@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -70,7 +71,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
  
     public View getGroupView(int groupPosition, boolean isExpanded,
             View convertView, ViewGroup parent) {
-        String laptopName = (String) getGroup(groupPosition);
+        String Name = (String) getGroup(groupPosition);
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -79,7 +80,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         }
         TextView item = (TextView) convertView.findViewById(R.id.categoryList);
         item.setTypeface(null, Typeface.BOLD);
-        item.setText(laptopName);
+        item.setText(Name);
         return convertView;
     }
  
@@ -87,7 +88,8 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         return true;
     }
  
-    public boolean isChildSelectable(int groupPosition, int childPosition) {
+    public boolean isChildSelectable(int groupPosition, int childPosition) { 
         return true;
     }
+    
 }

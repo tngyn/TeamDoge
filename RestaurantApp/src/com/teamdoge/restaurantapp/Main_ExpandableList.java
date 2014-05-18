@@ -23,7 +23,9 @@ import android.support.v4.widget.DrawerLayout;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class Main_ExpandableList extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -58,6 +60,7 @@ public class Main_ExpandableList extends Activity
         final ExpandableListAdapter expListAdapter = new ExpandableListAdapter(
                 this, groupList, InventoryList);
         expListView.setAdapter(expListAdapter);
+        expListView.setOnChildClickListener(ExpandList_ItemClicked);
         
      /*****************************************************************/
         mNavigationDrawerFragment = (NavigationDrawerFragment)
@@ -69,7 +72,18 @@ public class Main_ExpandableList extends Activity
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
     }
-    
+    /***************ExpandableView for Inventory***********************/
+    private OnChildClickListener ExpandList_ItemClicked =  new OnChildClickListener() {
+
+		public boolean onChildClick(ExpandableListView parent, View v,
+				int groupPosition, int childPosition, long id) {
+			// TODO Auto-generated method stub
+			
+			//Your code where
+			return false;
+		}
+		
+	};
     /***************ExpandableView for Inventory***********************/
     private void createGroupList() {
         groupList = new ArrayList<String>();
@@ -199,13 +213,6 @@ public class Main_ExpandableList extends Activity
             ((Main_ExpandableList) activity).onSectionAttached(
                     getArguments().getInt(ARG_SECTION_NUMBER));
         }
-        /** Called when the user clicks an item in the Inventory list */
-       /* public void ClickItem(View view) {
-            // Do something in response to button
-        	Intent intent = getIntent();
-        	EditText editText = (EditText) findViewById(R.id.categoryList);
-        	startActivity(intent);
-        }*/
     }
-
+    
 }
