@@ -122,6 +122,16 @@
                 android:entries ="@array/type_of_account"
                 android:prompt = "@string/prompt"
                 android:spinnerMode = "dialog"/>
+            <EditText
+                android:id = "@+id/owner_accout"
+              	android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/prompt_owner"
+                android:imeOptions="actionUnspecified"
+               	android:inputType="textEmailAddress"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:visibility="gone"/>
 
             <Button
                 android:id="@+id/register_button"
