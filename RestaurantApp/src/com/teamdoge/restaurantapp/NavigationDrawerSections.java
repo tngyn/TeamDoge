@@ -23,14 +23,18 @@ public class NavigationDrawerSections extends Fragment {
 		View rootView = inflater.inflate(R.layout.fragment_nav_sections, container,
 				false);
 		int i = getArguments().getInt(ARG_SECTION_NUMBER);
-		String planet = getResources().getStringArray(R.array.drawer_sections_array)[i];
+		String sections = getResources().getStringArray(R.array.drawer_sections_array)[i];
 
-		int imageId = getResources().getIdentifier(
-				planet.toLowerCase(Locale.getDefault()), "drawable",
-				getActivity().getPackageName());
-		((ImageView) rootView.findViewById(R.id.image))
-				.setImageResource(imageId);
-		getActivity().setTitle(planet);
+//		int imageId = getResources().getIdentifier(
+//				sections.toLowerCase(Locale.getDefault()), "drawable",
+//				getActivity().getPackageName());
+//		((ImageView) rootView.findViewById(R.id.image))
+//				.setImageResource(imageId);
+		
+		// Set title bar
+	    ((MainActivity) getActivity())
+	            .setActionBarTitle(sections);
+		
 		return rootView;
 	}
 }

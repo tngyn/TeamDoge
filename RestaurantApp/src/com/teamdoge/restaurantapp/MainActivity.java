@@ -44,9 +44,10 @@ public class MainActivity extends FragmentActivity {
 		
 		getWindow().setSoftInputMode(
 			      WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-		
 
-		mTitle = mDrawerTitle = getTitle();
+		
+		
+//		mTitle = mDrawerTitle = "testing something right now";
 		mDrawerSections = getResources().getStringArray(R.array.drawer_sections_array);
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerList = (ListView) findViewById(R.id.left_drawer);
@@ -73,13 +74,13 @@ public class MainActivity extends FragmentActivity {
 		R.string.drawer_close /* "close drawer" description for accessibility */
 		) {
 			public void onDrawerClosed(View view) {
-				getActionBar().setTitle(mTitle);
+				//getActionBar().setTitle(mTitle);
 				invalidateOptionsMenu(); // creates call to
 											// onPrepareOptionsMenu()
 			}
 
 			public void onDrawerOpened(View drawerView) {
-				getActionBar().setTitle(mDrawerTitle);
+				//getActionBar().setTitle(mDrawerTitle);
 				invalidateOptionsMenu(); // creates call to
 											// onPrepareOptionsMenu()
 			}
@@ -92,6 +93,11 @@ public class MainActivity extends FragmentActivity {
 
 	}
 
+	
+	public void setActionBarTitle(String title) {
+	    getActionBar().setTitle(title);
+	}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		return super.onCreateOptionsMenu(menu);
@@ -150,6 +156,7 @@ public class MainActivity extends FragmentActivity {
 					.replace(R.id.content,
 							PageSlidingTabStripFragment.newInstance(),
 							PageSlidingTabStripFragment.TAG).commit();
+		    getActionBar().setTitle("Schedule");
 			break;
 		default:
 
