@@ -17,6 +17,7 @@
         <item>Schedule</item>
         <item>Inventory</item>
         <item>Profile</item>
+        <item>Log Out</item>
     </string-array>
     
      <!-- activity_inventory_screen string id's are here -->

@@ -197,8 +197,8 @@ containing a value of this type.
         public static final int activity_main=0x7f030002;
         public static final int activity_sign_up=0x7f030003;
         public static final int drawer_list_item=0x7f030004;
-        public static final int fragment_page_sliding_tab_strip=0x7f030005;
-        public static final int fragment_planet=0x7f030006;
+        public static final int fragment_nav_sections=0x7f030005;
+        public static final int fragment_page_sliding_tab_strip=0x7f030006;
         public static final int fragment_sign_up=0x7f030007;
         public static final int pager=0x7f030008;
     }
