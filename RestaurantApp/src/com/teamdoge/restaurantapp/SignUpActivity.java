@@ -41,6 +41,7 @@ public class SignUpActivity extends Activity {
 	private String rpassword;
 	private View mViewSignUp;
 	private View mViewLoading;
+	private View mViewOwnerAcc;
 	private EditText eEmail;
 	private String email;
 	private Spinner spinner;
@@ -49,6 +50,7 @@ public class SignUpActivity extends Activity {
 	private String lastName;
 	private boolean keepGoing;
 	private boolean signup;
+	private String ownerAcc;
 	ParseUser user = new ParseUser();
 	
 	protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +63,9 @@ public class SignUpActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		setContentView(R.layout.activity_sign_up);
+	    mViewOwnerAcc = findViewById(R.id.owner_accout);
+		spinner = (Spinner) findViewById(R.id.spinner2); // Spinner for the type of account
+		spinner.setOnItemSelectedListener(new CustomOnItemSelectedListener()); // Setting up the spinner
 		if (savedInstanceState == null) {
 			getFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
@@ -80,10 +85,12 @@ public class SignUpActivity extends Activity {
 						email = eEmail.getText().toString(); // String of the Email Box
 						rePassword = (EditText) findViewById(R.id.password_register_confirm); // Content of the confirmation password
 						rpassword = rePassword.getText().toString(); //String of the confirmation password
-						spinner = (Spinner) findViewById(R.id.spinner2); // Spinner for the type of account
-						spinner.setOnItemSelectedListener(new CustomOnItemSelectedListener()); // Setting up the spinner
 						name = ((EditText) findViewById(R.id.name)).getText().toString(); //String of the name
 						lastName = ((EditText) findViewById(R.id.last_name)).getText().toString(); //String of the Last Name
+						if (String.valueOf(spinner.getSelectedItem()).equals("Owner"))
+							ownerAcc = username;
+						else
+							ownerAcc = ((EditText) mViewOwnerAcc).getText().toString();
 						//Setting all the boxes error to null
 					    ePassword.setError(null);
 					    eUsername.setError(null);
@@ -141,6 +148,7 @@ public class SignUpActivity extends Activity {
 						  user.put("Acc_Type", String.valueOf(spinner.getSelectedItem()));
 						  user.put("Name", name + " " + lastName);
 						  user.put("Remember_Me", false);
+						  user.put("Owner_Acc", ownerAcc);
 						  //Upload the information
 						  user.signUpInBackground(new SignUpCallback() {
 							  public void done(ParseException e) {
@@ -243,23 +251,27 @@ public class SignUpActivity extends Activity {
 	public class CustomOnItemSelectedListener implements OnItemSelectedListener {
 		 
 		  public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
-			switch(pos) {
-			case 0:
-			  type = parent.getItemAtPosition(pos).toString();
-			  break;
-			case 1:
-			  type = parent.getItemAtPosition(pos).toString();
-			  break;
-			default:
-			  break;
+			 switch (pos) {
+			 case 0: 
+				 mViewOwnerAcc.setVisibility(View.GONE);
+			   break;
+			 case 1:
+				    mViewOwnerAcc.setVisibility(View.VISIBLE);
+			    break;
+			  default:
+				  break;
+			 }
+			  
+
 			}
-		  }
-		 
-		  @Override
-		  public void onNothingSelected(AdapterView<?> arg0) {
+
+		@Override
+		public void onNothingSelected(AdapterView<?> arg0) {
 			// TODO Auto-generated method stub
+			
+		}
 		  }
 		 
-		}
+
 
 }

@@ -18,4 +18,5 @@
     <string name = "error_email">Invalid Email</string>
     <string name = "error_field_repeated_email">This Email Already Exists</string>
     <string name = "error_field_repeated_user">This Username Already Exists</string>
+    <string name = "prompt_owner">Enter Restaurant Account</string>
 </resources>
