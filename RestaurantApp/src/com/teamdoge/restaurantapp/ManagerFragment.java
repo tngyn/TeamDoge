@@ -39,11 +39,9 @@ public class ManagerFragment extends Fragment {
 	 * @return A new instance of fragment ManagerFragment.
 	 */
 	// TODO: Rename and change types and number of parameters
-	public static ManagerFragment newInstance(String param1, String param2) {
+	public static ManagerFragment newInstance() {
 		ManagerFragment fragment = new ManagerFragment();
 		Bundle args = new Bundle();
-		args.putString(ARG_PARAM1, param1);
-		args.putString(ARG_PARAM2, param2);
 		fragment.setArguments(args);
 		return fragment;
 	}
@@ -55,10 +53,7 @@ public class ManagerFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		if (getArguments() != null) {
-			mParam1 = getArguments().getString(ARG_PARAM1);
-			mParam2 = getArguments().getString(ARG_PARAM2);
-		}
+
 	}
 
 	@Override

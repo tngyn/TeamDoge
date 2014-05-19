@@ -6,8 +6,9 @@ import android.content.res.Configuration;
 
 import com.parse.Parse;
 import com.parse.ParseUser;
+import com.teamdoge.restaurantapp.ManagerFragment.OnFragmentInteractionListener;
 
-
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
@@ -27,7 +28,7 @@ import android.widget.Toast;
 
 
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends FragmentActivity implements OnFragmentInteractionListener {
 
 
     /**
@@ -210,5 +211,13 @@ public class MainActivity extends FragmentActivity {
 		}
 
 		mDrawerLayout.closeDrawer(mDrawerList);
+	}
+
+
+	@Override
+	public void onFragmentInteraction(Uri uri) {
+
+		Toast.makeText(getApplicationContext(),"Link sent to email", Toast.LENGTH_LONG).show();
+		
 	}
 }

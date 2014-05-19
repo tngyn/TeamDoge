@@ -1,5 +1,6 @@
 package com.teamdoge.restaurantapp;
 
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.Gravity;
@@ -10,8 +11,7 @@ import android.widget.FrameLayout;
 import android.widget.FrameLayout.LayoutParams;
 import android.widget.TextView;
 
-import com.parse.Parse;
-import com.parse.ParseUser;
+
 
 
 
@@ -21,8 +21,7 @@ public class SuperAwesomeCardFragment extends Fragment {
 
 	private int position;
 	
-	ParseUser user;
-	private String accountType;
+
 
 	public static SuperAwesomeCardFragment newInstance(int position) {
 		SuperAwesomeCardFragment f = new SuperAwesomeCardFragment();
@@ -35,10 +34,7 @@ public class SuperAwesomeCardFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Parse.initialize(getActivity(), "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8", "k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF");
-		
-		user = ParseUser.getCurrentUser();
-	    accountType = user.getString("Acc_Type");
+
 	    
 		position = getArguments().getInt(ARG_POSITION);
 	}
@@ -63,11 +59,7 @@ public class SuperAwesomeCardFragment extends Fragment {
 //		v.setText("CARD " + (position + 1));
 
 		if (position == 0) {
-			//CARD 1
-			if (accountType.equals("Owner"))
-				v.setText("I'm an Owner.");
-			else
-				v.setText("I'm an Employee.");
+		  v.setText("WORK!!!!! :("); 
 		}
 		else if (position == 1) {
 			//CARD 2

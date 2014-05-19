@@ -2,6 +2,8 @@ package com.teamdoge.restaurantapp;
 
 
 import com.astuetz.PagerSlidingTabStrip;
+import com.parse.Parse;
+import com.parse.ParseUser;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,6 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.parse.Parse;
+import com.parse.ParseUser;
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass. Activities that
  * contain this fragment must implement the
@@ -21,6 +25,8 @@ import android.view.ViewGroup;
  * 
  */
 public class PageSlidingTabStripFragment extends Fragment {
+	ParseUser user;
+	private String accountType;
 	
 	public static final String TAG = PageSlidingTabStripFragment.class
 			.getSimpleName();
@@ -33,6 +39,10 @@ public class PageSlidingTabStripFragment extends Fragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setRetainInstance(true);
+		Parse.initialize(getActivity(), "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8", "k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF");
+		
+		user = ParseUser.getCurrentUser();
+	    accountType = user.getString("Acc_Type");
 	}
 
 	@Override
@@ -83,7 +93,18 @@ public class PageSlidingTabStripFragment extends Fragment {
 
 		@Override
 		public Fragment getItem(int position) {
-			return SuperAwesomeCardFragment.newInstance(position);
+			switch(position) {
+			case 0:
+				if (accountType.equals("Owner")) {
+				  ManagerFragment m = new ManagerFragment();
+				  return m;
+				}
+				else
+				  return SuperAwesomeCardFragment.newInstance(position);
+			default:
+				return SuperAwesomeCardFragment.newInstance(position);
+			
+			}
 		}
 
 	}
