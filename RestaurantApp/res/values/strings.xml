@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">RestaurantApp</string>
-    <string name="title_section1">Section 1</string>
+    <string name="title_section1">Inventory</string>
     <string name="title_section2">Section 2</string>
     <string name="title_section3">Section 3</string>
     <string name="Tabs"> Tabs</string>
@@ -21,16 +21,5 @@
     <string name="trade_prompt1">Choose time to give</string>
     <string name="trade_prompt2">Choose time to take</string>
     <string name="time_prompt">Choose a time</string>
-    <string-array name="times1">
-    	<item>1:00-3:00</item>
-    	<item>6:00-8:00</item>
-    	<item>4:00-6:00</item>
-    	<item> </item>
-    </string-array>
-    <string-array name="times2">
-    	<item name="time1">John	1:00-3:00</item>
-    	<item name="time2">Alex	3:00-5:00</item>
-    	<item name="time3">Dean	5:00-7:00</item>
-    	<item> </item>
-	</string-array>
+
 </resources>

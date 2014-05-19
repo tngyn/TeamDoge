@@ -1,5 +1,13 @@
 package com.teamdoge.restaurantapp;
 
+import java.util.Arrays;
+
+import com.parse.Parse;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseUser;
+import com.parse.SignUpCallback;
+
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
@@ -30,8 +38,9 @@ public class MainActivity extends Activity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Parse.initialize(this, "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8",
+				"k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF");
         setContentView(R.layout.activity_main);
-
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
@@ -53,9 +62,6 @@ public class MainActivity extends Activity
 
     public void onSectionAttached(int number) {
         switch (number) {
-            case 1:
-                mTitle = getString(R.string.title_section1);
-                break;
             case 2:
                 mTitle = getString(R.string.title_section2);
                 break;
