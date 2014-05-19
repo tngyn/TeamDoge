@@ -27,6 +27,7 @@
         <activity
             android:name="com.teamdoge.restaurantapp.SignUpActivity"
             android:label="@string/title_activity_signup"
+            android:parentActivityName="com.teamdoge.restaurantapp.LoginActivity"
             android:windowSoftInputMode="adjustResize|stateVisible" >
         </activity>
         <activity
