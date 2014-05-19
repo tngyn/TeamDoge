@@ -1,6 +1,7 @@
 package com.teamdoge.restaurantapp;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
 
@@ -20,8 +21,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -117,6 +120,7 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 		if (savedInstanceState == null) {
 			selectItem(0);
 		}
+		
 
 	}
 
@@ -215,9 +219,72 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 
 
 	@Override
-	public void onFragmentInteraction(Uri uri) {
+	public void onFragmentInteraction() {
+		
 
-		Toast.makeText(getApplicationContext(),"Link sent to email", Toast.LENGTH_LONG).show();
 		
 	}
+
+
+	@Override
+	public void myClickMethod() {
+		findViewById(R.id.monday).setOnClickListener(
+				new View.OnClickListener() {
+					@Override
+					public void onClick(View view) {
+						Intent intent = new Intent(MainActivity.this, DayShiftsManagementActivity.class);
+						startActivity(intent);
+					}
+				});
+		findViewById(R.id.tuesday).setOnClickListener(
+				new View.OnClickListener() {
+					@Override
+					public void onClick(View view) {
+						Intent intent = new Intent(MainActivity.this, DayShiftsManagementActivity.class);
+						startActivity(intent);
+					}
+				});
+		findViewById(R.id.wednesday).setOnClickListener(
+				new View.OnClickListener() {
+					@Override
+					public void onClick(View view) {
+						Intent intent = new Intent(MainActivity.this, DayShiftsManagementActivity.class);
+						startActivity(intent);
+					}
+				});
+		findViewById(R.id.thursday).setOnClickListener(
+				new View.OnClickListener() {
+					@Override
+					public void onClick(View view) {
+						Intent intent = new Intent(MainActivity.this, DayShiftsManagementActivity.class);
+						startActivity(intent);
+					}
+				});
+		findViewById(R.id.friday).setOnClickListener(
+				new View.OnClickListener() {
+					@Override
+					public void onClick(View view) {
+						Intent intent = new Intent(MainActivity.this, DayShiftsManagementActivity.class);
+						startActivity(intent);
+					}
+				});
+		findViewById(R.id.saturday).setOnClickListener(
+				new View.OnClickListener() {
+					@Override
+					public void onClick(View view) {
+						Intent intent = new Intent(MainActivity.this, DayShiftsManagementActivity.class);
+						startActivity(intent);
+					}
+				});
+		findViewById(R.id.sunday).setOnClickListener(
+				new View.OnClickListener() {
+					@Override
+					public void onClick(View view) {
+						Intent intent = new Intent(MainActivity.this, DayShiftsManagementActivity.class);
+						startActivity(intent);
+					}
+				});
+		
+	}
+	
 }

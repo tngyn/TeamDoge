@@ -5,6 +5,7 @@ import com.astuetz.PagerSlidingTabStrip;
 import com.parse.Parse;
 import com.parse.ParseUser;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -43,6 +44,7 @@ public class PageSlidingTabStripFragment extends Fragment {
 		
 		user = ParseUser.getCurrentUser();
 	    accountType = user.getString("Acc_Type");
+		
 	}
 
 	@Override

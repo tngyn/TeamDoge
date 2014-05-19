@@ -1,6 +1,7 @@
 package com.teamdoge.restaurantapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,14 +18,7 @@ import android.view.ViewGroup;
  * 
  */
 public class ManagerFragment extends Fragment {
-	// TODO: Rename parameter arguments, choose names that match
-	// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-	private static final String ARG_PARAM1 = "param1";
-	private static final String ARG_PARAM2 = "param2";
 
-	// TODO: Rename and change types of parameters
-	private String mParam1;
-	private String mParam2;
 
 	private OnFragmentInteractionListener mListener;
 
@@ -53,21 +47,73 @@ public class ManagerFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		
 
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		View v = inflater.inflate(R.layout.fragment_manager, container, false);
+		v.findViewById(R.id.monday).setOnClickListener(
+				new View.OnClickListener() {
+					@Override
+					public void onClick(View view) {
+						Intent intent = new Intent(getActivity(), DayShiftsManagementActivity.class);
+						startActivity(intent);
+					}
+				});
+		v.findViewById(R.id.tuesday).setOnClickListener(
+				new View.OnClickListener() {
+					@Override
+					public void onClick(View view) {
+						Intent intent = new Intent(getActivity(), DayShiftsManagementActivity.class);
+						startActivity(intent);
+					}
+				});
+		v.findViewById(R.id.wednesday).setOnClickListener(
+				new View.OnClickListener() {
+					@Override
+					public void onClick(View view) {
+						Intent intent = new Intent(getActivity(), DayShiftsManagementActivity.class);
+						startActivity(intent);
+					}
+				});
+		v.findViewById(R.id.thursday).setOnClickListener(
+				new View.OnClickListener() {
+					@Override
+					public void onClick(View view) {
+						Intent intent = new Intent(getActivity(), DayShiftsManagementActivity.class);
+						startActivity(intent);
+					}
+				});
+		v.findViewById(R.id.friday).setOnClickListener(
+				new View.OnClickListener() {
+					@Override
+					public void onClick(View view) {
+						Intent intent = new Intent(getActivity(), DayShiftsManagementActivity.class);
+						startActivity(intent);
+					}
+				});
+		v.findViewById(R.id.saturday).setOnClickListener(
+				new View.OnClickListener() {
+					@Override
+					public void onClick(View view) {
+						Intent intent = new Intent(getActivity(), DayShiftsManagementActivity.class);
+						startActivity(intent);
+					}
+				});
+		v.findViewById(R.id.sunday).setOnClickListener(
+				new View.OnClickListener() {
+					@Override
+					public void onClick(View view) {
+						Intent intent = new Intent(getActivity(), DayShiftsManagementActivity.class);
+						startActivity(intent);
+					}
+				});
 		// Inflate the layout for this fragment
-		return inflater.inflate(R.layout.fragment_manager, container, false);
-	}
-
-	// TODO: Rename method, update argument and hook method into UI event
-	public void onButtonPressed(Uri uri) {
-		if (mListener != null) {
-			mListener.onFragmentInteraction(uri);
-		}
+		return v;
 	}
 
 	@Override
@@ -98,7 +144,8 @@ public class ManagerFragment extends Fragment {
 	 */
 	public interface OnFragmentInteractionListener {
 		// TODO: Update argument type and name
-		public void onFragmentInteraction(Uri uri);
+		public void onFragmentInteraction();
+		public void myClickMethod();
 	}
 
 }
