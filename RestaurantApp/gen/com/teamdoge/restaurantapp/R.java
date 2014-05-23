@@ -37,8 +37,8 @@ public final class R {
         public static final int action_settings=0x7f08000a;
         public static final int categoryList=0x7f080003;
         public static final int checkBox1=0x7f080008;
-        public static final int container=0x7f080001;
-        public static final int drawer_layout=0x7f080000;
+        public static final int container=0x7f080000;
+        public static final int drawer_layout=0x7f080001;
         public static final int navigation_drawer=0x7f080002;
         public static final int section_label=0x7f080009;
         public static final int textViewFrom=0x7f080004;
@@ -47,19 +47,22 @@ public final class R {
         public static final int timePickerTo=0x7f080007;
     }
     public static final class layout {
-        public static final int activity_main=0x7f030000;
-        public static final int fragment_add_availability=0x7f030001;
-        public static final int fragment_add_availability_day=0x7f030002;
-        public static final int fragment_inventory=0x7f030003;
-        public static final int fragment_inventory_item=0x7f030004;
-        public static final int fragment_inventory_itemview=0x7f030005;
-        public static final int fragment_inventory_list=0x7f030006;
-        public static final int fragment_main=0x7f030007;
-        public static final int fragment_navigation_drawer=0x7f030008;
+        public static final int activity_add_item=0x7f030000;
+        public static final int activity_main=0x7f030001;
+        public static final int fragment_add_availability=0x7f030002;
+        public static final int fragment_add_availability_day=0x7f030003;
+        public static final int fragment_add_item=0x7f030004;
+        public static final int fragment_inventory=0x7f030005;
+        public static final int fragment_inventory_item=0x7f030006;
+        public static final int fragment_inventory_list=0x7f030007;
+        public static final int fragment_main=0x7f030008;
+        public static final int fragment_navigation_drawer=0x7f030009;
     }
     public static final class menu {
-        public static final int global=0x7f070000;
-        public static final int main=0x7f070001;
+        public static final int add__item=0x7f070000;
+        public static final int add_item=0x7f070001;
+        public static final int global=0x7f070002;
+        public static final int main=0x7f070003;
     }
     public static final class string {
         public static final int Cancel=0x7f05000f;
@@ -71,12 +74,15 @@ public final class R {
         public static final int app_name=0x7f050000;
         public static final int category1=0x7f050008;
         public static final int category2=0x7f05000b;
+        public static final int hello_world=0x7f050013;
         public static final int item=0x7f050009;
         public static final int itemName=0x7f05000c;
         public static final int itemNotes=0x7f05000e;
         public static final int itemQuantity=0x7f05000d;
         public static final int navigation_drawer_close=0x7f050005;
         public static final int navigation_drawer_open=0x7f050004;
+        public static final int title_activity_add__item=0x7f050012;
+        public static final int title_activity_add_item=0x7f050014;
         public static final int title_section1=0x7f050001;
         public static final int title_section2=0x7f050002;
         public static final int title_section3=0x7f050003;

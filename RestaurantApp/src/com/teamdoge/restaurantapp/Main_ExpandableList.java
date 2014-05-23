@@ -55,7 +55,7 @@ public class Main_ExpandableList extends Activity
         createGroupList();
         
         createCollection();
- 
+        
         expListView = (ExpandableListView) findViewById(R.id.categoryList);
         final ExpandableListAdapter expListAdapter = new ExpandableListAdapter(
                 this, groupList, InventoryList);
@@ -77,9 +77,8 @@ public class Main_ExpandableList extends Activity
 
 		public boolean onChildClick(ExpandableListView parent, View v,
 				int groupPosition, int childPosition, long id) {
-			// TODO Auto-generated method stub
-			
-			//Your code where
+			Intent mIntent = new Intent(Main_ExpandableList.this, Add_item.class);
+			startActivity(mIntent);
 			return false;
 		}
 		
