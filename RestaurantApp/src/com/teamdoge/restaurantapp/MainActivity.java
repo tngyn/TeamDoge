@@ -228,62 +228,7 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 
 	@Override
 	public void myClickMethod() {
-		findViewById(R.id.monday).setOnClickListener(
-				new View.OnClickListener() {
-					@Override
-					public void onClick(View view) {
-						Intent intent = new Intent(MainActivity.this, DayShiftsManagementActivity.class);
-						startActivity(intent);
-					}
-				});
-		findViewById(R.id.tuesday).setOnClickListener(
-				new View.OnClickListener() {
-					@Override
-					public void onClick(View view) {
-						Intent intent = new Intent(MainActivity.this, DayShiftsManagementActivity.class);
-						startActivity(intent);
-					}
-				});
-		findViewById(R.id.wednesday).setOnClickListener(
-				new View.OnClickListener() {
-					@Override
-					public void onClick(View view) {
-						Intent intent = new Intent(MainActivity.this, DayShiftsManagementActivity.class);
-						startActivity(intent);
-					}
-				});
-		findViewById(R.id.thursday).setOnClickListener(
-				new View.OnClickListener() {
-					@Override
-					public void onClick(View view) {
-						Intent intent = new Intent(MainActivity.this, DayShiftsManagementActivity.class);
-						startActivity(intent);
-					}
-				});
-		findViewById(R.id.friday).setOnClickListener(
-				new View.OnClickListener() {
-					@Override
-					public void onClick(View view) {
-						Intent intent = new Intent(MainActivity.this, DayShiftsManagementActivity.class);
-						startActivity(intent);
-					}
-				});
-		findViewById(R.id.saturday).setOnClickListener(
-				new View.OnClickListener() {
-					@Override
-					public void onClick(View view) {
-						Intent intent = new Intent(MainActivity.this, DayShiftsManagementActivity.class);
-						startActivity(intent);
-					}
-				});
-		findViewById(R.id.sunday).setOnClickListener(
-				new View.OnClickListener() {
-					@Override
-					public void onClick(View view) {
-						Intent intent = new Intent(MainActivity.this, DayShiftsManagementActivity.class);
-						startActivity(intent);
-					}
-				});
+		
 		
 	}
 	
