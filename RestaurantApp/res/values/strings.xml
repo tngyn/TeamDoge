@@ -13,6 +13,7 @@
     <string-array name="drawer_sections_array">
         <item>Schedule</item>
         <item>Inventory</item>
+        <item>Tracking Menu</item>
         <item>Profile</item>
         <item>Log Out</item>
     </string-array>
@@ -37,5 +38,6 @@
 
     <string name="title_activity_shift_management_actity">ShiftManagementActity</string>
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_add_menu_item">AddMenuItemActivity</string>
 
 </resources>

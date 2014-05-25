@@ -7,4 +7,8 @@
     <string name = "friday">Friday</string>
     <string name = "saturday">Saturday</string>
     <string name = "sunday">Sunday</string>
+    
+    <string name = "image">img</string>
+    <string name = "username">DOGE</string>
+    <string name = "position">BOSS DOGE</string>
 </resources>

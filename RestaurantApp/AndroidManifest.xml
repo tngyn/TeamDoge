@@ -27,7 +27,7 @@
         <activity
             android:name="com.teamdoge.login.SignUpActivity"
             android:label="@string/title_activity_signup"
-            android:parentActivityName="com.teamcom.teamdoge.login.LoginActivity"      
+            android:parentActivityName="com.teamcom.teamdoge.login.LoginActivity"
             android:windowSoftInputMode="adjustResize|stateVisible" >
         </activity>
         <activity
@@ -45,7 +45,10 @@
         <activity
             android:name="com.teamdoge.restaurantapp.DayShiftsManagementActivity"
             android:label="@string/title_activity_shift_management_actity" >
-
+        </activity>
+        <activity
+            android:name="com.teamdodge.trackingmenu.AddMenuItemActivity"
+            android:label="@string/title_activity_add_menu_item" >
         </activity>
     </application>
 

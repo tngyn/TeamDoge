@@ -12,6 +12,7 @@ public class Shifts {
 	
 	
 	public String name;
+	public String position;
 	
 	public Shifts() {
 		children = new ArrayList<Shifts>();
@@ -23,32 +24,38 @@ public class Shifts {
 		this.name = name;
 	}
 	
+	public Shifts(String name, String position) {
+		this();
+		this.name = name;
+		this.position = position;
+	}
 	public String toString() {
 		return this.name;
 	}
 	
-	// generate some random amount of child objects (1..10)
-	private void generateChildren() {
-
-		for(int i=0; i < 10; i++) {
-			Shifts cat = new Shifts("Child "+i);
-			this.children.add(cat);
+	private void generateChildren(String[] names) {
+		for(int i = 0; i < names.length; i++) {
+			if (names[i] != null) {
+			  String[] trie = names[i].split(":");
+			  Shifts cat = new Shifts(trie[0],trie[1]);
+			  this.children.add(cat);
+			}
 		}
 	}
 	
-	public static ArrayList<Shifts> getCategories() {
+	public static ArrayList<Shifts> getCategories(String[] shifts, String[][]names) {
 		ArrayList<Shifts> categories = new ArrayList<Shifts>();
-		for(int i = 0; i < 10 ; i++) {
-			Shifts cat = new Shifts("Category "+i);
-			cat.generateChildren();
+		for(int i = 0; i < shifts.length ; i++) {
+			Shifts cat = new Shifts(shifts[i]);
+			cat.generateChildren(names[i]);
 			categories.add(cat);
 		}
 		return categories;
 	}
 	
-	public static Shifts get(String name)
+	public static Shifts get(String name,String[] shifts, String[][]names)
 	{
-		ArrayList<Shifts> collection = Shifts.getCategories();
+		ArrayList<Shifts> collection = Shifts.getCategories(shifts, names);
 		for (Iterator<Shifts> iterator = collection.iterator(); iterator.hasNext();) {
 			Shifts cat = (Shifts) iterator.next();
 			if(cat.name.equals(name)) {

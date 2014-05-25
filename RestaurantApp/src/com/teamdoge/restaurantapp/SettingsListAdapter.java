@@ -106,10 +106,12 @@ public class SettingsListAdapter extends BaseExpandableListAdapter {
  
         
         CheckedTextView textView = (CheckedTextView) view.findViewById(R.id.list_item_text_child);
+        TextView textView1 = (TextView) view.findViewById(R.id.list_item_text_child_position);
         
         //"i" is the position of the parent/group in the list and 
         //"i1" is the position of the child
-        textView.setText(mParent.get(i).children.get(i1).name);        
+        textView.setText(mParent.get(i).children.get(i1).name);
+        textView1.setText(mParent.get(i).children.get(i1).position);
  
         // set checked if parent category selection contains child category
         if(mParent.get(i).selection.contains(textView.getText().toString())) {
