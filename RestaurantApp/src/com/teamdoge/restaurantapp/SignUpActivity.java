@@ -1,5 +1,7 @@
 package com.teamdoge.restaurantapp;
 
+import java.util.Arrays;
+
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -145,9 +147,17 @@ public class SignUpActivity extends Activity {
 						  showProgress(true);
 						  //Set all the parameters
 						  signup = true;
+						  String[] time = {"0", "0", "0", "0"};
 						  user.setUsername(username);
 						  user.setEmail(email);
 						  user.setPassword(password);
+						  user.put("Available_Monday", Arrays.asList(time));
+						  user.put("Available_Tuesday", Arrays.asList(time));
+						  user.put("Available_Wednesday", Arrays.asList(time));
+						  user.put("Available_Thursday", Arrays.asList(time));
+						  user.put("Available_Friday", Arrays.asList(time));
+						  user.put("Available_Saturday", Arrays.asList(time));
+						  user.put("Available_Sunday", Arrays.asList(time));
 						  user.put("Acc_Type", String.valueOf(spinner.getSelectedItem()));
 						  user.put("Name", name + " " + lastName);
 						  user.put("Remember_Me", false);
