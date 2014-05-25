@@ -8,13 +8,16 @@
         android:minSdkVersion="16"
         android:targetSdkVersion="19" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+        
         <activity
-            android:name="com.teamdoge.restaurantapp.Main_ExpandableList"
+            android:name="com.teamdoge.login.LoginActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,15 +25,45 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+		<activity
+            android:name="com.teamdoge.restaurantapp.Main_ExpandableList"
+            android:label="@string/app_name" >
+        </activity>
         <activity android:name="com.teamdoge.restaurantapp.inventory" >
         </activity>
         <activity
             android:name="com.teamdoge.restaurantapp.Add_item"
             android:label="@string/title_activity_add_item" >
         </activity>
-        <activity
+   <!--      <activity
             android:name="com.teamdoge.restaurantapp.InventoryList"
             android:label="@string/title_activity_inventory_list" >
+		</activity> -->
+        <activity
+            android:name="com.teamdoge.login.SignUpActivity"
+            android:label="@string/title_activity_signup"
+            android:parentActivityName="com.teamcom.teamdoge.login.LoginActivity"
+            android:windowSoftInputMode="adjustResize|stateVisible" >
+        </activity>
+        <activity
+            android:name="com.teamdoge.restaurantapp.MainActivity"
+            android:windowSoftInputMode="adjustResize|stateVisible" >
+        </activity>
+        <activity
+            android:name="com.teamdoge.restaurantappW.adding_inventory_item_page"
+            android:label="@string/inv_item_page" >
+        </activity>
+        <activity
+            android:name="com.teamdoge.restaurantacom.teamdoge.login.ForgotPassword"
+            android:label="Forgot Password" >
+        </activity>
+        <activity
+            android:name="com.teamdoge.restaurantapp.DayShiftsManagementActivity"
+            android:label="@string/title_activity_shift_management_actity" >
+        </activity>
+        <activity
+            android:name="com.teamdodge.trackingmenu.AddMenuItemActivity"
+            android:label="@string/title_activity_add_menu_item" >
         </activity>
     </application>
 

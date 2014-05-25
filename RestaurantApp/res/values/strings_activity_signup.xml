@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_activity_signup">Sign Up</string>
+    <string name="reprompt_password">Re-type Password</string>
+    <string name="register">Register</string>
+    <string-array name = "type_of_account">
+        <item>Owner</item>
+        <item>Employee</item>
+    </string-array>
+    <string name = "type">Type of Account</string>
+    <string name = "prompt">Select type of account</string> 
+    <string name = "prompt_email">Enter Email Address</string>
+    <string name = "error_password">Password Don\'t Match</string>
+    <string name = "text">Sign Up</string> 
+    <string name = "prompt_name">Enter Name</string>
+    <string name = "prompt_last_name">Enter Last Name</string>
+    <string name = "sign_up_status_message">Registering</string>
+    <string name = "error_email">Invalid Email</string>
+    <string name = "error_field_repeated_email">This Email Already Exists</string>
+    <string name = "error_field_repeated_user">This Username Already Exists</string>
+    <string name = "prompt_owner">Enter Restaurant Account</string>
+</resources>
