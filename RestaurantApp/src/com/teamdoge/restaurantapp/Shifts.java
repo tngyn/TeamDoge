@@ -29,8 +29,8 @@ public class Shifts {
 	
 	// generate some random amount of child objects (1..10)
 	private void generateChildren() {
-		Random rand = new Random();
-		for(int i=0; i < rand.nextInt(9)+1; i++) {
+
+		for(int i=0; i < 10; i++) {
 			Shifts cat = new Shifts("Child "+i);
 			this.children.add(cat);
 		}
