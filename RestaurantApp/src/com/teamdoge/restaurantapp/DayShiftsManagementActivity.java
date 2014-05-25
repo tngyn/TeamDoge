@@ -7,7 +7,9 @@ import java.util.Comparator;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckedTextView;
@@ -25,6 +27,9 @@ public class DayShiftsManagementActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_day_shifts_management_activity);
 		mContext = this;
@@ -79,6 +84,24 @@ public class DayShiftsManagementActivity extends Activity {
             return o1.compareTo(o2);
         }
     }
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+	    switch (item.getItemId()) {
+	        case android.R.id.home:	
+	        	onBackPressed();
+	            this.finish();
+
+	            return true;
+
+	        // Other case statements...
+
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
+
+	}
 	
 //	@Override
 //	public boolean onCreateOptionsMenu(Menu menu) {

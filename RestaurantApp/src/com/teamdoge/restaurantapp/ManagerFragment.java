@@ -5,7 +5,10 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -48,13 +51,12 @@ public class ManagerFragment extends Fragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		
-
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		
 		View v = inflater.inflate(R.layout.fragment_manager, container, false);
 		v.findViewById(R.id.monday).setOnClickListener(
 				new View.OnClickListener() {
@@ -147,6 +149,6 @@ public class ManagerFragment extends Fragment {
 		public void onFragmentInteraction();
 		public void myClickMethod();
 	}
-
+	
 }
 
