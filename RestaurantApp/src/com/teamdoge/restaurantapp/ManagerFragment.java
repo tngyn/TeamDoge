@@ -239,7 +239,6 @@ public class ManagerFragment extends Fragment {
 	public interface OnFragmentInteractionListener {
 		// TODO: Update argument type and name
 		public void onFragmentInteraction();
-		public void myClickMethod();
 	}
 	
 }

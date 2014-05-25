@@ -1,9 +1,13 @@
-package com.teamdoge.restaurantapp;
+package com.teamdoge.login;
 
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
+import com.teamdoge.restaurantapp.R;
+import com.teamdoge.restaurantapp.R.id;
+import com.teamdoge.restaurantapp.R.layout;
+import com.teamdoge.restaurantapp.R.string;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;

@@ -1,9 +1,17 @@
-package com.teamdoge.restaurantapp;
+package com.teamdoge.login;
+
+import java.util.Arrays;
 
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.LogInCallback;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
+import com.teamdoge.restaurantapp.MainActivity;
+import com.teamdoge.restaurantapp.R;
+import com.teamdoge.restaurantapp.R.id;
+import com.teamdoge.restaurantapp.R.layout;
+import com.teamdoge.restaurantapp.R.string;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -66,6 +74,11 @@ public class LoginActivity extends Activity {
 		Parse.initialize(this, "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8", "k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF");
 		setContentView(R.layout.activity_login);
 		ParseUser user = ParseUser.getCurrentUser();
+		
+
+		
+		
+		
 		if (user != null)
 			remember = user.getBoolean("Remember_Me");
 		if (user != null && remember) {
@@ -233,7 +246,7 @@ public class LoginActivity extends Activity {
 				    if (user != null) {
 				      //Toast.makeText(getApplicationContext(),"Success", Toast.LENGTH_SHORT).show();
 				    	user.put("Remember_Me", remember);
-				    	user.saveInBackground();
+				    	user.saveInBackground(); 
 						Intent intent = new Intent(LoginActivity.this, MainActivity.class);
 						startActivity(intent);
 						finish();

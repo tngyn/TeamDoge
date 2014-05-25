@@ -63,9 +63,7 @@ public class PageSlidingTabStripFragment extends Fragment {
 		ViewPager pager = (ViewPager) view.findViewById(R.id.pager);
 		MyPagerAdapter adapter = new MyPagerAdapter(getChildFragmentManager());
 		
-		if (accountType.equals("Employee")) { 
-			tabs.setShouldExpand(true);
-		}
+		tabs.setShouldExpand(true);
 		
 		pager.setAdapter(adapter);
 		tabs.setViewPager(pager);
@@ -90,7 +88,7 @@ public class PageSlidingTabStripFragment extends Fragment {
 		public CharSequence getPageTitle(int position) {
 			
 			if (accountType.equals("Owner")) {
-				TITLES[0] = "Assign Shifts";
+				TITLES[0] = "Set Shifts";
 			}
 			
 			return TITLES[position];

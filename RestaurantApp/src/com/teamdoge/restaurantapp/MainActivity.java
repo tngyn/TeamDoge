@@ -7,6 +7,8 @@ import android.content.res.Configuration;
 
 import com.parse.Parse;
 import com.parse.ParseUser;
+import com.teamdodge.trackingmenu.TrackingMenuFragment;
+import com.teamdoge.login.LoginActivity;
 import com.teamdoge.restaurantapp.ManagerFragment.OnFragmentInteractionListener;
 
 import android.net.Uri;
@@ -181,6 +183,7 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 	private void selectItem(int position) {
 
 		switch (position) {
+		// Schedule
 		case 0:
 			
 			getSupportFragmentManager()
@@ -190,8 +193,27 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 					PageSlidingTabStripFragment.TAG).commit();
 			getActionBar().setTitle("Schedule");
 			break;
+		
+		// Inventory
+//		case 1:
+//			
+//			break;
 			
-		case 3:
+		// Tracking Menu
+		case 2:
+			
+			getSupportFragmentManager().beginTransaction()
+				.replace(R.id.content,
+					TrackingMenuFragment.newInstance()).commit();
+			getActionBar().setTitle("Tracking Menu");
+			Log.wtf("test", "NOT IN CASE 2 LOL");
+			break;
+		
+		// Profile
+//		case 3:
+//			break;
+//			
+		case 4:
 			
 			Intent intent = new Intent(MainActivity.this, LoginActivity.class);
 	    	startActivity(intent);
@@ -222,13 +244,6 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 	public void onFragmentInteraction() {
 		
 
-		
-	}
-
-
-	@Override
-	public void myClickMethod() {
-		
 		
 	}
 	
