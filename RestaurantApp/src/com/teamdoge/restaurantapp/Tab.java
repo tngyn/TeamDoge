@@ -1,12 +1,5 @@
 package com.teamdoge.restaurantapp;
 
-import java.util.Arrays;
-
-import com.parse.LogInCallback;
-import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseUser;
-
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
@@ -14,6 +7,10 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.parse.LogInCallback;
+import com.parse.ParseException;
+import com.parse.ParseUser;
 
 public class Tab extends FragmentActivity {
 	TabAdapter adapter;
@@ -23,7 +20,7 @@ public class Tab extends FragmentActivity {
 		final ActionBar actionBar = getActionBar();
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_tab);
-		ParseUser.logInInBackground("my name", "my pass", new LogInCallback() {
+	/**	ParseUser.logInInBackground("my name", "my pass", new LogInCallback() {
 			  public void done(ParseUser user, ParseException e) {
 			    if (user != null) {
 			    } else {
@@ -35,8 +32,8 @@ public class Tab extends FragmentActivity {
 		o.addAllUnique("AvailableTimes", Arrays.asList("4-5","5-6","6-7"));
 		o.saveInBackground();
 		ParseUser u = ParseUser.getCurrentUser();
-		String id = o.getObjectId();
-		u.put("Work", id);
+		u.put("Work", o.getObjectId());
+		u.saveInBackground();*/
 		/**ParseUser user = new ParseUser();
 		user.setUsername("my name");	
 		user.setPassword("my pass");
