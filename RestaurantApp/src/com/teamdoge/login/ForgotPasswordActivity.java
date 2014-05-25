@@ -1,4 +1,4 @@
-package com.teamdoge.restaurantapp;
+package com.teamdoge.login;
 
 import android.app.Activity;
 import android.app.ActionBar;
@@ -19,6 +19,10 @@ import com.parse.ParseException;
 import com.parse.LogInCallback;
 import com.parse.RequestPasswordResetCallback;
 import com.parse.ParseUser;
+import com.teamdoge.restaurantapp.R;
+import com.teamdoge.restaurantapp.R.id;
+import com.teamdoge.restaurantapp.R.layout;
+import com.teamdoge.restaurantapp.R.menu;
 
 import android.os.Build;
 

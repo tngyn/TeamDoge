@@ -7,6 +7,7 @@ import android.content.res.Configuration;
 
 import com.parse.Parse;
 import com.parse.ParseUser;
+import com.teamdoge.login.LoginActivity;
 import com.teamdoge.restaurantapp.ManagerFragment.OnFragmentInteractionListener;
 
 import android.net.Uri;

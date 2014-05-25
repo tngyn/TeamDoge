@@ -16,7 +16,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.teamdoge.restaurantapp.LoginActivity"
+            android:name="com.teamdoge.login.LoginActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,9 +25,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.teamdoge.restaurantapp.SignUpActivity"
+            android:name="com.teamdoge.login.SignUpActivity"
             android:label="@string/title_activity_signup"
-            android:parentActivityName="com.teamdoge.restaurantapp.LoginActivity"
+            android:parentActivityName="com.teamcom.teamdoge.login.LoginActivity"      
             android:windowSoftInputMode="adjustResize|stateVisible" >
         </activity>
         <activity
@@ -35,11 +35,11 @@
             android:windowSoftInputMode="adjustResize|stateVisible" >
         </activity>
         <activity
-            android:name="com.teamdoge.restaurantapp.adding_inventory_item_page"
+            android:name="com.teamdoge.restaurantappW.adding_inventory_item_page"
             android:label="@string/inv_item_page" >
         </activity>
         <activity
-            android:name="com.teamdoge.restaurantapp.ForgotPasswordActivity"
+            android:name="com.teamdoge.restaurantacom.teamdoge.login.ForgotPassword"
             android:label="Forgot Password" >
         </activity>
         <activity
