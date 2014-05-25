@@ -107,20 +107,12 @@ public class PageSlidingTabStripFragment extends Fragment {
 			case 0:
 				if (accountType.equals("Owner")) {
 				  ManagerFragment m = new ManagerFragment();
-//				  FragmentTransaction transaction = getFragmentManager().beginTransaction();
-//
-//				  //if you with to add it to backStack, do this, otherwise skip the line below
-//				  transaction.addToBackStack(null);
-//				  transaction.commit();
 				  return m;
 				}
-//				else
-//				  return SuperAwesomeCardFragment.newInstance(position);
+				else
+				  return SuperAwesomeCardFragment.newInstance(position);
 			default:
-//				return SuperAwesomeCardFragment.newInstance(position);
-				ManagerFragment m = new ManagerFragment();
-				return m;
-			
+				return SuperAwesomeCardFragment.newInstance(position);
 			}
 		}
 

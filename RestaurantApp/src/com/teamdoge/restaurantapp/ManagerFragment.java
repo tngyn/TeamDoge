@@ -1,5 +1,10 @@
 package com.teamdoge.restaurantapp;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -11,6 +16,8 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
 
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass. Activities that
@@ -24,6 +31,9 @@ public class ManagerFragment extends Fragment {
 
 
 	private OnFragmentInteractionListener mListener;
+	private ArrayList<String> Days = new ArrayList<String>();
+	private Button b;
+	private String day;
 
 	/**
 	 * Use this factory method to create a new instance of this fragment using
@@ -51,6 +61,14 @@ public class ManagerFragment extends Fragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
+		Days.add("Monday");
+		Days.add("Tuesday");
+		Days.add("Wednesday");
+		Days.add("Thursday");
+		Days.add("Friday");
+		Days.add("Saturday");
+		Days.add("Sunday");
+
 	}
 
 	@Override
@@ -58,11 +76,60 @@ public class ManagerFragment extends Fragment {
 			Bundle savedInstanceState) {
 		
 		View v = inflater.inflate(R.layout.fragment_manager, container, false);
+		String weekDay;
+		SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE", Locale.US);
+		Calendar calendar = Calendar.getInstance();
+		weekDay = dayFormat.format(calendar.getTime());
+		int i = Days.indexOf(weekDay);
+		for (int j = 0; j < Days.size(); j++) {
+		  if (i == Days.size())
+		    i = 0;
+		  switch (j) {
+		  case 0:
+			  b = (Button) v.findViewById(R.id.monday);
+			  b.setText(Days.get(i));
+			  i++;
+			  break;
+		  case 1:
+			  b = (Button) v.findViewById(R.id.tuesday);
+			  b.setText(Days.get(i));
+			  i++;
+			  break;
+		  case 2:
+			  b = (Button) v.findViewById(R.id.wednesday);
+			  b.setText(Days.get(i));
+			  i++;
+			  break;
+		  case 3:
+			  b = (Button) v.findViewById(R.id.thursday);
+			  b.setText(Days.get(i));
+			  i++;
+			  break;
+		  case 4:
+			  b = (Button) v.findViewById(R.id.friday);
+			  b.setText(Days.get(i));
+			  i++;
+			  break;
+		  case 5:
+			  b = (Button) v.findViewById(R.id.saturday);
+			  b.setText(Days.get(i));
+			  i++;
+			  break;
+		  case 6:
+			  b = (Button) v.findViewById(R.id.sunday);
+			  b.setText(Days.get(i));
+			  i++;
+			  break;
+		}
 		v.findViewById(R.id.monday).setOnClickListener(
 				new View.OnClickListener() {
 					@Override
 					public void onClick(View view) {
+						b = (Button) view;
+						day = b.getText().toString();
 						Intent intent = new Intent(getActivity(), DayShiftsManagementActivity.class);
+						intent.putExtra("Day", day);
+						Toast.makeText(getActivity().getApplicationContext(),day, Toast.LENGTH_SHORT).show();
 						startActivity(intent);
 					}
 				});
@@ -70,7 +137,11 @@ public class ManagerFragment extends Fragment {
 				new View.OnClickListener() {
 					@Override
 					public void onClick(View view) {
+						b = (Button) view;
+						day = b.getText().toString();
 						Intent intent = new Intent(getActivity(), DayShiftsManagementActivity.class);
+						intent.putExtra("Day", day);
+						Toast.makeText(getActivity().getApplicationContext(),day, Toast.LENGTH_SHORT).show();
 						startActivity(intent);
 					}
 				});
@@ -78,7 +149,11 @@ public class ManagerFragment extends Fragment {
 				new View.OnClickListener() {
 					@Override
 					public void onClick(View view) {
+						b = (Button) view;
+						day = b.getText().toString();
 						Intent intent = new Intent(getActivity(), DayShiftsManagementActivity.class);
+						intent.putExtra("Day", day);
+						Toast.makeText(getActivity().getApplicationContext(),day, Toast.LENGTH_SHORT).show();
 						startActivity(intent);
 					}
 				});
@@ -86,7 +161,11 @@ public class ManagerFragment extends Fragment {
 				new View.OnClickListener() {
 					@Override
 					public void onClick(View view) {
+						b = (Button) view;
+						day = b.getText().toString();
 						Intent intent = new Intent(getActivity(), DayShiftsManagementActivity.class);
+						intent.putExtra("Day", day);
+						Toast.makeText(getActivity().getApplicationContext(),day, Toast.LENGTH_SHORT).show();
 						startActivity(intent);
 					}
 				});
@@ -94,7 +173,11 @@ public class ManagerFragment extends Fragment {
 				new View.OnClickListener() {
 					@Override
 					public void onClick(View view) {
+						b = (Button) view;
+						day = b.getText().toString();
 						Intent intent = new Intent(getActivity(), DayShiftsManagementActivity.class);
+						intent.putExtra("Day", day);
+						Toast.makeText(getActivity().getApplicationContext(),day, Toast.LENGTH_SHORT).show();
 						startActivity(intent);
 					}
 				});
@@ -102,7 +185,11 @@ public class ManagerFragment extends Fragment {
 				new View.OnClickListener() {
 					@Override
 					public void onClick(View view) {
+						b = (Button) view;
+						day = b.getText().toString();
 						Intent intent = new Intent(getActivity(), DayShiftsManagementActivity.class);
+						intent.putExtra("Day", day);
+						Toast.makeText(getActivity().getApplicationContext(),day, Toast.LENGTH_SHORT).show();
 						startActivity(intent);
 					}
 				});
@@ -110,11 +197,16 @@ public class ManagerFragment extends Fragment {
 				new View.OnClickListener() {
 					@Override
 					public void onClick(View view) {
+						b = (Button) view;
+						day = b.getText().toString();
 						Intent intent = new Intent(getActivity(), DayShiftsManagementActivity.class);
+						intent.putExtra("Day", day);
+						Toast.makeText(getActivity().getApplicationContext(),day, Toast.LENGTH_SHORT).show();
 						startActivity(intent);
 					}
 				});
 		// Inflate the layout for this fragment
+		}
 		return v;
 	}
 
