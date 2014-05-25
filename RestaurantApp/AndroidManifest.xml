@@ -47,7 +47,7 @@
             android:label="@string/title_activity_shift_management_actity" >
         </activity>
         <activity
-            android:name="com.teamdodge.trackingmenu.AddMenuItemActivity"
+            android:name="com.teamdoge.trackingmenu.AddMenuItemActivity"
             android:label="@string/title_activity_add_menu_item" >
         </activity>
     </application>

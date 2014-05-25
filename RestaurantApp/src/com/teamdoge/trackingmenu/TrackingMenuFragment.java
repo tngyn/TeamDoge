@@ -1,4 +1,4 @@
-package com.teamdodge.trackingmenu;
+package com.teamdoge.trackingmenu;
 
 import com.teamdoge.restaurantapp.ManagerFragment.OnFragmentInteractionListener;
 import com.teamdoge.restaurantapp.R;
