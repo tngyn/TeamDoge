@@ -25,6 +25,7 @@
     <string name="inv_item_page">Add Inventory Item</string>
     <string name="quantity_hint">Type in Quantity</string>
     <string name="unit_hint">Type in Units</string>
+    <string name="dropdown_hint">Choose a Category</string>
     <string name="description_hint">Description</string>
     <string name="button_submit">Submit</string>
     <string name="button_cancel">Cancel</string>
@@ -35,6 +36,12 @@
     <string name="categoryLabel">Category:</string>
     <string name="descriptionBoxLabel">Description:</string>
     <!--          Names of the labels end here           -->
-    <!--  activity inventory scree string id's end here -->
+    <!--            New Item Fragment strings            -->
+    <string name="invFragIntroLabel">Please Add a New Option</string>
+    <string name="newOptionBoxHint">Add New Option</string>
+    <string name="Submit">Add Category</string>
+    <string name="Cancel">Cancel</string>
+    <!--            New Item Fragments end here          -->
+    <!--  activity inventory scree string id's end here  -->
    	
 </resources>
