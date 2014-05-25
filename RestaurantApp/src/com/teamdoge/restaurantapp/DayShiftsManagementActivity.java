@@ -95,8 +95,6 @@ public class DayShiftsManagementActivity extends Activity {
 
 	            return true;
 
-	        // Other case statements...
-
 	        default:
 	            return super.onOptionsItemSelected(item);
 	    }
