@@ -25,12 +25,12 @@
         <activity android:name="com.teamdoge.restaurantapp.inventory" >
         </activity>
         <activity
-            android:name="com.teamdoge.restaurantapp.Add_Item"
-            android:label="@string/title_activity_add__item" >
-        </activity>
-        <activity
             android:name="com.teamdoge.restaurantapp.Add_item"
             android:label="@string/title_activity_add_item" >
+        </activity>
+        <activity
+            android:name="com.teamdoge.restaurantapp.InventoryList"
+            android:label="@string/title_activity_inventory_list" >
         </activity>
     </application>
 

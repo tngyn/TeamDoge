@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
@@ -39,30 +40,22 @@ public class Main_ExpandableList extends Activity
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
-
-    /***************ExpandableView for Inventory***********************/
-    List<String> groupList;
-    List<String> childList;
-    Map<String, List<String>> InventoryList;
-    ExpandableListView expListView;
-    /*****************************************************************/
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-     /***************ExpandableView for Inventory***********************/
-        createGroupList();
+    
+        Button addItemB = (Button) findViewById(R.id.addItemButton);
+        addItemB.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent mIntent = new Intent(Main_ExpandableList.this, InventoryList.class);
+				startActivity(mIntent);
+			}
+		});
         
-        createCollection();
-        
-        expListView = (ExpandableListView) findViewById(R.id.categoryList);
-        final ExpandableListAdapter expListAdapter = new ExpandableListAdapter(
-                this, groupList, InventoryList);
-        expListView.setAdapter(expListAdapter);
-        expListView.setOnChildClickListener(ExpandList_ItemClicked);
-        
-     /*****************************************************************/
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
@@ -72,50 +65,7 @@ public class Main_ExpandableList extends Activity
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
     }
-    /***************ExpandableView for Inventory***********************/
-    private OnChildClickListener ExpandList_ItemClicked =  new OnChildClickListener() {
-
-		public boolean onChildClick(ExpandableListView parent, View v,
-				int groupPosition, int childPosition, long id) {
-			Intent mIntent = new Intent(Main_ExpandableList.this, Add_item.class);
-			startActivity(mIntent);
-			return false;
-		}
-		
-	};
-    /***************ExpandableView for Inventory***********************/
-    private void createGroupList() {
-        groupList = new ArrayList<String>();
-        groupList.add(getString(R.string.category1));
-        groupList.add(getString(R.string.category2));
-    }
     
-    private void createCollection() {
-        // preparing items in category(child)
-        String[] category1 = { getString(R.string.item), getString(R.string.item),
-        		getString(R.string.item) };
-        String[] category2 = { getString(R.string.item), getString(R.string.item),
-        		getString(R.string.item) };
- 
-        InventoryList = new LinkedHashMap<String, List<String>>();
- 
-        for (String category : groupList) {
-            if (category.equals("Category One")) {
-                loadChild(category1);
-            } else if (category.equals("Category Two"))
-                loadChild(category2);
-            
- 
-            InventoryList.put(category, childList);
-        }
-    }
-    private void loadChild(String[] itemList) {
-        childList = new ArrayList<String>();
-        for (String Citem : itemList)
-            childList.add(Citem);
-    }
-
-    /*****************************************************************/   
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments

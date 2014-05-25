@@ -22,7 +22,7 @@
     <string name="title_activity_add__item">Add_Item</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_add_item">Add_item</string>
-	
+
     <!-- activity_inventory_screen string id's are here -->
     <string name="item_label">Item Name:</string>
     <string name="item_name_hint">Type In Item Name</string>
@@ -40,4 +40,6 @@
     <string name="descriptionBoxLabel">Description:</string>
     <!-- Names of the labels end here -->
     <!-- activity inventory scree string id's end here -->
+    <string name="title_activity_inventory_list">InventoryList</string>
+
 </resources>
