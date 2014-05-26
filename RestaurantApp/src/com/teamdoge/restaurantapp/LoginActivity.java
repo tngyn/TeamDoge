@@ -235,7 +235,9 @@ public class LoginActivity extends Activity {
 				      //Toast.makeText(getApplicationContext(),"Success", Toast.LENGTH_SHORT).show();
 				    	user.put("Remember_Me", remember);
 				    	user.saveInBackground();
-						Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+				    	//edited line
+				    	Intent intent = new Intent(LoginActivity.this, View_Profile.class);
+						//Intent intent = new Intent(LoginActivity.this, MainActivity.class);
 						startActivity(intent);
 						finish();
 						showProgress(false);

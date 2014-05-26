@@ -10,14 +10,14 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <!-- Navigation drawer items -->
-   	<string-array name="drawer_sections_array">
+    <string-array name="drawer_sections_array">
         <item>Schedule</item>
         <item>Inventory</item>
         <item>Profile</item>
         <item>Log Out</item>
     </string-array>
-    
-     <!-- activity_inventory_screen string id's are here -->
+
+    <!-- activity_inventory_screen string id's are here -->
     <string name="item_label">Item Name:</string>
     <string name="item_name_hint">Type In Item Name</string>
     <string name="inv_item_page">Add Inventory Item</string>
@@ -26,13 +26,17 @@
     <string name="description_hint">Description</string>
     <string name="button_submit">Submit</string>
     <string name="button_cancel">Cancel</string>
-    <!--          Names of the labels go here           -->
+    <!-- Names of the labels go here -->
     <string name="itemNameLabel">Item\'s Name:</string>
     <string name="quantityLabel">Quantity:</string>
     <string name="unitsLabel">Units:</string>
     <string name="categoryLabel">Category:</string>
     <string name="descriptionBoxLabel">Description:</string>
-    <!--          Names of the labels end here           -->
-    <!--  activity inventory scree string id's end here -->
-   	
+    <!-- Names of the labels end here -->
+    <!-- activity inventory scree string id's end here -->
+
+    <string name="title_activity_view__profile">View_Profile</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="paintdis">Set Available Times</string>
+
 </resources>
