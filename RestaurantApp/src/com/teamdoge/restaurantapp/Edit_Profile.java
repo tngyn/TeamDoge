@@ -22,6 +22,8 @@ import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
 public class Edit_Profile extends Activity {
+	
+	
 	// establish Text views
 	private EditText editNameText;
 	private EditText editEmailText;
@@ -30,17 +32,24 @@ public class Edit_Profile extends Activity {
 			
 	
 	///** Called when the user clicks the set Confirm button */
-	public void setAvailableTimes(View view) {
-    	Intent intent = new Intent(Edit_Profile.this, ProfileActivity.class);
+	public void applyEdit(View view) {
+    	Intent intent = new Intent(Edit_Profile.this, View_Profile.class);
 	
 		startActivity(intent);
 	}
 	
+	// Back Button does not save anything to the database
+	// just makes a new view probile screen
+	public void cancelEdit(View view) {
+		Intent intent = new Intent(Edit_Profile.this, View_Profile.class);
+		startActivity(intent);
+	}
 	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		getActionBar().setTitle("Edit Profile");  
 		setContentView(R.layout.activity_edit__profile);
 		
 		// setup initial Edit Texts

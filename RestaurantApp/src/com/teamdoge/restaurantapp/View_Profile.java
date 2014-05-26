@@ -39,11 +39,18 @@ public class View_Profile extends Activity {
 	
 		startActivity(intent);
 	}
+
+	public void editProfile(View view) {
+    	Intent intent = new Intent(View_Profile.this, Edit_Profile.class);
+	
+		startActivity(intent);
+	}
 	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		getActionBar().setTitle("Profile"); 
 		setContentView(R.layout.activity_view__profile);
 		
 		// setup initial Text views
