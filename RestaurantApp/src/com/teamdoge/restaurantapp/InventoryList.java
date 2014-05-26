@@ -20,7 +20,6 @@ import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
 
-import com.parse.FindCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -171,8 +170,6 @@ public class InventoryList extends Fragment {
 
 		// try to find a food with the same name as the one we entered.
 		query.whereEqualTo("category", "Fruit");
-		
-		String count = "Hi";
 
 		try {
 			foodNames = query.find();
@@ -180,38 +177,25 @@ public class InventoryList extends Fragment {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-//		{
-//			public void done(List<ParseObject> foodNames, ParseException e) {
-//				if (e == null) {
-					Log.wtf("Mango Over Here", "" + foodNames.size());
-					String[] category1 = new String[foodNames.size()];
-					String[] category2 = { getString(R.string.item),getString(R.string.item), 
-							getString(R.string.item) };
-					if (foodNames.isEmpty() == false) {
-						for (ParseObject foodObj : foodNames) {
-							category1[0] = foodObj.getString("name");
-							Log.wtf("MangoMangoMango", ""+category1[0]);
-						}
-//					}
-					listInventory = new LinkedHashMap<String, List<String>>();
 
-					for (String category : groupList) {
-						if (category.equals("Fruit")) {
-							loadChild(category1);
-						} else if (category.equals("Category Two"))
-							loadChild(category2);
+		String[] category1 = new String[foodNames.size()];
+		String[] category2 = { getString(R.string.item),
+				getString(R.string.item), getString(R.string.item) };
+		if (foodNames.isEmpty() == false) {
+			for (ParseObject foodObj : foodNames) {
+				category1[0] = foodObj.getString("name");
+			}
+			listInventory = new LinkedHashMap<String, List<String>>();
 
-						listInventory.put(category, childList);
-						Log.wtf("ListInventory", ""+listInventory);
-						count = "Yello";
-					}
-				} 
-//				else {
-//				}
-//				
-//			}
-//		});
-		Log.wtf("COUNT", ""+count);
+			for (String category : groupList) {
+				if (category.equals("Fruit")) {
+					loadChild(category1);
+				} else if (category.equals("Category Two"))
+					loadChild(category2);
+
+				listInventory.put(category, childList);
+			}
+		}
 	}
 
 	private void loadChild(String[] itemList) {

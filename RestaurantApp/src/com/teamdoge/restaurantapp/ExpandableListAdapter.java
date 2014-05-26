@@ -55,7 +55,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     }
  
     public int getChildrenCount(int groupPosition) {
-    	Log.wtf("HI MANGO", ""+categoryList);
         return categoryList.get(items.get(groupPosition)).size();
     }
  

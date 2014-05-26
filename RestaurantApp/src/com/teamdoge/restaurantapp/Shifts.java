@@ -61,7 +61,6 @@ public class Shifts {
 			if(cat.name.equals(name)) {
 				return cat;
 			}
-			
 		}
 		return null;
 	}
