@@ -220,7 +220,8 @@ public class LoginActivity extends Activity {
 			showProgress(false);
 
 			if (success) {
-				Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+				// avoid main screen and go straight to profile
+				Intent intent = new Intent(LoginActivity.this, View_Profile.class);
 				startActivity(intent);
 				finish();
 			} else {

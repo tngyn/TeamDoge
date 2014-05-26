@@ -28,52 +28,68 @@ public final class R {
         public static final int navigation_drawer_width=0x7f040002;
     }
     public static final class drawable {
-        public static final int drawer_shadow=0x7f020000;
-        public static final int ic_drawer=0x7f020001;
-        public static final int ic_launcher=0x7f020002;
+        public static final int blank_profile=0x7f020000;
+        public static final int drawer_shadow=0x7f020001;
+        public static final int ic_drawer=0x7f020002;
+        public static final int ic_launcher=0x7f020003;
     }
     public static final class id {
-        public static final int action_example=0x7f080016;
-        public static final int action_forgot_password=0x7f080014;
-        public static final int action_settings=0x7f080013;
-        public static final int checkBox1=0x7f08000f;
+        public static final int Availabilities=0x7f08001a;
+        public static final int action_example=0x7f080020;
+        public static final int action_forgot_password=0x7f08001e;
+        public static final int action_settings=0x7f08001d;
+        public static final int button1=0x7f080011;
+        public static final int checkBox1=0x7f080016;
         public static final int container=0x7f080009;
         public static final int drawer_layout=0x7f080008;
         public static final int email=0x7f080003;
-        public static final int from_field=0x7f080011;
+        public static final int from_field=0x7f080018;
+        public static final int imageView1=0x7f08000b;
+        public static final int lblListHeader=0x7f08001b;
+        public static final int lblListItem=0x7f08001c;
         public static final int login=0x7f080005;
         public static final int login_form=0x7f080002;
         public static final int login_status=0x7f080000;
         public static final int login_status_message=0x7f080001;
-        public static final int logout=0x7f080015;
+        public static final int logout=0x7f08001f;
         public static final int navigation_drawer=0x7f08000a;
         public static final int password=0x7f080004;
-        public static final int section_label=0x7f080010;
+        public static final int section_label=0x7f080017;
         public static final int sign_in_button=0x7f080006;
         public static final int sign_up_button=0x7f080007;
-        public static final int textViewFrom=0x7f08000b;
-        public static final int textViewTo=0x7f08000d;
-        public static final int timePickerFrom=0x7f08000c;
-        public static final int timePickerTo=0x7f08000e;
-        public static final int to_field=0x7f080012;
+        public static final int textViewFrom=0x7f080012;
+        public static final int textViewTo=0x7f080014;
+        public static final int timePickerFrom=0x7f080013;
+        public static final int timePickerTo=0x7f080015;
+        public static final int to_field=0x7f080019;
+        public static final int userAcctText=0x7f08000e;
+        public static final int userEmailText=0x7f08000f;
+        public static final int userNameText=0x7f08000c;
+        public static final int userPNumberText=0x7f08000d;
+        public static final int userUserNameText=0x7f080010;
     }
     public static final class layout {
         public static final int activity_login=0x7f030000;
         public static final int activity_main=0x7f030001;
         public static final int activity_profile=0x7f030002;
-        public static final int fragment_add_availability=0x7f030003;
-        public static final int fragment_add_availability_day=0x7f030004;
-        public static final int fragment_main=0x7f030005;
-        public static final int fragment_navigation_drawer=0x7f030006;
-        public static final int fragment_profile=0x7f030007;
+        public static final int activity_shift_selector=0x7f030003;
+        public static final int activity_view__profile=0x7f030004;
+        public static final int fragment_add_availability=0x7f030005;
+        public static final int fragment_add_availability_day=0x7f030006;
+        public static final int fragment_main=0x7f030007;
+        public static final int fragment_navigation_drawer=0x7f030008;
+        public static final int fragment_profile=0x7f030009;
+        public static final int fragment_shift_selector=0x7f03000a;
+        public static final int fragment_view__profile=0x7f03000b;
+        public static final int list_group=0x7f03000c;
+        public static final int list_item=0x7f03000d;
     }
     public static final class menu {
-        public static final int add_availability=0x7f070000;
-        public static final int add_availability_calendar=0x7f070001;
-        public static final int global=0x7f070002;
-        public static final int login=0x7f070003;
-        public static final int main=0x7f070004;
-        public static final int profile=0x7f070005;
+        public static final int global=0x7f070000;
+        public static final int login=0x7f070001;
+        public static final int main=0x7f070002;
+        public static final int shift_selector=0x7f070003;
+        public static final int view__profile=0x7f070004;
     }
     public static final class string {
         public static final int action_example=0x7f050006;
