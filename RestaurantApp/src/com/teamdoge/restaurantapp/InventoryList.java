@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,7 +24,6 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.teamdoge.restaurantapp.ManagerFragment.OnFragmentInteractionListener;
-import com.teamdoge.trackingmenu.AddMenuItemActivity;
 
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass. Activities that
@@ -99,7 +97,6 @@ public class InventoryList extends Fragment {
 		View v = inflater.inflate(R.layout.activity_inventory_list, container,
 				false);
 		expListView = (ExpandableListView) v.findViewById(R.id.categoryList);
-		Log.wtf("Mangoooooo", "" + listInventory);
 		final ExpandableListAdapter expListAdapter = new ExpandableListAdapter(
 				getActivity(), groupList, listInventory);
 		expListView.setAdapter(expListAdapter);
@@ -149,7 +146,7 @@ public class InventoryList extends Fragment {
 
 		public boolean onChildClick(ExpandableListView parent, View v,
 				int groupPosition, int childPosition, long id) {
-			Intent mIntent = new Intent(getActivity(), Add_item.class);
+			Intent mIntent = new Intent(getActivity(), Edit_item.class);
 			startActivity(mIntent);
 			return false;
 		}
