@@ -80,7 +80,7 @@ public class DayShiftsManagementActivity extends Activity {
 			e1.printStackTrace();
 		}
 		scheduleObject = scheduleList.get(0);
-	    temp = (ArrayList) scheduleObject.get(DAY);
+	    temp = (ArrayList<?>) scheduleObject.get(DAY);
 		schedules = new String[temp.size()];
 		schedules = copy(temp, schedules);
 		String[][] names = new String[temp.size()][shiftList.size()];
@@ -92,7 +92,7 @@ public class DayShiftsManagementActivity extends Activity {
 				if (i == 0) {
 				  userNames.add(shiftObject.getString("Name"));
 				}
-				temp = (ArrayList) shiftObject.get(DAY);
+				temp = (ArrayList<?>) shiftObject.get(DAY);
 				shiftsArray[j][i] = (String) temp.get(i);
 				if (!temp.get(i).equals("0")) {
 				  String value = shiftObject.getString("Name") + ":" + shiftObject.getString("Acc_Type");
