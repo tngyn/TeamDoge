@@ -45,6 +45,7 @@ public class LoginActivity extends Activity {
 	// Values for email and password at the time of the login attempt.
 	private String mUsername;
 	private String mPassword;
+	private String test;
 
 	// UI references.
 	private EditText mUsernameView;
