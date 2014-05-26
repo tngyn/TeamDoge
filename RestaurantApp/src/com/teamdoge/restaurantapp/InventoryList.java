@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -94,7 +95,7 @@ public class InventoryList extends Fragment {
 		createGroupList();
 
 		createCollection();
-		View v = inflater.inflate(R.layout.activity_inventory_screen, container,
+		View v = inflater.inflate(R.layout.activity_inventory_list, container,
 				false);
 		expListView = (ExpandableListView) v.findViewById(R.id.categoryList);
 		final ExpandableListAdapter expListAdapter = new ExpandableListAdapter(
@@ -188,6 +189,7 @@ public class InventoryList extends Fragment {
 
 			for (String category : groupList) {
 				if (category.equals("Fruit")) {
+					Log.wtf("THIS IS A TAG", "WE GO IN HERE");
 					loadChild(category1);
 				} else if (category.equals("Category Two"))
 					loadChild(category2);
