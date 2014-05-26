@@ -45,11 +45,21 @@
             android:name="com.teamdoge.restaurantapp.View_Profile"
             android:label="@string/title_activity_view__profile" >
         </activity>
-         <activity
+        <activity
             android:name="com.teamdoge.restaurantapp.ProfileActivity"
             android:label="@string/title_activity_view__profile" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.teamdoge.restaurantapp.MainActivity" />
         </activity>
-        
+        <activity
+            android:name="com.teamdoge.restaurantapp.Edit_Profile"
+            android:label="@string/title_activity_edit__profile"
+            android:parentActivityName="com.teamdoge.restaurantapp.View_Profile" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.teamdoge.restaurantapp.View_Profile" />
+        </activity>
     </application>
 
 </manifest>

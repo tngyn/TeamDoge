@@ -38,5 +38,6 @@
     <string name="title_activity_view__profile">View_Profile</string>
     <string name="hello_world">Hello world!</string>
     <string name="paintdis">Set Available Times</string>
+    <string name="title_activity_edit__profile">Edit_Profile</string>
 
 </resources>
