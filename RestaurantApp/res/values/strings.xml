@@ -34,7 +34,9 @@
     <string name="unitsLabel">Units:</string>
     <string name="categoryLabel">Category:</string>
     <string name="descriptionBoxLabel">Description:</string>
-
+    <string name = "submit">Submit</string>
+    
+    
     <!-- Names of the labels end here -->
     <!-- activity inventory scree string id's end here -->
 
