@@ -1,6 +1,7 @@
 package com.teamdoge.restaurantapp;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -11,16 +12,21 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.teamdoge.login.LoginActivity;
+import com.teamdoge.login.SignUpActivity;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.CheckedTextView;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 import android.widget.ExpandableListView.OnChildClickListener;
@@ -32,10 +38,18 @@ public class DayShiftsManagementActivity extends Activity {
 	private ArrayList<Shifts> shifts;
 	private String owner;
 	protected Context mContext;
-	protected List<ParseObject> scheduleList;
-	protected List<ParseUser> usersList;
-	protected ParseObject[] schedule;
-	protected ParseUser[] users;
+	protected static List<ParseObject> scheduleList;
+	protected static List<ParseObject> shiftList;
+	protected ParseObject[] shceduleObjectArray;
+	protected ParseObject[] shiftObjectArray;
+	protected ArrayList<String> userNames;
+	protected int index;
+	protected static String[][] shiftsArray;
+	private View button;
+	private ParseObject shiftObject;
+	private String[] schedules;
+	private ArrayList temp;
+	private ParseObject scheduleObject;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -56,37 +70,32 @@ public class DayShiftsManagementActivity extends Activity {
 		} catch (ParseException e1) {
 			e1.printStackTrace();
 		}
-		ParseQuery<ParseUser> userquery = ParseUser.getQuery();
-		userquery.whereEqualTo("Owner_Acc", owner);
+		ParseQuery<ParseObject> shiftquery = ParseQuery.getQuery("Shifts");
+		shiftquery.whereEqualTo("Id", owner);
 
 		Log.d("Check", "schedule is fine");
 		try {
-			usersList = userquery.find();
+			shiftList = shiftquery.find();
 		} catch (ParseException e1) {
 			e1.printStackTrace();
 		}
-
-		
-		Log.d("Check", DAY);
-		String[] schedules;
-		ArrayList temp;
-		ParseObject scheduleObject;
-		ParseObject userObject;
-		String Availability = "Available_" + DAY;
 		scheduleObject = scheduleList.get(0);
 	    temp = (ArrayList) scheduleObject.get(DAY);
 		schedules = new String[temp.size()];
 		schedules = copy(temp, schedules);
-		String[][] names = new String[temp.size()][usersList.size()];
-		Log.d("ASD",schedules[0]);
+		String[][] names = new String[temp.size()][shiftList.size()];
+		userNames = new ArrayList<String>();
+		shiftsArray = new String[shiftList.size()][schedules.length];
 		for (int i = 0; i < schedules.length; i++) {
-			String[] available;
-			for (int j = 0; j < usersList.size(); j++) {
-				userObject = usersList.get(j);
-				temp = (ArrayList) userObject.get(Availability);
-				Log.d("Check", "So Far So Good");
-				if (temp.get(i).equals("1")) {
-				  String value = userObject.getString("Name") + ":" + userObject.getString("Acc_Type");
+			for (int j = 0; j < shiftList.size(); j++) {
+				shiftObject = shiftList.get(j);
+				if (i == 0) {
+				  userNames.add(shiftObject.getString("Name"));
+				}
+				temp = (ArrayList) shiftObject.get(DAY);
+				shiftsArray[j][i] = (String) temp.get(i);
+				if (!temp.get(i).equals("0")) {
+				  String value = shiftObject.getString("Name") + ":" + shiftObject.getString("Acc_Type");
 				  names[i][j] = value;
 				}
 			}
@@ -121,6 +130,10 @@ public class DayShiftsManagementActivity extends Activity {
 							
 							// sort list in alphabetical order
 							Collections.sort(category.selection, new CustomComparator());
+							
+							index = userNames.indexOf(checkbox.getText().toString());
+							setArray(index,groupPosition,"2");
+							Log.d("ASDASDASDASDASDASDASDASD",(String) shiftsArray[index][groupPosition] + index + groupPosition);
 						}
 						else {
 							// remove child category from parent's selection list
@@ -134,6 +147,27 @@ public class DayShiftsManagementActivity extends Activity {
 				return true;
 			}
 		});
+		button = findViewById(R.id.refresh);
+		button.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View view) {
+					  for (int i = 0; i < shiftList.size(); i++) {
+						  shiftObject = shiftList.get(i);
+						  Log.d("TESTING", shiftObject.getString("Name"));
+						  shiftObject.put(DAY, Arrays.asList(shiftsArray[i]));
+						  shiftObject.saveInBackground();
+						  
+					  }
+					  onBackPressed();
+					}
+				});
+        
+        
+	}
+	
+	public boolean setArray(int i, int j, String value) {
+		shiftsArray[i][j] = value;
+		return true;
 	}
 	
 	public class CustomComparator implements Comparator<String> {

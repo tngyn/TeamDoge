@@ -1,7 +1,10 @@
 package com.teamdoge.login;
 
+import java.util.Arrays;
+
 import com.parse.Parse;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 import com.teamdoge.restaurantapp.R;
@@ -153,6 +156,19 @@ public class SignUpActivity extends Activity {
 						  user.setEmail(email);
 						  user.setPassword(password);
 						  user.put("Acc_Type", String.valueOf(spinner.getSelectedItem()));
+						  String[] times = {"0", "1", "0", "0" };
+						  ParseObject shifts = new ParseObject("Shifts");
+						  shifts.put("Monday", Arrays.asList(times));
+						  shifts.put("Tuesday", Arrays.asList(times));
+						  shifts.put("Wednesday", Arrays.asList(times));
+						  shifts.put("Thursday", Arrays.asList(times));
+						  shifts.put("Friday", Arrays.asList(times));
+						  shifts.put("Saturday", Arrays.asList(times));
+						  shifts.put("Sunday", Arrays.asList(times));
+						  shifts.put("Id", ownerAcc);
+						  shifts.put("Username", username);
+						  shifts.put("Name", name + " " + lastName);
+						  shifts.saveInBackground();
 						  user.put("Name", name + " " + lastName);
 						  user.put("Remember_Me", false);
 						  user.put("Owner_Acc", ownerAcc);
