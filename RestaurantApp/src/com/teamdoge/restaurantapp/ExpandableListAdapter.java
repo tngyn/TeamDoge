@@ -6,6 +6,7 @@ import java.util.Map;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -54,6 +55,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     }
  
     public int getChildrenCount(int groupPosition) {
+    	Log.wtf("HI MANGO", ""+categoryList);
         return categoryList.get(items.get(groupPosition)).size();
     }
  
