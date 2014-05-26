@@ -164,6 +164,7 @@ public class InventoryList extends Fragment {
 	}
 
 	private void createCollection() {
+		int index = 0;
 		// preparing items in category(child)
 		// set a query to check the food items
 		ParseQuery<ParseObject> query = ParseQuery.getQuery("Food");
@@ -183,7 +184,8 @@ public class InventoryList extends Fragment {
 				getString(R.string.item), getString(R.string.item) };
 		if (foodNames.isEmpty() == false) {
 			for (ParseObject foodObj : foodNames) {
-				category1[0] = foodObj.getString("name");
+				category1[index] = foodObj.getString("name");
+				index++;
 			}
 			listInventory = new LinkedHashMap<String, List<String>>();
 
@@ -217,7 +219,7 @@ public class InventoryList extends Fragment {
 		switch (item.getItemId()) {
 
 		case R.id.item_add:
-			Intent intent = new Intent(getActivity(), AddMenuItemActivity.class);
+			Intent intent = new Intent(getActivity(), Add_item.class);
 			startActivity(intent);
 			return true;
 
