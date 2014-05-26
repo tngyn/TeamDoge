@@ -7,9 +7,9 @@ import android.content.res.Configuration;
 
 import com.parse.Parse;
 import com.parse.ParseUser;
-import com.teamdodge.trackingmenu.TrackingMenuFragment;
 import com.teamdoge.login.LoginActivity;
 import com.teamdoge.restaurantapp.ManagerFragment.OnFragmentInteractionListener;
+import com.teamdoge.trackingmenu.TrackingMenuFragment;
 
 import android.net.Uri;
 import android.os.Bundle;

@@ -24,8 +24,8 @@ import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-import com.teamdodge.trackingmenu.AddMenuItemActivity;
 import com.teamdoge.restaurantapp.ManagerFragment.OnFragmentInteractionListener;
+import com.teamdoge.trackingmenu.AddMenuItemActivity;
 
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass. Activities that
