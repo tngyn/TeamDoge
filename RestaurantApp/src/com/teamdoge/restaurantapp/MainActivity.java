@@ -52,18 +52,18 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 
 	ParseUser user;
 	private String accountType;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
-		
+
+
 		Parse.initialize(this, "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8", "k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF");
-		
+
 		user = ParseUser.getCurrentUser();
 	    accountType = user.getString("Acc_Type");
-		
+
 		if (accountType.equals("Owner")) {
 			Toast.makeText(getApplicationContext(),"it works", Toast.LENGTH_LONG).show();
 			Log.d("works", "works");
@@ -71,14 +71,14 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 		else {
 			Toast.makeText(getApplicationContext(),accountType, Toast.LENGTH_LONG).show();
 		}
-		
-		
-		
+
+
+
 		getWindow().setSoftInputMode(
 			      WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
-		
-		
+
+
 //		mTitle = mDrawerTitle = "testing something right now";
 		mDrawerSections = getResources().getStringArray(R.array.drawer_sections_array);
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -122,15 +122,15 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 		if (savedInstanceState == null) {
 			selectItem(0);
 		}
-		
+
 
 	}
 
-	
+
 	public void setActionBarTitle(String title) {
 	    getActionBar().setTitle(title);
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		return super.onCreateOptionsMenu(menu);
@@ -164,7 +164,7 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 			selectItem(position);
 		}
 	}
-	
+
 
 	@Override
 	protected void onPostCreate(Bundle savedInstanceState) {
@@ -185,7 +185,7 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 		switch (position) {
 		// Schedule
 		case 0:
-			
+
 			getSupportFragmentManager()
 			.beginTransaction()
 			.replace(R.id.content,
@@ -193,28 +193,28 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 					PageSlidingTabStripFragment.TAG).commit();
 			getActionBar().setTitle("Schedule");
 			break;
-		
+
 		// Inventory
 //		case 1:
 //			
 //			break;
-			
+
 		// Tracking Menu
 		case 2:
-			
+
 			getSupportFragmentManager().beginTransaction()
 				.replace(R.id.content,
 					TrackingMenuFragment.newInstance()).commit();
 			getActionBar().setTitle("Tracking Menu");
 			Log.wtf("test", "NOT IN CASE 2 LOL");
 			break;
-		
+
 		// Profile
 //		case 3:
 //			break;
 //			
 		case 4:
-			
+
 			Intent intent = new Intent(MainActivity.this, LoginActivity.class);
 	    	startActivity(intent);
 	    	user.put("Remember_Me", false);
@@ -223,7 +223,7 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 	    	user = ParseUser.getCurrentUser();
 	    	finish();
 	    	break;
-	    	
+
 		default:
 
 			Fragment fragment = new NavigationDrawerSections();
@@ -242,9 +242,9 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 
 	@Override
 	public void onFragmentInteraction() {
-		
 
-		
+
+
 	}
-	
+
 }
