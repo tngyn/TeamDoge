@@ -5,21 +5,44 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.parse.Parse;
+import com.teamdodge.trackingmenu.AddMenuItemActivity;
+import com.teamdoge.restaurantapp.ManagerFragment.OnFragmentInteractionListener;
+
 import android.app.Activity;
-import android.app.ActionBar;
-import android.app.Fragment;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
-import android.os.Build;
+import android.widget.TextView;
 
-public class InventoryList extends Activity {
+/**
+ * A simple {@link android.support.v4.app.Fragment} subclass. Activities that
+ * contain this fragment must implement the
+ * {@link InventoryList.OnFragmentInteractionListener} interface to handle
+ * interaction events. Use the {@link InventoryList#newInstance} factory method
+ * to create an instance of this fragment.
+ * 
+ */
+public class InventoryList extends Fragment{
+	// TODO: Rename parameter arguments, choose names that match
+	// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+	private static final String ARG_PARAM1 = "param1";
+	private static final String ARG_PARAM2 = "param2";
+
+	// TODO: Rename and change types of parameters
+	private String mParam1;
+	private String mParam2;
+
+	private OnFragmentInteractionListener mListener;
 	
 	/***************ExpandableView for Inventory***********************/
     List<String> groupList;
@@ -27,56 +50,96 @@ public class InventoryList extends Activity {
     Map<String, List<String>> InventoryList;
     ExpandableListView expListView;
     /*****************************************************************/
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_inventory_list);
+	
+	/**
+	 * Use this factory method to create a new instance of this fragment using
+	 * the provided parameters.
+	 */
+	// TODO: Rename and change types and number of parameters
+	public static InventoryList newInstance() {
+		InventoryList fragment = new InventoryList();
+		Bundle args = new Bundle();
+		fragment.setArguments(args);
+		return fragment;
+	}
 
-		if (savedInstanceState == null) {
-			getFragmentManager().beginTransaction()
-					.add(R.id.container, new PlaceholderFragment()).commit();
+	public InventoryList() {
+		// Required empty public constructor
+	}
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		//Parse.initialize(this, "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8", "k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF");
+		setHasOptionsMenu(true);
+		if (getArguments() != null) {
+			mParam1 = getArguments().getString(ARG_PARAM1);
+			mParam2 = getArguments().getString(ARG_PARAM2);
 		}
-		
+	}
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		//TextView textView = new TextView(getActivity());
+		//textView.setText(R.string.hello_blank_fragment);
+		//View v = inflater.inflate(R.layout.fragment_manager, container, false);
 		 /***************ExpandableView for Inventory***********************/
         createGroupList();
         
         createCollection();
-        
-        expListView = (ExpandableListView) findViewById(R.id.categoryList);
-        final ExpandableListAdapter expListAdapter = new ExpandableListAdapter(
-                this, groupList, InventoryList);
+        View v = inflater.inflate(R.layout.activity_inventory_list,container, false);
+        expListView = (ExpandableListView) v.findViewById(R.id.categoryList);
+        final ExpandableListAdapter expListAdapter = new ExpandableListAdapter( 
+        		getActivity(), groupList, InventoryList);
         expListView.setAdapter(expListAdapter);
         expListView.setOnChildClickListener(ExpandList_ItemClicked);
         
      /*****************************************************************/
+
+		return v;
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.inventory_list, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
+	// TODO: Rename method, update argument and hook method into UI event
+	public void onButtonPressed(Uri uri) {
+		if (mListener != null) {
+			mListener.onFragmentInteraction();
 		}
-		return super.onOptionsItemSelected(item);
 	}
 
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		try {
+			mListener = (OnFragmentInteractionListener) activity;
+		} catch (ClassCastException e) {
+			throw new ClassCastException(activity.toString()
+					+ " must implement OnFragmentInteractionListener");
+		}
+	}
+
+	@Override
+	public void onDetach() {
+		super.onDetach();
+		mListener = null;
+	}
+
+	/**
+	 * This interface must be implemented by activities that contain this
+	 * fragment to allow an interaction in this fragment to be communicated to
+	 * the activity and potentially other fragments contained in that activity.
+	 * <p>
+	 * See the Android Training lesson <a href=
+	 * "http://developer.android.com/training/basics/fragments/communicating.html"
+	 * >Communicating with Other Fragments</a> for more information.
+	 */
+	
 	 /***************ExpandableView for Inventory***********************/
     private OnChildClickListener ExpandList_ItemClicked =  new OnChildClickListener() {
 
 		public boolean onChildClick(ExpandableListView parent, View v,
 				int groupPosition, int childPosition, long id) {
-			Intent mIntent = new Intent(InventoryList.this, Add_item.class);
+			Intent mIntent = new Intent(getActivity(), Add_item.class);
 			startActivity(mIntent);
 			return false;
 		}
@@ -114,22 +177,27 @@ public class InventoryList extends Activity {
             childList.add(Citem);
     }
 
-    /*****************************************************************/  
-	/**
-	 * A placeholder fragment containing a simple view.
-	 */
-	public static class PlaceholderFragment extends Fragment {
+    /*****************************************************************/ 
+    
+    @Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+	   inflater.inflate(R.menu.menu, menu);
+	}
 
-		public PlaceholderFragment() {
-		}
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
 
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_inventory_list,
-					container, false);
-			return rootView;
-		}
+	    switch (item.getItemId()) {
+
+	        case R.id.item_add:
+	        	Intent intent = new Intent(getActivity(), AddMenuItemActivity.class);
+	        	startActivity(intent);
+	        	return true;
+	           
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
+
 	}
 
 }

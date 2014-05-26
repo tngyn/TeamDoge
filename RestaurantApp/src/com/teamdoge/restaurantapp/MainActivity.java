@@ -195,9 +195,13 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 			break;
 		
 		// Inventory
-//		case 1:
-//			
-//			break;
+		case 1:
+			getSupportFragmentManager().beginTransaction()
+			.replace(R.id.content,
+				InventoryList.newInstance()).commit();
+			getActionBar().setTitle("Inventory");
+			break;
+
 			
 		// Tracking Menu
 		case 2:
