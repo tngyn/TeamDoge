@@ -48,8 +48,10 @@
             android:name="com.teamdoge.restaurantapp.MainActivity"
             android:windowSoftInputMode="adjustResize|stateVisible" >
         </activity>
+        <activity android:name="com.teamdoge.restaurantapp.inventory" >
+        </activity>
         <activity
-            android:name="com.teamdoge.restaurantappW.adding_inventory_item_page"
+            android:name="com.teamdoge.restaurantapp.adding_inventory_item_page"
             android:label="@string/inv_item_page" >
         </activity>
         <activity
@@ -63,10 +65,6 @@
         <activity
             android:name="com.teamdoge.trackingmenu.AddMenuItemActivity"
             android:label="@string/title_activity_add_menu_item" >
-        </activity>
-        <activity
-            android:name="com.teamdoge.restaurantapp.inventory"
-            android:label="@string/inv_item_page" >
         </activity>
         <activity
             android:name="com.teamdoge.restaurantapp.Add_Item"
