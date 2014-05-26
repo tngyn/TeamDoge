@@ -4,85 +4,37 @@
     android:orientation="vertical" >
     
     <TextView
-        android:id="@+id/itemNameLabelText"
+        android:id="@+id/mealNameLabelText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/itemNameLabel" />
+        android:text="@+string/mealNameLabel" />
     
-    <EditText android:id="@+id/item_name_box"
+    <EditText android:id="@+id/meal_name_box"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/item_name_hint" 
+        android:hint="@+string/meal_name_hint" 
         android:paddingTop="10dp"/>
     
-    <LinearLayout 
-        	android:layout_width="fill_parent"
-    		android:layout_height="wrap_content"
-    		android:orientation="horizontal" 
-    		android:paddingTop="10dp">
-        
-        <TextView
-        	android:id="@+id/quantLabelText"
-        	android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-        	android:layout_weight="1"
-        	android:text="@string/quantityLabel" />
-        
-        <TextView
-        	android:id="@+id/unitsLabelText"
-        	android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-        	android:layout_weight="1"
-        	android:text="@string/unitsLabel" />
-        
-    </LinearLayout>
-    
-    <LinearLayout
-    		android:layout_width="fill_parent"
-    		android:layout_height="wrap_content"
-    		android:orientation="horizontal" 
-    		android:paddingTop="10dp">
-    
-        <EditText android:id="@+id/quant_box"
-        	android:layout_width="fill_parent"
-       		android:layout_height="wrap_content"
-        	android:layout_weight="1"
-        	android:inputType="phone"
-        	android:hint="@string/quantity_hint" />
-    	
-    	<Spinner android:id="@+id/units_dropdown"
-    		android:layout_width="fill_parent"
-    		android:layout_height="wrap_content" 
-    		android:layout_weight="1"
-    		android:spinnerMode="dropdown"/>
-    
-    	<!-- <EditText android:id="@+id/units_box"
-        	android:layout_width="fill_parent"
-        	android:layout_height="wrap_content"
-        	android:layout_weight="1"
-        	android:hint="@string/unit_hint" /> -->
-    </LinearLayout>
-    
     <TextView
-        	android:id="@+id/categoryLabelText"
+        	android:id="@+id/mealCategoryLabelText"
         	android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
         	android:text="@string/categoryLabel" />
     
-    <Spinner android:id="@+id/categories_dropdown"
+    <Spinner android:id="@+id/meal_categories_dropdown"
     	android:layout_width="fill_parent"
     	android:layout_height="wrap_content" 
     	android:spinnerMode="dropdown"
     	android:paddingTop="5dp"/>
     
     <TextView
-        	android:id="@+id/descriptionLabelText"
+        	android:id="@+id/mealDescriptionLabelText"
         	android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
         	android:text="@string/descriptionBoxLabel" 
         	android:paddingTop = "10dp"/>
     
-    <EditText android:id="@+id/description_box"
+    <EditText android:id="@+id/mealDescription_box"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:inputType="textMultiLine"

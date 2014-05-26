@@ -63,4 +63,7 @@
     <string name="Submit">Add Category</string>
 
 
+    <string name="mealNameLabel">Meal\'s Name</string>
+    <string name="meal_name_hint">Type in Meal Name</string>
+    
 </resources>
