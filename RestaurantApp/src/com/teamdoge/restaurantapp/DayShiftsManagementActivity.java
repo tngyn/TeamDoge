@@ -29,6 +29,7 @@ import android.widget.CheckedTextView;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ExpandableListView.OnChildClickListener;
 
 public class DayShiftsManagementActivity extends Activity {
@@ -50,6 +51,8 @@ public class DayShiftsManagementActivity extends Activity {
 	private String[] schedules;
 	private ArrayList temp;
 	private ParseObject scheduleObject;
+	private static boolean[][] working;
+	private static int[] indexArray;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -84,9 +87,10 @@ public class DayShiftsManagementActivity extends Activity {
 		schedules = new String[temp.size()];
 		schedules = copy(temp, schedules);
 		String[][] names = new String[temp.size()][shiftList.size()];
+		working = new boolean[temp.size()][shiftList.size()];
 		userNames = new ArrayList<String>();
 		shiftsArray = new String[shiftList.size()][schedules.length];
-		for (int i = 0; i < schedules.length; i++) {
+		for (int i = 0;i < schedules.length; i++) {
 			for (int j = 0; j < shiftList.size(); j++) {
 				shiftObject = shiftList.get(j);
 				if (i == 0) {
@@ -94,6 +98,10 @@ public class DayShiftsManagementActivity extends Activity {
 				}
 				temp = (ArrayList<?>) shiftObject.get(DAY);
 				shiftsArray[j][i] = (String) temp.get(i);
+				if (temp.get(i).equals("2")) 
+				  working[i][j] = true;
+				else
+				  working[i][j] = false;
 				if (!temp.get(i).equals("0")) {
 				  String value = shiftObject.getString("Name") + ":" + shiftObject.getString("Acc_Type");
 				  names[i][j] = value;
@@ -102,7 +110,7 @@ public class DayShiftsManagementActivity extends Activity {
 		}
 		mContext = this;
 		shiftsList = (ExpandableListView)findViewById(R.id.shifts);
-		shifts = Shifts.getCategories(schedules, names);
+		shifts = Shifts.getCategories(schedules, names, working);
 		adapter = new SettingsListAdapter(this, 
 				shifts, shiftsList);
         shiftsList.setAdapter(adapter);
@@ -125,19 +133,13 @@ public class DayShiftsManagementActivity extends Activity {
 					if(sub != null) {
 						Shifts category = shifts.get(groupPosition);
 						if(checkbox.isChecked()) {
-							// add child category to parent's selection list
-							category.selection.add(checkbox.getText().toString());
-							
-							// sort list in alphabetical order
-							Collections.sort(category.selection, new CustomComparator());
 							
 							index = userNames.indexOf(checkbox.getText().toString());
 							setArray(index,groupPosition,"2");
-							Log.d("ASDASDASDASDASDASDASDASD",(String) shiftsArray[index][groupPosition] + index + groupPosition);
 						}
 						else {
-							// remove child category from parent's selection list
-							category.selection.remove(checkbox.getText().toString());
+							index = userNames.indexOf(checkbox.getText().toString());
+							setArray(index,groupPosition,"1");
 						}		
 						
 						// display selection list
@@ -154,6 +156,7 @@ public class DayShiftsManagementActivity extends Activity {
 					  for (int i = 0; i < shiftList.size(); i++) {
 						  shiftObject = shiftList.get(i);
 						  Log.d("TESTING", shiftObject.getString("Name"));
+					      Toast.makeText(getApplicationContext(),"Scheduled Compiled", Toast.LENGTH_LONG).show();
 						  shiftObject.put(DAY, Arrays.asList(shiftsArray[i]));
 						  shiftObject.saveInBackground();
 						  
