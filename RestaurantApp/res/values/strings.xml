@@ -5,10 +5,25 @@
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
+    <string name="addItem">Add an Item</string>
+    <string name="category1">Fruit</string>
+    <string name="item">item</string>
     <string name="action_settings">Settings</string>
     <string name="logout"> Logout</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <string name="category2">Category Two</string>
+    <string name="itemName">Item Name</string>
+    <string name="itemQuantity">Quantity</string>
+    <string name="itemNotes">Notes</string>
+    <string name="Cancel">Cancel</string>
+    <string name="Save">Save</string>
+    <string name="Category">Category</string>
+    <string name="title_activity_add__item">Add_Item</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_add_item">Add_item</string>
+    
+    
     <!-- Navigation drawer items -->
     <string-array name="drawer_sections_array">
         <item>Schedule</item>
@@ -27,6 +42,7 @@
     <string name="dropdown_hint">Choose a Category</string>
     <string name="description_hint">Description</string>
     <string name="button_submit">Submit</string>
+    <string name="button_save">Save</string>
     <string name="button_cancel">Cancel</string>
     <!-- Names of the labels go here -->
     <string name="itemNameLabel">Item\'s Name:</string>
@@ -34,20 +50,19 @@
     <string name="unitsLabel">Units:</string>
     <string name="categoryLabel">Category:</string>
     <string name="descriptionBoxLabel">Description:</string>
-    <string name = "submit">Submit</string>
-    
-    
+    <string name="submit">Submit</string>
+
     <!-- Names of the labels end here -->
     <!-- activity inventory scree string id's end here -->
 
     <string name="title_activity_shift_management_actity">ShiftManagementActity</string>
-    <string name="hello_world">Hello world!</string>
     <string name="title_activity_add_menu_item">AddMenuItemActivity</string>
-    
-    
     <string name="invFragIntroLabel">Please Add a New Option</string>
     <string name="newOptionBoxHint">Add New Option</string>
     <string name="Submit">Add Category</string>
-    <string name="Cancel">Cancel</string>
+
+    <string name="mealNameLabel">Meal\'s Name</string>
+    <string name="meal_name_hint">Type in Meal Name</string>
+    <string name="title_activity_edit_item">Edit_item</string>
 
 </resources>
