@@ -87,7 +87,7 @@ public class TrackingMenuFragment extends Fragment {
 		super.onCreate(savedInstanceState);
 		setRetainInstance(true);
 		
-		 setHasOptionsMenu(true);
+		setHasOptionsMenu(true);
 		
 		Parse.initialize(getActivity(), "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8", "k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF");
 		

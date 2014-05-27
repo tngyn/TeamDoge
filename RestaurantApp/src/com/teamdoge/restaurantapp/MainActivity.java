@@ -10,6 +10,7 @@ import com.parse.ParseUser;
 import com.teamdoge.login.LoginActivity;
 import com.teamdoge.restaurantapp.ManagerFragment.OnFragmentInteractionListener;
 import com.teamdoge.trackingmenu.TrackingMenuFragment;
+import com.teamdoge.userprofile.View_Profile;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -213,9 +214,15 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 			break;
 
 		// Profile
-//		case 3:
-//			break;
-//			
+		case 3:
+			
+			getSupportFragmentManager().beginTransaction()
+				.replace(R.id.content,
+						View_Profile.newInstance()).commit();
+			getActionBar().setTitle("Tracking Menu");
+			
+			break;
+			
 		case 4:
 
 			Intent intent = new Intent(MainActivity.this, LoginActivity.class);

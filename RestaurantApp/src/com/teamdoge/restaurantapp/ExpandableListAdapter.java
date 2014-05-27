@@ -18,7 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
-	 
+
     private Activity context;
     private Map<String, List<String>> categoryList;
     private List<String> items;
@@ -55,9 +55,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     }
  
     public int getChildrenCount(int groupPosition) {
-    	Log.wtf("TIMMYTIMMYTIMMYTIM", categoryList.toString());
         return categoryList.get(items.get(groupPosition)).size();
-        
     }
  
     public Object getGroup(int groupPosition) {

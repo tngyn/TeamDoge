@@ -64,5 +64,9 @@
     <string name="mealNameLabel">Meal\'s Name</string>
     <string name="meal_name_hint">Type in Meal Name</string>
     <string name="title_activity_edit_item">Edit_item</string>
+    <string name="title_activity_shift_selector">Shift Selector</string>
+    <string name="title_activity_view__profile">View_Profile</string>
+    <string name="paintdis">Set Available Times</string>
+    <string name="title_activity_edit__profile">Edit_Profile</string>
 
 </resources>

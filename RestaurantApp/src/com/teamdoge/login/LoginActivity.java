@@ -53,6 +53,7 @@ public class LoginActivity extends Activity {
 	// Values for email and password at the time of the login attempt.
 	private String mUsername;
 	private String mPassword;
+	private String test;
 
 	// UI references.
 	private EditText mUsernameView;
@@ -246,8 +247,10 @@ public class LoginActivity extends Activity {
 				    if (user != null) {
 				      //Toast.makeText(getApplicationContext(),"Success", Toast.LENGTH_SHORT).show();
 				    	user.put("Remember_Me", remember);
+
 				    	user.saveInBackground(); 
 						Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+
 						startActivity(intent);
 						finish();
 						showProgress(false);
