@@ -17,7 +17,8 @@ public class MyShiftList implements ListItem {
     private final String position;
     // Status of shift
     private String status;
-    
+    public int i;
+    public int j;
     
     
     // Strings for formating shift
@@ -31,6 +32,15 @@ public class MyShiftList implements ListItem {
     	this.displayShift = time;
         this.position = pos;
         this.status = stat;
+    }
+    
+    public MyShiftList( String time, String pos, String stat, int i , int j) {
+    	this.shift = time;
+    	this.displayShift = time;
+        this.position = pos;
+        this.status = stat;
+        this.i = i;
+        this.j = j;
     }
 
     // implementation needed for the TwoTextArrayAdapter
