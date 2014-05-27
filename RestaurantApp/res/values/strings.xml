@@ -16,5 +16,8 @@
     <string name="done">Done</string>
     <string name="from">From</string>
     <string name="to">To</string>
+    <string name="title_activity_shift_selector">ShiftSelectorActivity</string>
+    <string name="title_activity_assign_role">AssignRoleActivity</string>
+    <string name="title_activity_employee_assign_role_fragment">EmployeeAssignRoleFragment</string>
 
 </resources>
