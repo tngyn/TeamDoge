@@ -39,6 +39,8 @@ public class MyShiftFragment extends ListFragment {
 	
 	// Message strings
 	private final String dialogTradeInitial = "Would you like to post ";
+	private final String dialogTradeInitialNot = "Would you like to remove ";
+	private final String dialogTradeEndNot = " down from swapping?";
 	private final String dialogTradeEnd = " up for swapping?";
 	
 	// Parse-related
@@ -47,12 +49,13 @@ public class MyShiftFragment extends ListFragment {
     private ParseUser user;
     private String restaurantID;
     private String username;
-	
+    private List<String> temp;
+	private static ParseObject shiftObject;
 	// List to hold all headers and shifts, the week's schedule,
 	// and the user's schedule
 	private List<ListItem> items;
-	private List<ArrayList<String>> weekSchedule;
-	private List<ArrayList<String>> userSchedule;
+	private static List<ArrayList<String>> weekSchedule;
+	private static List<ArrayList<String>> userSchedule;
 	
 	// check if an entire day has been requested to trade or drop
 	private static boolean entireDay = false;
@@ -60,6 +63,7 @@ public class MyShiftFragment extends ListFragment {
 	// boundaries for checking an entire day off
 	private static int start = 0;
 	private static int end = 0;
+	private static int index = -1;
 	
     //Array of ints to denote header ids
     private int[] headerID = new int[] { 0, 0, 0, 0, 0, 0, 0 }; 
@@ -101,6 +105,35 @@ public class MyShiftFragment extends ListFragment {
 		// Gets restaurant ID
 		restaurantID = user.getString("Owner_Acc");
 		username = user.getString("username");
+		weekSchedule = new ArrayList<ArrayList<String>>();
+		userSchedule = new ArrayList<ArrayList<String>>();
+		
+		ParseQuery<ParseObject> scheduleQuery = ParseQuery.getQuery("Schedule");
+		scheduleQuery.whereEqualTo( "Id", restaurantID );
+		try{
+			List<ParseObject> scheduleList = scheduleQuery.find();
+			ParseObject schedule = scheduleList.get(0);
+			for( int dayCounter = 0; dayCounter < daysOfWeek; ++dayCounter ) {
+				weekSchedule.add( (ArrayList)schedule.getList(day[dayCounter]));
+			}	
+		}
+		catch(ParseException e1) {
+			e1.printStackTrace();
+		}
+		
+		
+		ParseQuery<ParseObject> shiftQuery = ParseQuery.getQuery("Shifts");
+		shiftQuery.whereEqualTo( "Username", username );
+		try {
+			List<ParseObject> shiftList = shiftQuery.find();
+			shiftObject = shiftList.get(0);
+			for( int dayCounter = 0; dayCounter < daysOfWeek; ++dayCounter ) {
+				userSchedule.add( (ArrayList)shiftObject.getList(day[dayCounter]));
+			}	
+		}
+		catch(ParseException e2) {
+			e2.printStackTrace();
+		}
 		
 	}
 	
@@ -139,6 +172,7 @@ public class MyShiftFragment extends ListFragment {
 					start = headerID[0] + 1;
 					end = headerID[1];
 					entireDay = true;
+					index = 0;
 				}
 				// MONDAY
 				else if( id == headerID[1] ) {
@@ -147,6 +181,7 @@ public class MyShiftFragment extends ListFragment {
 					start = headerID[1] + 1;
 					end = headerID[2];
 					entireDay = true;
+					index = 1;
 				}
 				// TUESDAY
 				else if( id ==  headerID[2] ) {
@@ -155,6 +190,7 @@ public class MyShiftFragment extends ListFragment {
 					start = headerID[2] + 1;
 					end = headerID[3];
 					entireDay = true;
+					index = 2;
 				}
 				// WEDNESDAY
 				else if( id == headerID[3] ) {
@@ -163,6 +199,7 @@ public class MyShiftFragment extends ListFragment {
 					start = headerID[3] + 1;
 					end = headerID[4];
 					entireDay = true;
+					index = 3;
 				}
 				// THURSDAY
 				else if( id == headerID[4] ) {
@@ -171,6 +208,7 @@ public class MyShiftFragment extends ListFragment {
 					start = headerID[4] + 1;
 					end = headerID[5];
 					entireDay = true;
+					index = 4;
 				}
 		        // FRIDAY
 				else if( id == headerID[5] ) {
@@ -179,6 +217,7 @@ public class MyShiftFragment extends ListFragment {
 					start = headerID[5] + 1;
 					end = headerID[6];
 					entireDay = true;
+					index = 5;
 				}
 				// SATURDAY
 				else if( id == headerID[6] ) {
@@ -187,11 +226,17 @@ public class MyShiftFragment extends ListFragment {
 					start = headerID[6] + 1;
 					end = items.size();
 					entireDay = true;
+					index = 6;
 				}
 				// SINGLE SHIFT SELECTED
 				else {			
-					box.setMessage( dialogTradeInitial + "this shift" 
-							+ dialogTradeEnd );
+					MyShiftList shift = (MyShiftList)items.get( (int)id );
+					if (userSchedule.get(shift.i).get(shift.j).equals("2"))
+						box.setMessage( dialogTradeInitial + "this shift" 
+								+ dialogTradeEnd );
+						else if (userSchedule.get(shift.i).get(shift.j).equals("3"))
+							box.setMessage( dialogTradeInitialNot + "this shift" 
+									+ dialogTradeEndNot );
 					entireDay = false;
 				}
 				
@@ -214,20 +259,51 @@ public class MyShiftFragment extends ListFragment {
 						 */
 						if( !entireDay ) {
 							MyShiftList shift = (MyShiftList)items.get( (int)id );
-							shift.setStatus(1);
-							items.set( (int)id, shift );
+							if (userSchedule.get(shift.i).get(shift.j).equals("2"))
+								  userSchedule.get(shift.i).set(shift.j,"3");
+								else if (userSchedule.get(shift.i).get(shift.j).equals("3"))
+									  userSchedule.get(shift.i).set(shift.j,"2");
+							int shiftStatus = Integer.parseInt(
+		        					userSchedule.get(shift.i).get(shift.j) );
+							shift.setStatus(shiftStatus);
+							items.set( (int)start, shift );
 							entireDay = false;
+							temp = userSchedule.get(shift.i);
+							shiftObject.put(day[shift.i], temp);
+							try {
+								shiftObject.save();
+							} catch (ParseException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 						} 
 						else {
 							for(; start < end; ++start ) {
+								for (int i = 0; i < userSchedule.get(index).size(); i++) {
+									if (userSchedule.get(index).get(i).equals("2"))
+									  userSchedule.get(index).set(i,"3");
+								}
 								MyShiftList shift = (MyShiftList)items.get( (int)start );
-								shift.setStatus(1);
+								int shiftStatus = Integer.parseInt(
+			        					userSchedule.get(shift.i).get(shift.j) );
+								shift.setStatus(shiftStatus);
 								items.set( (int)start, shift );
 							}
-				
+							if (index != -1) {
+								temp = userSchedule.get(index);
+								shiftObject.put(day[index], temp);
+								try {
+									shiftObject.save();
+								} catch (ParseException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+							}
+							  
 							start = 0;
 							end = 0;
 							entireDay = false;
+							index = -1;
 						}			
 						dialog.dismiss();
 					}
@@ -265,38 +341,7 @@ public class MyShiftFragment extends ListFragment {
 	
 	
 	// PREPARES MY SHIFT LISTS
-	private void prepareMyShiftList() {
-	
-		weekSchedule = new ArrayList<ArrayList<String>>();
-		userSchedule = new ArrayList<ArrayList<String>>();
-		
-		ParseQuery<ParseObject> scheduleQuery = ParseQuery.getQuery("Schedule");
-		scheduleQuery.whereEqualTo( "Id", restaurantID );
-		try{
-			List<ParseObject> scheduleList = scheduleQuery.find();
-			ParseObject schedule = scheduleList.get(0);
-			for( int dayCounter = 0; dayCounter < daysOfWeek; ++dayCounter ) {
-				weekSchedule.add( (ArrayList)schedule.getList(day[dayCounter]));
-			}	
-		}
-		catch(ParseException e1) {
-			e1.printStackTrace();
-		}
-		
-		
-		ParseQuery<ParseObject> shiftQuery = ParseQuery.getQuery("Shifts");
-		shiftQuery.whereEqualTo( "Username", username );
-		try {
-			List<ParseObject> shiftList = shiftQuery.find();
-			ParseObject shift = shiftList.get(0);
-			for( int dayCounter = 0; dayCounter < daysOfWeek; ++dayCounter ) {
-				userSchedule.add( (ArrayList)shift.getList(day[dayCounter]));
-			}	
-		}
-		catch(ParseException e2) {
-			e2.printStackTrace();
-		}
-		
+	private void prepareMyShiftList() {	
 		int counter = 0;
 		
         items = new ArrayList<ListItem>();
@@ -310,22 +355,25 @@ public class MyShiftFragment extends ListFragment {
         		if( userSchedule.get(headerCount).get(shiftCount).length() == 1) {
         			int shiftStatus = Integer.parseInt(
         					userSchedule.get(headerCount).get(shiftCount) );
+        			if (shiftStatus == 0 || shiftStatus == 1) {
+        				
+        			}
         			if( shiftStatus == 2  ) {
         				items.add( new MyShiftList(
         						weekSchedule.get(headerCount).get(shiftCount),
-        						user.getString("Acc_Type"), " " ) );
+        						user.getString("Acc_Type"), " ", headerCount, shiftCount ) );
         				++counter;
         			}
         			if( shiftStatus == 3 ) {
         				items.add( new MyShiftList(
         						weekSchedule.get(headerCount).get(shiftCount),
-        						user.getString("Acc_Type"), "Trade pending" ) );
+        						user.getString("Acc_Type"), "Trade pending", headerCount, shiftCount ) );
         				++counter;
         			}
         		} else {
         			items.add( new MyShiftList(
         					weekSchedule.get(headerCount).get(shiftCount),
-        					user.getString("Acc_Type"), "Pending approval" ) );
+        					user.getString("Acc_Type"), "Pending approval", headerCount, shiftCount ) );
     				++counter;
         		}
         	}
