@@ -89,6 +89,7 @@ import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 public class Add_item extends FragmentActivity implements OnItemSelectedListener, InvAddPageDropdownFrag.OnFragmentInteractionListener{
 	//used to clear all the text boxes (initialize them for typing)
@@ -125,8 +126,13 @@ public class Add_item extends FragmentActivity implements OnItemSelectedListener
         category_dropdown = (Spinner) findViewById(R.id.categories_dropdown);
         units_dropdown = (Spinner) findViewById(R.id.units_dropdown);
         //populate our dropdown menus with options and set their item select listeners
-        populateDropdowns();
+        //populate with "" to initialize it to empty
+        populateUnits("");
+    	populateCategories("");
         //category_dropdown.
+    	
+    	//Set Title to add item
+    	getActionBar().setTitle("Add Item");
       
     }
     
@@ -163,7 +169,7 @@ public class Add_item extends FragmentActivity implements OnItemSelectedListener
     		ParseQuery<ParseObject> query = ParseQuery.getQuery("Food");
     		
     		//try to find a food with the same name as the one we entered.
-    		query.whereEqualTo("name", foodName);
+    		query.whereEqualTo("userId", foodName);
     		
     		query.findInBackground(new FindCallback<ParseObject>() {
     		    public void done(List<ParseObject> foodNames, ParseException e) {
@@ -188,13 +194,29 @@ public class Add_item extends FragmentActivity implements OnItemSelectedListener
 	    		    		Toast toast = Toast.makeText(context, text, duration);
 	    		    		toast.show();
 	    		    		
+	    		    		//get current user, they're id is tagged to each food that's created
+	    		    		String userId = "";
+	    		    		ParseUser currentUser = ParseUser.getCurrentUser();
+	    		    		if(currentUser != null) {
+	    		    			userId = currentUser.getObjectId();
+	    		    		}
+	    		    		
 	    		    		//send the information to the DB.
 	    		    		ParseObject food = new ParseObject("Food");
+	    		    		//name of the food
 	    		    		food.put("name", foodName);
+	    		    		//quantity of the food to track original value
 	    		    		food.put("quantity", quan);
+	    		    		//shrink tracking quantity for reduction when meals ordered
+	    		    		food.put("shrinkTrackQuantity", quan);
+	    		    		//description of food
 	    		    		food.put("description", description);
+	    		    		//units of food e.g. oz. lbs. kg.
 	    		    		food.put("units", units);
+	    		    		//categories of the food
 	    		    		food.put("category", categories);
+	    		    		//userId associated with each food.
+	    		    		food.put("userId", userId);
 	    		    		food.saveInBackground();
 	    		    		onBackPressed();
 						}
@@ -224,7 +246,6 @@ public class Add_item extends FragmentActivity implements OnItemSelectedListener
     
     public void cancel(View view){    	
     	onBackPressed();
-    	
     }
     
     public void clearBoxes(){
@@ -235,54 +256,31 @@ public class Add_item extends FragmentActivity implements OnItemSelectedListener
     	descrip_box.setText(init);    	
     }
     
-    public void populateDropdowns() { 	
-    	
-    	//ParseUser user = ParseUser.getCurrentUser(); gets the current user.
-    	
-    	//populate the units dropdown here.
-//    	List<String> unitslist = new ArrayList<String>();
-//    	unitslist.add("Select Units");
-//    	unitslist.add("lbs.");
-//    	unitslist.add("oz.");
-//    	unitslist.add("litres");
-//    	unitslist.add("New");
-    	ArrayAdapter<String> unitsdataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item) {
-    		@Override
-    	    public View getView(int position, View convertView, ViewGroup parent) {
-
-    	        View v = super.getView(position, convertView, parent);
-    	        if (position == getCount()) {
-    	            ((TextView)v.findViewById(android.R.id.text1)).setText("");
-    	            ((TextView)v.findViewById(android.R.id.text1)).setHint(getItem(getCount())); //"Hint to be displayed"
-    	        }
-
-    	        return v;
-    	    }
-    		@Override
-    	    public int getCount() {
-    	        return super.getCount()-1; // you dont display last item. It is used as hint.
-    	    }
-    	};
-//    	ArrayAdapter<String> unitsdataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, unitslist);
-    	unitsdataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-    	unitsdataAdapter.add("lbs.");
-    	unitsdataAdapter.add("oz.");
-    	unitsdataAdapter.add("litres");
-    	unitsdataAdapter.add("New");
-    	unitsdataAdapter.add("Select Units");
-    	units_dropdown.setAdapter(unitsdataAdapter);
-    	units_dropdown.setSelection(unitsdataAdapter.getCount());
-    	units_dropdown.setOnItemSelectedListener(this);
-    	
+    public void populateCategories(String newCategory) {
     	//populate the categories dropdown here.
-    	//clear the list, then add in the new items
-//    	categorylist = new ArrayList<String>();
-//    	categorylist.clear();
-//    	categorylist.add("Meat");
-//    	categorylist.add("Veggies");
-//    	categorylist.add("Sweets");
-//    	categorylist.add("New");
-//    	categorylist.add("Select a Category");
+    	
+    	//get the current userID
+    	String userId = "";
+		ParseUser currentUser = ParseUser.getCurrentUser();
+		if(currentUser != null) {
+			userId = currentUser.getObjectId();
+		}
+		
+		//Find all the foods that are tied to this id
+		ParseQuery<ParseObject> query = ParseQuery.getQuery("Food");
+		query.whereEqualTo("userId", userId);
+		List<ParseObject> foods = null;
+		try {
+			foods = query.find();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		//list of added categories we'll be checking against for duplicates.
+		List<String> added = new ArrayList<String>();
+    	
+		//create our own category adapter
     	ArrayAdapter<String> categorydataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item) {
     		@Override
     	    public View getView(int position, View convertView, ViewGroup parent) {
@@ -302,53 +300,70 @@ public class Add_item extends FragmentActivity implements OnItemSelectedListener
     	    }
     	};
     	categorydataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-    	categorydataAdapter.add("Meat");
-    	categorydataAdapter.add("Veggies");
-    	categorydataAdapter.add("Sweets");
+    	
+    	//position we'll set the selection to
+    	int position = 0;
+    	
+    	//if the newCategory is empty, we don't do add anything to the 0'th position
+    	//otherwise we set the newCategory as the 0'th position.
+		if (newCategory != "") {
+			categorydataAdapter.add(newCategory);
+		}
+		
+		//go through the foods and add their categories to the category data adapter
+    	for(ParseObject food : foods) {
+    		String category = food.getString("category");
+    		//this if initially adds in a string to added the first time
+    		if(added.isEmpty()) {
+    			added.add(category);
+    			categorydataAdapter.add(category);
+    		}
+    		//added isn't empty, so we will see if it's in there, if it isn't we add to adapter
+    		else if(added.contains(category) == false) {
+    			added.add(category);
+    			categorydataAdapter.add(category);
+    		}
+    	}
+		
+		//add in the new and select units manually (select category won't show up when dropped down)
     	categorydataAdapter.add("New");
     	categorydataAdapter.add("Select a Category");
+    	
+    	//one more check for if newCategory is empty or not since we have to set the position if it is.
+    	if (newCategory == "") {
+			position = categorydataAdapter.getCount();
+		}
+    	
     	category_dropdown.setAdapter(categorydataAdapter);
-    	category_dropdown.setSelection(categorydataAdapter.getCount());
+    	category_dropdown.setSelection(position);
     	category_dropdown.setOnItemSelectedListener(this);
     }
     
-    public void populateCategories(String newCategory) {
-    	//populate the categories dropdown here.
-    	//clear the list, then add in the new items
-    	
-    	ArrayAdapter<String> categorydataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item) {
-    		@Override
-    	    public View getView(int position, View convertView, ViewGroup parent) {
+    public void populateUnits(String newUnits) {
+    	//populate the units dropdown here
 
-    	        View v = super.getView(position, convertView, parent);
-    	        if (position == getCount()) {
-    	            ((TextView)v.findViewById(android.R.id.text1)).setText("");
-    	            ((TextView)v.findViewById(android.R.id.text1)).setHint(getItem(getCount())); //"Hint to be displayed"
-    	        }
-
-    	        return v;
-    	    }       
-
-    	    @Override
-    	    public int getCount() {
-    	        return super.getCount()-1; // you dont display last item. It is used as hint.
-    	    }
-    	};
-    	categorydataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-    	categorydataAdapter.add(newCategory);
-    	categorydataAdapter.add("Meat");
-    	categorydataAdapter.add("Veggies");
-    	categorydataAdapter.add("Sweets");
-    	categorydataAdapter.add("New");
-    	categorydataAdapter.add("Select a Category");
-    	category_dropdown.setAdapter(categorydataAdapter);
-    	category_dropdown.setSelection(0);
-    }
-    
-    public void populateUnits(String newCategory) {
-    	//populate the units dropdown here.
-    	//clear the list, then add in the new items
-    	
+		//the list of strings that are added 
+		List<String> added = new ArrayList<String>();
+		
+    	//get the current userID
+    	String userId = "";
+		ParseUser currentUser = ParseUser.getCurrentUser();
+		if(currentUser != null) {
+			userId = currentUser.getObjectId();
+		}
+		
+		//Find all the foods that are tied to this id
+		ParseQuery<ParseObject> query = ParseQuery.getQuery("Food");
+		query.whereEqualTo("userId", userId);
+		List<ParseObject> foods = null;
+		try {
+			foods = query.find();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		//units datadapter that we're making
     	ArrayAdapter<String> unitsdataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item) {
     		@Override
     	    public View getView(int position, View convertView, ViewGroup parent) {
@@ -360,22 +375,52 @@ public class Add_item extends FragmentActivity implements OnItemSelectedListener
     	        }
 
     	        return v;
-    	    }       
-
-    	    @Override
+    	    }
+    		@Override
     	    public int getCount() {
     	        return super.getCount()-1; // you dont display last item. It is used as hint.
     	    }
     	};
+    	
     	unitsdataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-    	unitsdataAdapter.add(newCategory);
-    	unitsdataAdapter.add("Meat");
-    	unitsdataAdapter.add("Veggies");
-    	unitsdataAdapter.add("Sweets");
+		
+		//position we'll set the selection to
+    	int position = 0;
+    	
+    	//if the newCategory is empty, we don't do add anything to the 0'th position
+    	//otherwise we set the newCategory as the 0'th position.
+		if (newUnits != "") {
+			unitsdataAdapter.add(newUnits);
+		}
+    	
+		//go through the foods and add their units to the units data adapter
+		for (ParseObject food : foods) {
+			String units = food.getString("units");
+			// this if initially adds in a string to added the first time
+			if (added.isEmpty()) {
+				added.add(units);
+				unitsdataAdapter.add(units);
+			}
+			// added isn't empty, so we will see if it's in there, if it isn't
+			// we add to adapter
+			else if (added.contains(units) == false) {
+				added.add(units);
+				unitsdataAdapter.add(units);
+			}
+		}
+		
+		//add in the new and select units manually (select units won't show up when dropped down)
     	unitsdataAdapter.add("New");
-    	unitsdataAdapter.add("Select a Category");
+    	unitsdataAdapter.add("Select Units");
+    	
+    	//one more check for if newCategory is empty or not since we have to set the position if it is.
+    	if (newUnits == "") {
+			position = unitsdataAdapter.getCount();
+		}
+    	
     	units_dropdown.setAdapter(unitsdataAdapter);
-    	units_dropdown.setSelection(0);
+    	units_dropdown.setSelection(position);
+    	units_dropdown.setOnItemSelectedListener(this);
     }
     
     public void showNewCategoryDialog() {
@@ -443,4 +488,122 @@ public class Add_item extends FragmentActivity implements OnItemSelectedListener
     	}
     }
 
+//  public void populateDropdowns() { 	
+//	
+////	//get the current userID
+////	String userId = "";
+////	ParseUser currentUser = ParseUser.getCurrentUser();
+////	if(currentUser != null) {
+////		userId = currentUser.getObjectId();
+////	}
+////	
+////	//Find all the foods that are tied to this id
+////	ParseQuery<ParseObject> query = ParseQuery.getQuery("Food");
+////	query.whereEqualTo("userId", userId);
+////	List<ParseObject> foods = null;
+////	try {
+////		foods = query.find();
+////	} catch (ParseException e) {
+////		// TODO Auto-generated catch block
+////		e.printStackTrace();
+////	}
+////	
+////	//units datadapter that we're making
+////	ArrayAdapter<String> unitsdataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item) {
+////		@Override
+////	    public View getView(int position, View convertView, ViewGroup parent) {
+////
+////	        View v = super.getView(position, convertView, parent);
+////	        if (position == getCount()) {
+////	            ((TextView)v.findViewById(android.R.id.text1)).setText("");
+////	            ((TextView)v.findViewById(android.R.id.text1)).setHint(getItem(getCount())); //"Hint to be displayed"
+////	        }
+////
+////	        return v;
+////	    }
+////		@Override
+////	    public int getCount() {
+////	        return super.getCount()-1; // you dont display last item. It is used as hint.
+////	    }
+////	};
+////	
+////	unitsdataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+////	
+////	//the list of strings that are added 
+////	List<String> added = new ArrayList<String>();
+////	
+////	//go through the foods and add their units to the units data adapter
+////	for (ParseObject food : foods) {
+////		String units = food.getString("units");
+////		// this if initially adds in a string to added the first time
+////		if (added.isEmpty()) {
+////			added.add(units);
+////			unitsdataAdapter.add(units);
+////		}
+////		// added isn't empty, so we will see if it's in there, if it isn't
+////		// we add to adapter
+////		else if (added.contains(units) == false) {
+////			added.add(units);
+////			unitsdataAdapter.add(units);
+////		}
+////	}
+////	
+////	//add in the new and select units manually (select units won't show up when dropped down)
+////	unitsdataAdapter.add("New");
+////	unitsdataAdapter.add("Select Units");
+////	units_dropdown.setAdapter(unitsdataAdapter);
+////	units_dropdown.setSelection(unitsdataAdapter.getCount());
+////	units_dropdown.setOnItemSelectedListener(this);
+//	
+//	
+////	//adapter for the categories
+////	ArrayAdapter<String> categorydataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item) {
+////		@Override
+////	    public View getView(int position, View convertView, ViewGroup parent) {
+////
+////	        View v = super.getView(position, convertView, parent);
+////	        if (position == getCount()) {
+////	            ((TextView)v.findViewById(android.R.id.text1)).setText("");
+////	            ((TextView)v.findViewById(android.R.id.text1)).setHint(getItem(getCount())); //"Hint to be displayed"
+////	        }
+////
+////	        return v;
+////	    }       
+////
+////	    @Override
+////	    public int getCount() {
+////	        return super.getCount()-1; // you dont display last item. It is used as hint.
+////	    }
+////	};
+////	categorydataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+////	
+////	//clear the added list before populating for category
+////	added.clear();
+////	
+////	//go through the foods and add their categories to the category data adapter
+////	for(ParseObject food : foods) {
+////		String category = food.getString("category");
+////		//this if initially adds in a string to added the first time
+////		if(added.isEmpty()) {
+////			added.add(category);
+////			categorydataAdapter.add(category);
+////		}
+////		//added isn't empty, so we will see if it's in there, if it isn't we add to adapter
+////		else if(added.contains(category) == false) {
+////			added.add(category);
+////			categorydataAdapter.add(category);
+////		}
+////	}
+////	
+////	//add in the new and select units manually (select category won't show up when dropped down)
+////	categorydataAdapter.add("New");
+////	categorydataAdapter.add("Select a Category");
+////	category_dropdown.setAdapter(categorydataAdapter);
+////	category_dropdown.setSelection(categorydataAdapter.getCount());
+////	category_dropdown.setOnItemSelectedListener(this);
+//	
+//	populateUnits("");
+//	populateCategories("");
+//}
+    
 }
