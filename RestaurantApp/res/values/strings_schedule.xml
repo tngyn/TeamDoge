@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <!-- SHIFT STRINGS -->
+    <string name="shift_hours">All Day, Every Day</string>
+    <string name="user_name">Dogge Doge</string>
+    <string name="position">DOGE Manager</string>
+    <string name="image_desc">Gaze upon the Dogely visage</string>
+	<string name="status">Status</string>
+    
+    <!-- OTHER -->
+    <string name="header">HEADER</string>
+    <string name="sample">SAMPLE</string>
+    
+</resources>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="5dip" >
+
+
+    <!-- SHIFT HOURS -->
+
+    <TextView
+        android:id="@+id/shift_hours"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/shift_hours"
+        android:clickable="false"
+        android:linksClickable="false"
+        android:textColor="#040404"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:typeface="sans"
+        android:paddingLeft="5dip" />
+
+    <!-- POSITION -->
+
+     <TextView
+        android:id="@+id/position"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/shift_hours"
+        android:layout_marginTop="1dip"
+        android:text="@string/position"
+        android:clickable="false"
+        android:linksClickable="false"
+        android:textColor="#343434"
+        android:textSize="14sp"
+        tools:ignore="SmallSp"
+        android:paddingLeft="5dip" />
+     
+     <!-- STATUS -->
+     
+     <TextView
+        android:id="@+id/status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@id/position"
+        android:layout_marginRight="5dip"
+        android:gravity="right"
+        android:text="@string/status"
+        android:textColor="#10bcc9"
+        android:textSize="13sp"
+        tools:ignore="SmallSp" />
+
+
+</RelativeLayout>

@@ -107,8 +107,14 @@ public class PageSlidingTabStripFragment extends Fragment {
 				  ManagerFragment m = new ManagerFragment();
 				  return m;
 				}
-				else
-				  return SuperAwesomeCardFragment.newInstance(position);
+				else {
+					MyShiftFragment ms = new MyShiftFragment();
+					return ms;
+				  //return SuperAwesomeCardFragment.newInstance(position);
+				}
+			case 1:
+				ScheduleFragment schedule = new ScheduleFragment();
+				return schedule;
 			default:
 				return SuperAwesomeCardFragment.newInstance(position);
 			}
