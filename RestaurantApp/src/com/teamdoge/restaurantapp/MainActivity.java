@@ -219,7 +219,7 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 			getSupportFragmentManager().beginTransaction()
 				.replace(R.id.content,
 						View_Profile.newInstance()).commit();
-			getActionBar().setTitle("Tracking Menu");
+			getActionBar().setTitle("Profile");
 			
 			break;
 			
