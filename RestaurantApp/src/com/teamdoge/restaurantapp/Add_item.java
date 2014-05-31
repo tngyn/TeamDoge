@@ -89,6 +89,7 @@ import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 public class Add_item extends FragmentActivity implements OnItemSelectedListener, InvAddPageDropdownFrag.OnFragmentInteractionListener{
 	//used to clear all the text boxes (initialize them for typing)
@@ -188,13 +189,21 @@ public class Add_item extends FragmentActivity implements OnItemSelectedListener
 	    		    		Toast toast = Toast.makeText(context, text, duration);
 	    		    		toast.show();
 	    		    		
+	    		    		String userId ="";
+	    		    		ParseUser currentUser = ParseUser.getCurrentUser();
+	    		    		if(currentUser != null){
+	    		    			userId = currentUser.getObjectId();
+	    		    		}
+	    		    		
 	    		    		//send the information to the DB.
 	    		    		ParseObject food = new ParseObject("Food");
 	    		    		food.put("name", foodName);
 	    		    		food.put("quantity", quan);
+	    		    		food.put("shrinkTrackQuantity", quan);
 	    		    		food.put("description", description);
 	    		    		food.put("units", units);
 	    		    		food.put("category", categories);
+	    		    		food.put("userId", userId);
 	    		    		food.saveInBackground();
 	    		    		onBackPressed();
 						}

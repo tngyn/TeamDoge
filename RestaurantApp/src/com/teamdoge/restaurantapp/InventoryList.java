@@ -216,20 +216,24 @@ public class InventoryList extends Fragment {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
         }
-        
+        Log.wtf("Array", ""+groupList.isEmpty());
         for(ParseObject food : foods) {
             String category = food.getString("category");
-            if(groupList.contains(category) == false)
+            if(groupList.contains(category) == false || groupList.isEmpty()){
+            	Log.wtf("category", category);
             	groupList.add(category);
+            }
         }
+        Log.wtf("Array", ""+groupList.size());
+        
 	}
 
 	private void createCollection() {
-		int index = 0;
 		// preparing items in category(child)
 		// set a query to check the food items
 		ParseQuery<ParseObject> query = ParseQuery.getQuery("Food");
 		for (int i = 0; i < groupList.size(); i++) {
+			int index = 0;
 			// try to find a food with the same name as the one we entered.
 			query.whereEqualTo("category", groupList.get(i));
 			try {
@@ -240,11 +244,19 @@ public class InventoryList extends Fragment {
 			}
 
 			String[] category1 = new String[foodNames.size()];
+			Log.wtf("Food Name Size", ""+foodNames.size());
+			Log.wtf("Category Size", ""+category1.length);
+			for(ParseObject food : foodNames)
+				Log.wtf("Fod Names in foodnames: ", food.getString("name"));
+			Log.wtf("Index before if statement", "" + index);
 			if (foodNames.isEmpty() == false) {
 				for (ParseObject foodObj : foodNames) {
 					category1[index] = foodObj.getString("name");
+					Log.wtf("index before increment", "" + index);
 					index++;
+					Log.wtf("category1 item added", "index: " + (index - 1) + " name: " + category1[index-1]);
 				}
+				
 				listInventory = new LinkedHashMap<String, List<String>>();
 
 				for (String category : groupList) {
