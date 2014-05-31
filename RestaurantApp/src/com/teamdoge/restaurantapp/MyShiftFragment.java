@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
@@ -325,11 +326,14 @@ public class MyShiftFragment extends ListFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		
-		prepareMyShiftList();
+//		prepareMyShiftList();
 
-        TwoTextArrayAdapter adapter = new TwoTextArrayAdapter(getActivity().getBaseContext(), items);
-        setListAdapter(adapter);
-       
+//        TwoTextArrayAdapter adapter = new TwoTextArrayAdapter(getActivity().getBaseContext(), items);
+//        setListAdapter(adapter);
+		
+		MyAsyncTaskHelper task = new MyAsyncTaskHelper();
+		task.execute();
+		
 		return super.onCreateView(inflater, container, savedInstanceState);		
 	}
 	
@@ -388,6 +392,25 @@ public class MyShiftFragment extends ListFragment {
 	
 	private void postShift() {
 	
+	}
+	
+	private class MyAsyncTaskHelper extends AsyncTask<Void, Void, List<ListItem>> {
+
+		@Override
+		protected List<ListItem> doInBackground(Void... params) {
+			// TODO Auto-generated method stub
+			prepareMyShiftList();
+			
+			return items;
+			
+		}
+		
+		@Override
+		protected void onPostExecute(List<ListItem> items) {
+			TwoTextArrayAdapter adapter = new TwoTextArrayAdapter(getActivity().getBaseContext(), items);
+	        setListAdapter(adapter);
+		}
+		
 	}
 
 }
