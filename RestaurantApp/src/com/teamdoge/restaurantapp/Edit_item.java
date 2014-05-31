@@ -7,6 +7,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -42,28 +43,54 @@ public class Edit_item extends FragmentActivity implements OnItemSelectedListene
     protected void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_item);
-        
+        Intent intent = getIntent();
+        String item = intent.getStringExtra("item");
+        Log.wtf("In EDIT", item);
         //Parse.initialize(this, "fb0rPJ5AFeAx5JNdMV7Yxlcw3paruRc2XNPjOUWo", "fDpkgdVM4vwTTjYdQSq5kMRyuoEQzt6JCuI3ivWC");
         
         Parse.initialize(this, "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8", "k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF");
         
         //init = "";
         //initialize the food name box
-        item_name_box = (EditText) findViewById(R.id.item_name_box);
+        item_name_box = (EditText) findViewById(R.id.edititem_name_box);
+        item_name_box.setText(item);
+        item_name_box.setFocusable(false);
         //initialize the quantity box
-        quantity_box = (EditText) findViewById(R.id.quant_box);
+        quantity_box = (EditText) findViewById(R.id.editquant_box);
         //initialize the description box
-        descrip_box = (EditText) findViewById(R.id.description_box);
+        descrip_box = (EditText) findViewById(R.id.editdescription_box);
         //call the method that initializes all the textboxes. We set everything to empty.
         clearBoxes();
+        fillInfo(item);
 
         //get out dropdown objects here
-        category_dropdown = (Spinner) findViewById(R.id.categories_dropdown);
-        units_dropdown = (Spinner) findViewById(R.id.units_dropdown);
+        category_dropdown = (Spinner) findViewById(R.id.editcategories_dropdown);
+        units_dropdown = (Spinner) findViewById(R.id.editunits_dropdown);
         //populate our dropdown menus with options and set their item select listeners
         populateDropdowns();
         //category_dropdown.
       
+    }
+    
+    public void fillInfo(String item){
+    	ParseQuery<ParseObject> itemQ = ParseQuery.getQuery("Food");
+    	
+    	itemQ.whereEqualTo("name", item);
+    	List<ParseObject> foods = null;
+    	try {
+    		foods = itemQ.find();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	int quanty = foods.get(0).getInt("quantity");
+    	String quantString = "" + quanty;
+    	quantity_box.setText(quantString);
+    	quantity_box.setFocusable(false);
+    	String unit = foods.get(0).getString("units");
+    	//TODO: units_dropdown.setT;
+    	//TODO: units_dropdown.setFocusable(false);
+    	//units_dropdown.setSelec;
     }
     
     public void submit(View view){
@@ -166,7 +193,6 @@ public class Edit_item extends FragmentActivity implements OnItemSelectedListene
     public void clearBoxes(){
     	//set all the text to the empty string
     	String init = "";
-    	item_name_box.setText(init);
     	quantity_box.setText(init);
     	descrip_box.setText(init);    	
     }
