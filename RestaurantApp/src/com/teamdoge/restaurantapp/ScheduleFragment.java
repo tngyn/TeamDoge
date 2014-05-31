@@ -13,11 +13,17 @@ import com.parse.ParseUser;
 import com.parse.ParseException;
 import com.teamdoge.schedules.*;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 public class ScheduleFragment extends ListFragment {
 	
@@ -48,8 +54,8 @@ public class ScheduleFragment extends ListFragment {
 	private ArrayList<String> NAME;
 	private ArrayList<String> POSITION;
 	private List<List<String>> TIME;
+
 	
-    
     // Array of integers points to images stored in /res/drawable/
     // Needs access to individual photos
     int[] img = new int[]{
@@ -93,10 +99,14 @@ public class ScheduleFragment extends ListFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		
-		createScheduleList();
+//		createScheduleList();
+		
 
-        TwoTextArrayAdapter adapter = new TwoTextArrayAdapter(getActivity().getBaseContext(), items);
-        setListAdapter(adapter);
+//		TwoTextArrayAdapter adapter = new TwoTextArrayAdapter(getActivity().getBaseContext(), items);
+//        setListAdapter(adapter);
+		
+		MyAsyncTaskHelper task = new MyAsyncTaskHelper();
+		task.execute();
        
 		return super.onCreateView(inflater, container, savedInstanceState);		
 	}
@@ -206,5 +216,23 @@ public class ScheduleFragment extends ListFragment {
 		}
 	}
 	
+	private class MyAsyncTaskHelper extends AsyncTask<Void, Void, List<ListItem>> {
 
+		@Override
+		protected List<ListItem> doInBackground(Void... params) {
+			// TODO Auto-generated method stub
+			createScheduleList();
+			
+			return items;
+			
+		}
+		
+		@Override
+		protected void onPostExecute(List<ListItem> items) {
+			TwoTextArrayAdapter adapter = new TwoTextArrayAdapter(getActivity().getBaseContext(), items);
+	        setListAdapter(adapter);
+		}
+		
+	}
+	
 }

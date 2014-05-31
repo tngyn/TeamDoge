@@ -1,6 +1,8 @@
 package com.teamdoge.restaurantapp;
 
 
+import java.util.List;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -9,14 +11,18 @@ import com.parse.Parse;
 import com.parse.ParseUser;
 import com.teamdoge.login.LoginActivity;
 import com.teamdoge.restaurantapp.ManagerFragment.OnFragmentInteractionListener;
+import com.teamdoge.schedules.ListItem;
+import com.teamdoge.schedules.TwoTextArrayAdapter;
 import com.teamdoge.trackingmenu.TrackingMenuFragment;
 import com.teamdoge.userprofile.View_Profile;
 
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
@@ -29,6 +35,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 
@@ -53,13 +60,27 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 
 	ParseUser user;
 	private String accountType;
+	
+	ProgressBar bar;
+	
+	private Boolean isFrag0Visible;
+	private Boolean isFrag1Visible;
+	private Boolean isFrag2Visible;
+	private Boolean isFrag3Visible;
+	private PageSlidingTabStripFragment frag0 ;
+	private InventoryList frag1;
+	private TrackingMenuFragment frag2;
+	private View_Profile frag3;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+//		bar = (ProgressBar) findViewById(R.id.progressBarMainActivity);
+//		new MyTask().execute();
 
-
+		initFragments();
+		
 		Parse.initialize(this, "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8", "k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF");
 
 		user = ParseUser.getCurrentUser();
@@ -183,46 +204,114 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 
 	private void selectItem(int position) {
 
+		mDrawerLayout.closeDrawer(mDrawerList);
+		
+		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+
 		switch (position) {
 		// Schedule
 		case 0:
-
-			getSupportFragmentManager()
-			.beginTransaction()
-			.replace(R.id.content,
-					PageSlidingTabStripFragment.newInstance(),
-					PageSlidingTabStripFragment.TAG).commit();
+			
+			if (isFrag0Visible) {
+				ft.show(frag0);
+			}
+			else {
+				ft.hide(frag1);
+				ft.hide(frag2);
+				ft.hide(frag3);
+				ft.show(frag0);
+				isFrag0Visible = true;
+				isFrag1Visible = false;
+				isFrag2Visible = false;
+				isFrag3Visible = false;
+			}
+			ft.commit();
+			
+//			getSupportFragmentManager()
+//			.beginTransaction()
+//			.replace(R.id.content,
+//					PageSlidingTabStripFragment.newInstance(),
+//					PageSlidingTabStripFragment.TAG).commit();
+			
 			getActionBar().setTitle("Schedule");
 			break;
 
 		// Inventory
 		case 1:
-			getSupportFragmentManager().beginTransaction()
-			.replace(R.id.content,
-				InventoryList.newInstance()).commit();
+			
+			if (isFrag1Visible) {
+				ft.show(frag1);
+			}
+			else {
+				ft.hide(frag0);
+				ft.hide(frag2);
+				ft.hide(frag3);
+				ft.show(frag1);
+				isFrag0Visible = false;
+				isFrag1Visible = true;
+				isFrag2Visible = false;
+				isFrag3Visible = false;
+			}
+			ft.commit();
+			
+//			getSupportFragmentManager().beginTransaction()
+//			.replace(R.id.content,
+//				InventoryList.newInstance()).commit();
+			
 			getActionBar().setTitle("Inventory");
 			break;
 
 		// Tracking Menu
 		case 2:
-
-			getSupportFragmentManager().beginTransaction()
-				.replace(R.id.content,
-					TrackingMenuFragment.newInstance()).commit();
+			
+			if (isFrag2Visible) {
+				ft.show(frag2);
+			}
+			else {
+				ft.hide(frag0);
+				ft.hide(frag1);
+				ft.hide(frag3);
+				ft.show(frag2);
+				isFrag0Visible = false;
+				isFrag1Visible = false;
+				isFrag2Visible = true;
+				isFrag3Visible = false;
+			}
+			ft.commit();
+			
+//			getSupportFragmentManager().beginTransaction()
+//				.replace(R.id.content,
+//					TrackingMenuFragment.newInstance()).commit();
+			
 			getActionBar().setTitle("Tracking Menu");
-			Log.wtf("test", "NOT IN CASE 2 LOL");
 			break;
 
 		// Profile
 		case 3:
+
+			if (isFrag3Visible) {
+				ft.show(frag3);
+			}
+			else {
+				ft.hide(frag0);
+				ft.hide(frag1);
+				ft.hide(frag2);
+				ft.show(frag3);
+				isFrag0Visible = false;
+				isFrag1Visible = false;
+				isFrag2Visible = false;
+				isFrag3Visible = true;
+			}
+			ft.commit();
 			
-			getSupportFragmentManager().beginTransaction()
-				.replace(R.id.content,
-						View_Profile.newInstance()).commit();
+//			getSupportFragmentManager().beginTransaction()
+//				.replace(R.id.content,
+//						View_Profile.newInstance()).commit();
+			
 			getActionBar().setTitle("Profile");
-			
 			break;
-			
+		
+		// Logout
 		case 4:
 
 			Intent intent = new Intent(MainActivity.this, LoginActivity.class);
@@ -233,20 +322,9 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 	    	user = ParseUser.getCurrentUser();
 	    	finish();
 	    	break;
-
-		default:
-
-			Fragment fragment = new NavigationDrawerSections();
-			Bundle args = new Bundle();
-			args.putInt(NavigationDrawerSections.ARG_SECTION_NUMBER, position);
-			fragment.setArguments(args);
-
-			getSupportFragmentManager().beginTransaction()
-					.replace(R.id.content, fragment).commit();
-			break;
+	    	
 		}
 
-		mDrawerLayout.closeDrawer(mDrawerList);
 	}
 
 
@@ -257,4 +335,30 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 
 	}
 
+	private void initFragments() {
+		
+		frag0 = PageSlidingTabStripFragment.newInstance();
+		frag1 = InventoryList.newInstance();
+		frag2 = TrackingMenuFragment.newInstance();
+		frag3 = View_Profile.newInstance();
+		
+		isFrag0Visible = true;
+		isFrag1Visible = false;
+		isFrag2Visible = false;
+		isFrag3Visible = false;
+		
+		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+		ft.add(R.id.content, frag0);
+		ft.add(R.id.content, frag1);
+		ft.add(R.id.content, frag2);
+		ft.add(R.id.content, frag3);
+		
+		ft.hide(frag1);
+		ft.hide(frag2);
+		ft.hide(frag3);
+		
+		ft.commit();
+		
+	}
+	
 }

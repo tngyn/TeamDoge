@@ -55,6 +55,7 @@ public class DayShiftsManagementActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		
 		getActionBar().setDisplayHomeAsUpEnabled(true);
+		
 		Parse.initialize(this, "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8", "k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF");
 		super.onCreate(savedInstanceState);
 		ParseUser curruser = ParseUser.getCurrentUser();

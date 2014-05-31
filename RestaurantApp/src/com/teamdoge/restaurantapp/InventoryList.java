@@ -34,7 +34,7 @@ import com.teamdoge.restaurantapp.ManagerFragment.OnFragmentInteractionListener;
  * to create an instance of this fragment.
  * 
  */
-public class InventoryList extends Fragment {
+public class InventoryList extends Fragment implements Runnable {
 	// TODO: Rename parameter arguments, choose names that match
 	// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 	private static final String ARG_PARAM1 = "param1";
@@ -92,9 +92,9 @@ public class InventoryList extends Fragment {
 		// View v = inflater.inflate(R.layout.fragment_manager, container,
 		// false);
 		/*************** ExpandableView for Inventory ***********************/
-		createGroupList();
-
-		createCollection();
+		
+		run();
+		
 		View v = inflater.inflate(R.layout.activity_inventory_list, container,
 				false);
 		expListView = (ExpandableListView) v.findViewById(R.id.categoryList);
@@ -226,6 +226,16 @@ public class InventoryList extends Fragment {
 			return super.onOptionsItemSelected(item);
 		}
 
+	}
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
+		
+		createGroupList();
+
+		createCollection();
 	}
 
 }
