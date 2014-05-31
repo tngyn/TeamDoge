@@ -110,6 +110,11 @@ public class SignUpActivity extends Activity {
 					    eUsername.setError(null);
 					    rePassword.setError(null);
 					    //If username box is empty show error and prevent register
+					    if (username.length() <= 1) {
+					        eUsername.setError("Username too short");
+					        eUsername.requestFocus();
+					        keepGoing = false;
+					    }
 					    if (TextUtils.isEmpty(username)) {
 					    	eUsername.setError(getString(R.string.error_field_required));
 					    	eUsername.requestFocus();
