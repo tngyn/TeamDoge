@@ -75,13 +75,12 @@ public class LoginActivity extends Activity {
 		Parse.initialize(this, "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8", "k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF");
 		setContentView(R.layout.activity_login);
 		ParseUser user = ParseUser.getCurrentUser();
-		
-
-		
-		
-		
-		if (user != null)
+		if (user != null) {
 			remember = user.getBoolean("Remember_Me");
+			
+			if (remember)
+				Log.d("ASD", "true");
+		}
 		if (user != null && remember) {
 			Intent intent = new Intent(LoginActivity.this, MainActivity.class);
 			startActivity(intent);

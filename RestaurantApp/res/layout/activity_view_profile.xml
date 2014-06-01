@@ -69,17 +69,5 @@
         android:text="Set Available Times"
         android:onClick="setAvailableTimes" />
 
-    <Button
-        android:id="@+id/button2"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/imageView1"
-        android:layout_marginLeft="26dp"
-        android:layout_marginTop="21dp"
-        android:onClick="editProfile"
-        android:text="Edit" />
-
 </RelativeLayout>
    

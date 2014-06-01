@@ -50,7 +50,7 @@
         android:inputType="textEmailAddress" />
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/cancel_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/editEmailText"
@@ -60,11 +60,11 @@
         android:onClick="cancelEdit" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/submit_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/button1"
-        android:layout_alignBottom="@+id/button1"
+        android:layout_alignBaseline="@id/cancel_btn"
+        android:layout_alignBottom="@id/cancel_btn"
         android:layout_alignRight="@+id/editEmailText"
         android:text="Confirm" 
         android:onClick="applyEdit"/>
