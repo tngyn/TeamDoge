@@ -194,10 +194,9 @@ public class Add_item extends FragmentActivity implements OnItemSelectedListener
 	    		    		Toast toast = Toast.makeText(context, text, duration);
 	    		    		toast.show();
 	    		    		
-	    		    		//get current user, they're id is tagged to each food that's created
-	    		    		String userId = "";
+	    		    		String userId ="";
 	    		    		ParseUser currentUser = ParseUser.getCurrentUser();
-	    		    		if(currentUser != null) {
+	    		    		if(currentUser != null){
 	    		    			userId = currentUser.getObjectId();
 	    		    		}
 	    		    		
@@ -207,15 +206,17 @@ public class Add_item extends FragmentActivity implements OnItemSelectedListener
 	    		    		food.put("name", foodName);
 	    		    		//quantity of the food to track original value
 	    		    		food.put("quantity", quan);
-	    		    		//shrink tracking quantity for reduction when meals ordered
+	    		    		
 	    		    		food.put("shrinkTrackQuantity", quan);
-	    		    		//description of food
+
 	    		    		food.put("description", description);
 	    		    		//units of food e.g. oz. lbs. kg.
 	    		    		food.put("units", units);
 	    		    		//categories of the food
 	    		    		food.put("category", categories);
+
 	    		    		//userId associated with each food.
+
 	    		    		food.put("userId", userId);
 	    		    		food.saveInBackground();
 	    		    		onBackPressed();
