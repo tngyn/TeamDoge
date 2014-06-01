@@ -27,6 +27,13 @@
     	android:spinnerMode="dropdown"
     	android:paddingTop="5dp"/>
     
+    <Button android:id="@+id/menuAddIngredient"
+        android:layout_width="125dp"
+        android:layout_height="50dp"
+        android:text="@string/addIngredient" 
+        android:layout_gravity="center_horizontal"
+        style="?android:attr/borderlessButtonStyle"/>
+    
     <TextView
         	android:id="@+id/mealDescriptionLabelText"
         	android:layout_width="wrap_content"
@@ -48,7 +55,7 @@
     		android:orientation="horizontal" 
     		android:paddingTop="20dp">
    	
-			<Button
+			<Button android:id="@+id/menuItemSubmit"
         		android:layout_width="100dp"
         		android:layout_height="wrap_content"
         		android:text="@string/button_submit" 
@@ -56,7 +63,7 @@
         		android:onClick="submit"
         		style="?android:attr/borderlessButtonStyle"/>
     
-    		<Button
+    		<Button android:id="@+id/menuItemCancel"
         		android:layout_width="100dp"
         		android:layout_height="wrap_content"
         		android:text="@string/button_cancel"

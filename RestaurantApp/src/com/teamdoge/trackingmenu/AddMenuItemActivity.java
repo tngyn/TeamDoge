@@ -1,38 +1,36 @@
 package com.teamdoge.trackingmenu;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.app.Fragment;
+import android.content.Context;
+import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 import com.teamdoge.restaurantapp.InvAddPageDropdownFrag;
 import com.teamdoge.restaurantapp.R;
-import com.teamdoge.restaurantapp.R.layout;
-
-import android.app.Activity;
-import android.app.Dialog;
-import android.app.DialogFragment;
-import android.app.Fragment;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.AdapterView.OnItemSelectedListener;
 
 public class AddMenuItemActivity extends FragmentActivity
-		implements OnItemSelectedListener, InvAddPageDropdownFrag.OnFragmentInteractionListener {
+		implements OnItemSelectedListener, MealIngredientsFragment.OnFragmentInteractionListener {
 	
 		//used to clear all the text boxes (initialize them for typing)
 		//private String init; (I don't think we need this here)
@@ -40,8 +38,9 @@ public class AddMenuItemActivity extends FragmentActivity
 		private EditText meal_name_box;
 		private EditText descrip_box;
 		private Spinner category_dropdown;
+		private List ingredientListItemList;
 		
-		List<String> categorylist;
+		private List<String> categorylist;
 	    
 	    @Override
 	    protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +49,12 @@ public class AddMenuItemActivity extends FragmentActivity
 	        getActionBar().setDisplayHomeAsUpEnabled(true);
 			
 			setContentView(R.layout.activity_add_menu_item);
+			
+//			if (savedInstanceState == null) {
+//		        getSupportFragmentManager().beginTransaction()
+//		                .add(R.id.container, new android.support.v4.app.Fragment())
+//		                .commit();
+//		    }
 	        
 //	        Parse.initialize(this, "fb0rPJ5AFeAx5JNdMV7Yxlcw3paruRc2XNPjOUWo", "fDpkgdVM4vwTTjYdQSq5kMRyuoEQzt6JCuI3ivWC");
 	        
@@ -67,9 +72,21 @@ public class AddMenuItemActivity extends FragmentActivity
 	        //get out dropdown objects here
 	        category_dropdown = (Spinner) findViewById(R.id.meal_categories_dropdown);
 	        //populate our dropdown menus with options and set their item select listeners
-	        populateDropdowns();
+	        populateCategories("");
 	        //category_dropdown.
+	        
+	        ingredientListItemList = new ArrayList();
+	        ingredientListItemList.add(new IngredientListItem("Example 1"));
+	        ingredientListItemList.add(new IngredientListItem("Example 2"));
+	        ingredientListItemList.add(new IngredientListItem("Example 3"));
+	        IngredientListAdapter mAdapter = new IngredientListAdapter(AddMenuItemActivity.this, ingredientListItemList);
 	      
+	    }
+	    
+	    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+	        IngredientListItem item = (IngredientListItem) this.ingredientListItemList.get(position);
+	        Toast.makeText(AddMenuItemActivity.this, item.getIngredientName() + " Clicked!"
+	                , Toast.LENGTH_SHORT).show();
 	    }
 	    
 	    public void submit(View view){
@@ -91,16 +108,16 @@ public class AddMenuItemActivity extends FragmentActivity
 	    	if(everythingWorks){
 	    		
 	    		//set a query to check the food items
-	    		ParseQuery<ParseObject> query = ParseQuery.getQuery("Food");
+	    		ParseQuery<ParseObject> query = ParseQuery.getQuery("Menu");
 	    		
 	    		//try to find a food with the same name as the one we entered.
-	    		query.whereEqualTo("name", foodName);
+	    		query.whereEqualTo("name", "menuItemName");
 	    		
 	    		query.findInBackground(new FindCallback<ParseObject>() {
-	    		    public void done(List<ParseObject> foodNames, ParseException e) {
+	    		    public void done(List<ParseObject> menuItemNames, ParseException e) {
 	    		        if (e == null) {
 	    		    		//The item already exists in the database if isEmpty is false
-							if (foodNames.isEmpty() == false) {
+							if (menuItemNames.isEmpty() == false) {
 								Context context = getApplicationContext();
 								CharSequence text = "Item Already Exists";
 								int duration = Toast.LENGTH_SHORT;
@@ -119,12 +136,21 @@ public class AddMenuItemActivity extends FragmentActivity
 		    		    		Toast toast = Toast.makeText(context, text, duration);
 		    		    		toast.show();
 		    		    		
+		    		    		//get current user, they're id is tagged to each food that's created
+		    		    		String userId = "";
+		    		    		ParseUser currentUser = ParseUser.getCurrentUser();
+		    		    		if(currentUser != null) {
+		    		    			userId = currentUser.getObjectId();
+		    		    		}
+		    		    		
 		    		    		//send the information to the DB.
-		    		    		ParseObject food = new ParseObject("Food");
-		    		    		food.put("name", foodName);
+		    		    		ParseObject food = new ParseObject("Menu");
+		    		    		food.put("menuItemName", foodName);
 		    		    		food.put("description", description);
 		    		    		food.put("category", categories);
+		    		    		food.put("userId", userId);
 		    		    		food.saveInBackground();
+		    		    		onBackPressed();
 							}
 	    		        	
 	    		        } else {    		            	
@@ -150,9 +176,7 @@ public class AddMenuItemActivity extends FragmentActivity
 	    }
 	    
 	    public void cancel(View view){
-	    	clearBoxes();
-	    	category_dropdown.setSelection(1);
-	    	
+	    	onBackPressed();	    	
 	    }
 	    
 	    public void clearBoxes(){
@@ -162,84 +186,31 @@ public class AddMenuItemActivity extends FragmentActivity
 	    	descrip_box.setText(init);    	
 	    }
 	    
-	    public void populateDropdowns() { 	
-	    	
-	    	//ParseUser user = ParseUser.getCurrentUser(); gets the current user.
-	    	
-	    	//populate the units dropdown here.
-//	    	List<String> unitslist = new ArrayList<String>();
-//	    	unitslist.add("Select Units");
-//	    	unitslist.add("lbs.");
-//	    	unitslist.add("oz.");
-//	    	unitslist.add("litres");
-//	    	unitslist.add("New");
-	    	ArrayAdapter<String> unitsdataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item) {
-	    		@Override
-	    	    public View getView(int position, View convertView, ViewGroup parent) {
-
-	    	        View v = super.getView(position, convertView, parent);
-	    	        if (position == getCount()) {
-	    	            ((TextView)v.findViewById(android.R.id.text1)).setText("");
-	    	            ((TextView)v.findViewById(android.R.id.text1)).setHint(getItem(getCount())); //"Hint to be displayed"
-	    	        }
-
-	    	        return v;
-	    	    }
-	    		@Override
-	    	    public int getCount() {
-	    	        return super.getCount()-1; // you dont display last item. It is used as hint.
-	    	    }
-	    	};
-//	    	ArrayAdapter<String> unitsdataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, unitslist);
-	    	unitsdataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-	    	unitsdataAdapter.add("lbs.");
-	    	unitsdataAdapter.add("oz.");
-	    	unitsdataAdapter.add("litres");
-	    	unitsdataAdapter.add("New");
-	    	unitsdataAdapter.add("Select Units");
-	    	
-	    	//populate the categories dropdown here.
-	    	//clear the list, then add in the new items
-//	    	categorylist = new ArrayList<String>();
-//	    	categorylist.clear();
-//	    	categorylist.add("Meat");
-//	    	categorylist.add("Veggies");
-//	    	categorylist.add("Sweets");
-//	    	categorylist.add("New");
-//	    	categorylist.add("Select a Category");
-	    	ArrayAdapter<String> categorydataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item) {
-	    		@Override
-	    	    public View getView(int position, View convertView, ViewGroup parent) {
-
-	    	        View v = super.getView(position, convertView, parent);
-	    	        if (position == getCount()) {
-	    	            ((TextView)v.findViewById(android.R.id.text1)).setText("");
-	    	            ((TextView)v.findViewById(android.R.id.text1)).setHint(getItem(getCount())); //"Hint to be displayed"
-	    	        }
-
-	    	        return v;
-	    	    }       
-
-	    	    @Override
-	    	    public int getCount() {
-	    	        return super.getCount()-1; // you dont display last item. It is used as hint.
-	    	    }
-	    	};
-	    	categorydataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-	    	categorydataAdapter.add("Meat");
-	    	categorydataAdapter.add("Veggies");
-	    	categorydataAdapter.add("Sweets");
-	    	categorydataAdapter.add("New");
-	    	categorydataAdapter.add("Select a Category");
-	    	category_dropdown.setAdapter(categorydataAdapter);
-	    	category_dropdown.setSelection(categorydataAdapter.getCount());
-	    	category_dropdown.setOnItemSelectedListener(this);
-	    }
-	    
 	    public void populateCategories(String newCategory) {
 	    	//populate the categories dropdown here.
-	    	//clear the list, then add in the new items
 	    	
+	    	//get the current userID
+	    	String userId = "";
+			ParseUser currentUser = ParseUser.getCurrentUser();
+			if(currentUser != null) {
+				userId = currentUser.getObjectId();
+			}
+			
+			//Find all the foods that are tied to this id
+			ParseQuery<ParseObject> query = ParseQuery.getQuery("Menu");
+			query.whereEqualTo("userId", userId);
+			List<ParseObject> meals = null;
+			try {
+				meals = query.find();
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			//list of added categories we'll be checking against for duplicates.
+			List<String> added = new ArrayList<String>();
+	    	
+			//create our own category adapter
 	    	ArrayAdapter<String> categorydataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item) {
 	    		@Override
 	    	    public View getView(int position, View convertView, ViewGroup parent) {
@@ -259,45 +230,43 @@ public class AddMenuItemActivity extends FragmentActivity
 	    	    }
 	    	};
 	    	categorydataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-	    	categorydataAdapter.add(newCategory);
-	    	categorydataAdapter.add("Meat");
-	    	categorydataAdapter.add("Veggies");
-	    	categorydataAdapter.add("Sweets");
+	    	
+	    	//position we'll set the selection to
+	    	int position = 0;
+	    	
+	    	//if the newCategory is empty, we don't do add anything to the 0'th position
+	    	//otherwise we set the newCategory as the 0'th position.
+			if (newCategory != "") {
+				categorydataAdapter.add(newCategory);
+			}
+			
+			//go through the foods and add their categories to the category data adapter
+	    	for(ParseObject meal : meals) {
+	    		String category = meal.getString("category");
+	    		//this if initially adds in a string to added the first time
+	    		if(added.isEmpty()) {
+	    			added.add(category);
+	    			categorydataAdapter.add(category);
+	    		}
+	    		//added isn't empty, so we will see if it's in there, if it isn't we add to adapter
+	    		else if(added.contains(category) == false) {
+	    			added.add(category);
+	    			categorydataAdapter.add(category);
+	    		}
+	    	}
+			
+			//add in the new and select units manually (select category won't show up when dropped down)
 	    	categorydataAdapter.add("New");
 	    	categorydataAdapter.add("Select a Category");
-	    	category_dropdown.setAdapter(categorydataAdapter);
-	    	category_dropdown.setSelection(0);
-	    }
-	    
-	    public void populateUnits(String newCategory) {
-	    	//populate the units dropdown here.
-	    	//clear the list, then add in the new items
 	    	
-	    	ArrayAdapter<String> unitsdataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item) {
-	    		@Override
-	    	    public View getView(int position, View convertView, ViewGroup parent) {
-
-	    	        View v = super.getView(position, convertView, parent);
-	    	        if (position == getCount()) {
-	    	            ((TextView)v.findViewById(android.R.id.text1)).setText("");
-	    	            ((TextView)v.findViewById(android.R.id.text1)).setHint(getItem(getCount())); //"Hint to be displayed"
-	    	        }
-
-	    	        return v;
-	    	    }       
-
-	    	    @Override
-	    	    public int getCount() {
-	    	        return super.getCount()-1; // you dont display last item. It is used as hint.
-	    	    }
-	    	};
-	    	unitsdataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-	    	unitsdataAdapter.add(newCategory);
-	    	unitsdataAdapter.add("Meat");
-	    	unitsdataAdapter.add("Veggies");
-	    	unitsdataAdapter.add("Sweets");
-	    	unitsdataAdapter.add("New");
-	    	unitsdataAdapter.add("Select a Category");
+	    	//one more check for if newCategory is empty or not since we have to set the position if it is.
+	    	if (newCategory == "") {
+				position = categorydataAdapter.getCount();
+			}
+	    	
+	    	category_dropdown.setAdapter(categorydataAdapter);
+	    	category_dropdown.setSelection(position);
+	    	category_dropdown.setOnItemSelectedListener(this);
 	    }
 	    
 	    public void showNewCategoryDialog() {
@@ -306,23 +275,21 @@ public class AddMenuItemActivity extends FragmentActivity
 	    	//newFragment.show(manager, tag);
 	    }
 	    
-	    public void showNewUnitsDialog() {
-	    	DialogFragment newFragment = new InvAddPageDropdownFrag();
-	    	newFragment.show(this.getFragmentManager(), "units");
-	    }
 	    
 	    @Override
 		public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-			if (parent.equals(category_dropdown)) {
+// Only one if statement if no units_dropdown since the parent is always category dropdown.
+//	    	if (parent.equals(category_dropdown)) {
 				if (parent.getItemAtPosition(position).toString() == "New") {
 					showNewCategoryDialog();
 				}
-			} 
-			else {
-				if(parent.getItemAtPosition(position).toString() == "New") {
-					showNewUnitsDialog();
-				}
-			}
+//			} 
+//Don't need units as far as I know.
+//			else {
+//				if(parent.getItemAtPosition(position).toString() == "New") {
+//					showNewUnitsDialog();
+//				}
+//			}
 			
 		}
 	    
@@ -341,14 +308,16 @@ public class AddMenuItemActivity extends FragmentActivity
 			EditText newItemToAdd = (EditText) dialogView.findViewById(R.id.new_item_box);
 			String newItemAdding = newItemToAdd.getText().toString();
 			
-	    	Fragment prev = getFragmentManager().findFragmentByTag("categories");
-			if (prev != null) {
+//			Always gonna be categories if there's no units.
+//	    	Fragment prev = getFragmentManager().findFragmentByTag("categories");
+//			if (prev != null) {
 				//the fragment is called by categories dropdown
 				populateCategories(newItemAdding);
-			}else {
-				//the fragment is called by units dropdown
-				populateUnits(newItemAdding);
-			}
+//			}
+//			else {
+//				//the fragment is called by units dropdown
+//				populateUnits(newItemAdding);
+//			}
 	    }
 	    
 	    @Override
@@ -377,4 +346,97 @@ public class AddMenuItemActivity extends FragmentActivity
 	    }
 
 	}
+
+	//we don't need units as far as I know
+//    public void populateUnits(String newCategory) {
+//    	//populate the units dropdown here
+//
+//		//the list of strings that are added 
+//		List<String> added = new ArrayList<String>();
+//		
+//    	//get the current userID
+//    	String userId = "";
+//		ParseUser currentUser = ParseUser.getCurrentUser();
+//		if(currentUser != null) {
+//			userId = currentUser.getObjectId();
+//		}
+//		
+//		//Find all the foods that are tied to this id
+//		ParseQuery<ParseObject> query = ParseQuery.getQuery("Food");
+//		query.whereEqualTo("userId", userId);
+//		List<ParseObject> foods = null;
+//		try {
+//			foods = query.find();
+//		} catch (ParseException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+//		//units datadapter that we're making
+//    	ArrayAdapter<String> unitsdataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item) {
+//    		@Override
+//    	    public View getView(int position, View convertView, ViewGroup parent) {
+//
+//    	        View v = super.getView(position, convertView, parent);
+//    	        if (position == getCount()) {
+//    	            ((TextView)v.findViewById(android.R.id.text1)).setText("");
+//    	            ((TextView)v.findViewById(android.R.id.text1)).setHint(getItem(getCount())); //"Hint to be displayed"
+//    	        }
+//
+//    	        return v;
+//    	    }
+//    		@Override
+//    	    public int getCount() {
+//    	        return super.getCount()-1; // you dont display last item. It is used as hint.
+//    	    }
+//    	};
+//    	
+//    	unitsdataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//		
+//		//position we'll set the selection to
+//    	int position = 0;
+//    	
+//    	//if the newCategory is empty, we don't do add anything to the 0'th position
+//    	//otherwise we set the newCategory as the 0'th position.
+//		if (newUnits != "") {
+//			unitsdataAdapter.add(newUnits);
+//		}
+//    	
+//		//go through the foods and add their units to the units data adapter
+//		for (ParseObject food : foods) {
+//			String units = food.getString("units");
+//			// this if initially adds in a string to added the first time
+//			if (added.isEmpty()) {
+//				added.add(units);
+//				unitsdataAdapter.add(units);
+//			}
+//			// added isn't empty, so we will see if it's in there, if it isn't
+//			// we add to adapter
+//			else if (added.contains(units) == false) {
+//				added.add(units);
+//				unitsdataAdapter.add(units);
+//			}
+//		}
+//		
+//		//add in the new and select units manually (select units won't show up when dropped down)
+//    	unitsdataAdapter.add("New");
+//    	unitsdataAdapter.add("Select Units");
+//    	
+//    	//one more check for if newCategory is empty or not since we have to set the position if it is.
+//    	if (newUnits == "") {
+//			position = unitsdataAdapter.getCount();
+//		}
+//    	
+//    	units_dropdown.setAdapter(unitsdataAdapter);
+//    	units_dropdown.setSelection(position);
+//    	units_dropdown.setOnItemSelectedListener(this);
+//    }
+    
+// Don't need unit as far as I know
+//    public void showNewUnitsDialog() {
+//    	DialogFragment newFragment = new InvAddPageDropdownFrag();
+//    	newFragment.show(this.getFragmentManager(), "units");
+//    }
+	
 }
+

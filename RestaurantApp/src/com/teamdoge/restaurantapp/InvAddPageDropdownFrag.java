@@ -115,7 +115,11 @@ public class InvAddPageDropdownFrag extends DialogFragment {
 		}
 	}	
 	
-	
+	@Override
+	public void onDetach() {
+		super.onDetach();
+		mListener = null;
+	}	
 
 //	@Override
 //	public void onCreate(Bundle savedInstanceState) {
@@ -145,11 +149,6 @@ public class InvAddPageDropdownFrag extends DialogFragment {
 //
 
 //
-//	@Override
-//	public void onDetach() {
-//		super.onDetach();
-//		mListener = null;
-//	}
 //	
 //	public void launchDialog(adding_inventory_item_page item){
 //		final Dialog dialog = new Dialog(item);

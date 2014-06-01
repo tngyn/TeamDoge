@@ -22,6 +22,7 @@
     <string name="title_activity_add__item">Add_Item</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_add_item">Add_item</string>
+    <string name="addIngredient">Add Ingredient</string>
     
     
     <!-- Navigation drawer items -->
@@ -68,5 +69,7 @@
     <string name="title_activity_view__profile">View_Profile</string>
     <string name="paintdis">Set Available Times</string>
     <string name="title_activity_edit__profile">Edit_Profile</string>
+    <string name="add_ingredients_dialog_box">Please Add a New ingredient</string>
+    <string name="add">Add</string>
 
 </resources>
