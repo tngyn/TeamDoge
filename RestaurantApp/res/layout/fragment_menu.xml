@@ -2,13 +2,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.teamdoge.restaurantapp.MenuFragment" >
 
     <!-- TODO: Update blank fragment layout -->
-
+	<LinearLayout 
+       	android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:orientation="horizontal" 
+    	android:paddingTop="5dp">
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_width="175dp"
+        android:layout_height="35dp"
+        android:text="@string/hello_blank_fragment"
+        android:id="@+id/newIngredient"
+        android:layout_gravity="center_horizontal"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/hello_blank_fragment" 
+        android:layout_weight = "1"
+        android:id="@+id/newIngredientUnitAmount"
+        android:layout_gravity="center_horizontal"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/hello_blank_fragment" 
+        android:layout_weight = "1"
+        android:id="@+id/newIngredientUnitType"
+        android:layout_gravity="center_horizontal"/>
+    </LinearLayout>
+
 
 </FrameLayout>

@@ -25,6 +25,7 @@ import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 public class adding_inventory_item_page extends FragmentActivity implements OnItemSelectedListener, InvAddPageDropdownFrag.OnFragmentInteractionListener{
 	//used to clear all the text boxes (initialize them for typing)
@@ -43,9 +44,9 @@ public class adding_inventory_item_page extends FragmentActivity implements OnIt
     	super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inventory_screen);
         
-        Parse.initialize(this, "fb0rPJ5AFeAx5JNdMV7Yxlcw3paruRc2XNPjOUWo", "fDpkgdVM4vwTTjYdQSq5kMRyuoEQzt6JCuI3ivWC");
+        //Parse.initialize(this, "fb0rPJ5AFeAx5JNdMV7Yxlcw3paruRc2XNPjOUWo", "fDpkgdVM4vwTTjYdQSq5kMRyuoEQzt6JCuI3ivWC");
         
-        //Parse.initialize(this, "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8", "k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF");
+        Parse.initialize(this, "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8", "k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF");
         
         //init = "";
         //initialize the food name box
@@ -63,6 +64,13 @@ public class adding_inventory_item_page extends FragmentActivity implements OnIt
         //populate our dropdown menus with options and set their item select listeners
         populateDropdowns();
         //category_dropdown.
+        
+        String userId = "";
+		ParseUser currentUser = ParseUser.getCurrentUser();
+		if(currentUser != null) {
+			userId = currentUser.getObjectId();
+		}
+		Log.wtf("HEY OVER HERE", userId);
       
     }
     
@@ -124,13 +132,21 @@ public class adding_inventory_item_page extends FragmentActivity implements OnIt
 	    		    		Toast toast = Toast.makeText(context, text, duration);
 	    		    		toast.show();
 	    		    		
+//	    		    		String userId = "";
+//	    		    		ParseUser currentUser = ParseUser.getCurrentUser();
+//	    		    		if(currentUser != null) {
+//	    		    			userId = currentUser.getObjectId();
+//	    		    		}
+	    		    		
 	    		    		//send the information to the DB.
 	    		    		ParseObject food = new ParseObject("Food");
 	    		    		food.put("name", foodName);
 	    		    		food.put("quantity", quan);
 	    		    		food.put("description", description);
 	    		    		food.put("units", units);
+//	    		    		food.put("userId", userId);
 	    		    		food.put("category", categories);
+//	    		    		Log.wtf("HEY OVER HERE", userId);
 	    		    		food.saveInBackground();
 						}
     		        	

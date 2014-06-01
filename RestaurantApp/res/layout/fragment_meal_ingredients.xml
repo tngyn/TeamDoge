@@ -1,12 +1,65 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
     tools:context="com.teamdoge.trackingmenu.MealIngredientsFragment" >
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="@+string/add_ingredients_dialog_box" />
+    
+    <EditText android:id="@+id/new_ingredient_box"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginBottom="4dp"
+        android:fontFamily="sans-serif"
+        android:hint="@string/newOptionBoxHint"/>
+    
+    <LinearLayout 
+        	android:layout_width="fill_parent"
+    		android:layout_height="wrap_content"
+    		android:orientation="horizontal" 
+    		android:paddingTop="4dp">
+        
+        <TextView
+        	android:id="@+id/quantLabelText"
+        	android:layout_width="125dp"
+        	android:layout_height="wrap_content"
+        	android:layout_weight="1"
+        	android:text="@string/quantityLabel" />
+        
+        <TextView
+        	android:id="@+id/unitsLabelText"
+        	android:layout_width="125dp"
+        	android:layout_height="wrap_content"
+        	android:layout_weight="1"
+        	android:text="@string/unitsLabel" />
+        
+    </LinearLayout>
+    
+    <LinearLayout
+    		android:layout_width="fill_parent"
+    		android:layout_height="wrap_content"
+    		android:orientation="horizontal" 
+    		android:paddingTop="2dp">
+    
+        <EditText android:id="@+id/new_ingredients_quant_box"
+        	android:layout_width="125dp"
+       		android:layout_height="50dp"
+        	android:layout_weight="1"
+        	android:inputType="phone"
+        	android:hint="@string/quantity_hint" />
+    	
+    	<Spinner android:id="@+id/new_ingredient_units_dropdown"
+    		android:layout_width="125dp"
+    		android:layout_height="50dp" 
+    		android:layout_weight="1"
+    		android:spinnerMode="dropdown"/>
+    </LinearLayout>
 
-</FrameLayout>
+</LinearLayout>

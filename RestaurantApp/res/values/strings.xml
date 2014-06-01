@@ -66,5 +66,7 @@
     <string name="paintdis">Set Available Times</string>
     <string name="title_activity_edit__profile">Edit_Profile</string>
     <string name="title_activity_menu_list">MenuList</string>
+    <string name="add_ingredients_dialog_box">Please Add a New ingredient</string>
+    <string name="add">Add</string>
 
 </resources>

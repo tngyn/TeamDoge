@@ -196,8 +196,9 @@ public class Add_item extends FragmentActivity implements OnItemSelectedListener
 	    		    		
 	    		    		String userId ="";
 	    		    		ParseUser currentUser = ParseUser.getCurrentUser();
-	    		    		if(currentUser != null){
-	    		    			userId = currentUser.getObjectId();
+
+	    		    		if(currentUser != null) {
+	    		    			userId = currentUser.getString("Owner_Acc");
 	    		    		}
 	    		    		
 	    		    		//send the information to the DB.
@@ -264,7 +265,7 @@ public class Add_item extends FragmentActivity implements OnItemSelectedListener
     	String userId = "";
 		ParseUser currentUser = ParseUser.getCurrentUser();
 		if(currentUser != null) {
-			userId = currentUser.getObjectId();
+			userId = currentUser.getString("Owner_Acc");
 		}
 		
 		//Find all the foods that are tied to this id
@@ -338,6 +339,8 @@ public class Add_item extends FragmentActivity implements OnItemSelectedListener
     	category_dropdown.setAdapter(categorydataAdapter);
     	category_dropdown.setSelection(position);
     	category_dropdown.setOnItemSelectedListener(this);
+    	
+    	
     }
     
     public void populateUnits(String newUnits) {
@@ -350,7 +353,7 @@ public class Add_item extends FragmentActivity implements OnItemSelectedListener
     	String userId = "";
 		ParseUser currentUser = ParseUser.getCurrentUser();
 		if(currentUser != null) {
-			userId = currentUser.getObjectId();
+			userId = currentUser.getString("Owner_Acc");
 		}
 		
 		//Find all the foods that are tied to this id
