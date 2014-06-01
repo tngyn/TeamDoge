@@ -11,6 +11,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -28,7 +30,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-public class Edit_item extends FragmentActivity implements OnItemSelectedListener, InvAddPageDropdownFrag.OnFragmentInteractionListener{
+public class View_Item extends FragmentActivity implements OnItemSelectedListener, InvAddPageDropdownFrag.OnFragmentInteractionListener{
 	//used to clear all the text boxes (initialize them for typing)
 	//private String init; (I don't think we need this here)
 	
@@ -37,40 +39,41 @@ public class Edit_item extends FragmentActivity implements OnItemSelectedListene
 	private EditText descrip_box;
 	private Spinner category_dropdown;
 	private Spinner units_dropdown;
-	
+	private String itemName;
 	List<String> categorylist;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_item);
+        setContentView(R.layout.activity_view__item);
         Intent intent = getIntent();
-        String item = intent.getStringExtra("item");
-        Log.wtf("IN EDIT", item);
+        itemName = intent.getStringExtra("item");
+        //Log.wtf("In EDIT", item);
         //Parse.initialize(this, "fb0rPJ5AFeAx5JNdMV7Yxlcw3paruRc2XNPjOUWo", "fDpkgdVM4vwTTjYdQSq5kMRyuoEQzt6JCuI3ivWC");
         
         Parse.initialize(this, "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8", "k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF");
         
+        //init = "";
         //initialize the food name box
-        item_name_box = (EditText) findViewById(R.id.edititem_name_box);
-        Log.wtf("ITEM BOX", ".");
-        item_name_box.setText(item);
+        item_name_box = (EditText) findViewById(R.id.viewItem_name_box);
+        item_name_box.setText(itemName);
+        item_name_box.setFocusable(false);
         //initialize the quantity box
-        quantity_box = (EditText) findViewById(R.id.editquant_box);
+        quantity_box = (EditText) findViewById(R.id.viewQuant_box);
         //initialize the description box
-        descrip_box = (EditText) findViewById(R.id.editdescription_box);
+        descrip_box = (EditText) findViewById(R.id.viewDescription_box);
         //call the method that initializes all the textboxes. We set everything to empty.
         clearBoxes();
 
 
         //get out dropdown objects here
-        category_dropdown = (Spinner) findViewById(R.id.editcategories_dropdown);
-        units_dropdown = (Spinner) findViewById(R.id.editunits_dropdown);
+        category_dropdown = (Spinner) findViewById(R.id.viewCategories_dropdown);
+        units_dropdown = (Spinner) findViewById(R.id.viewUnits_dropdown);
         //populate our dropdown menus with options and set their item select listeners
         //populateDropdowns();
         populateCategories("");
         populateUnits("");
-        fillInfo(item);
+        fillInfo(itemName);
       
     }
     
@@ -88,6 +91,7 @@ public class Edit_item extends FragmentActivity implements OnItemSelectedListene
     	int quanty = foods.get(0).getInt("quantity");
     	String quantString = "" + quanty;
     	quantity_box.setText(quantString);
+    	quantity_box.setFocusable(false);
     	//Unit dropdown
     	String unit = foods.get(0).getString("units");
     	for( int i = 0; i < units_dropdown.getCount(); i++){
@@ -110,6 +114,7 @@ public class Edit_item extends FragmentActivity implements OnItemSelectedListene
     	//Description
     	String description = foods.get(0).getString("description");
     	descrip_box.setText(description);
+    	descrip_box.setFocusable(false);
     }
     
     public void submit(View view){
@@ -151,7 +156,7 @@ public class Edit_item extends FragmentActivity implements OnItemSelectedListene
     		    public void done(List<ParseObject> foodNames, ParseException e) {
     		        if (e == null) {
     		    		//The item already exists in the database if isEmpty is false
-						/*if (foodNames.isEmpty() == false) {
+						if (foodNames.isEmpty() == false) {
 							Context context = getApplicationContext();
 							CharSequence text = "Item Already Exists";
 							int duration = Toast.LENGTH_SHORT;
@@ -159,9 +164,7 @@ public class Edit_item extends FragmentActivity implements OnItemSelectedListene
 							toast.show();
 						}
 						//item doesn't exist yet, add it.
-						else {*/
-    		        		//if(foodNames.isEmpty() == true)
-    		        			
+						else {
 							//clear all the boxes
 	    		        	clearBoxes();
 	    		    		
@@ -173,8 +176,7 @@ public class Edit_item extends FragmentActivity implements OnItemSelectedListene
 	    		    		toast.show();
 	    		    		
 	    		    		//send the information to the DB.
-	    		    		//ParseObject food = new ParseObject("Food");
-	    		    		ParseObject food = foodNames.get(0);
+	    		    		ParseObject food = new ParseObject("Food");
 	    		    		food.put("name", foodName);
 	    		    		food.put("quantity", quan);
 	    		    		food.put("description", description);
@@ -182,7 +184,7 @@ public class Edit_item extends FragmentActivity implements OnItemSelectedListene
 	    		    		food.put("category", categories);
 	    		    		food.saveInBackground();
 	    		    		onBackPressed();
-						//}
+						}
     		        	
     		        } else {    		            	
     		        	//fatal error, this should never happen
@@ -593,4 +595,32 @@ public class Edit_item extends FragmentActivity implements OnItemSelectedListene
     		units_dropdown.setSelection(units_dropdown.getAdapter().getCount());
     	}
     }
+   /* @Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		inflater.inflate(R.menu.menu, menu);
+	}*/
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.view__profile, menu);
+        return true;
+    }
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+		switch (item.getItemId()) {
+
+		case R.id.actionEdit:
+			Intent intent = new Intent(View_Item.this, Edit_item.class);
+			intent.putExtra("item", itemName);
+			startActivity(intent);
+			return true;
+
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+
+	}
+
 }

@@ -151,10 +151,11 @@ public class InventoryList extends Fragment implements Runnable {
 
 		public boolean onChildClick(ExpandableListView parent, View v,
 				int groupPosition, int childPosition, long id) {
-			Intent mIntent = new Intent(getActivity(), Edit_item.class);
-			Log.wtf("CLICK: ", getValue(groupPosition, childPosition));
+			Intent mIntent = new Intent(getActivity(), View_Item.class);
+			//Log.wtf("CLICK: ", getValue(groupPosition, childPosition));
 			mIntent.putExtra("item", getValue(groupPosition, childPosition));
 			startActivity(mIntent);
+			
 			return false;
 		}
 
@@ -168,12 +169,8 @@ public class InventoryList extends Fragment implements Runnable {
 													// of the Set
 		for (Iterator<String> i = keys.iterator(); i.hasNext();) {
 			String key = (String) i.next();
-			List<String> value = (List<String>) listInventory.get(key); // Here
-																		// is an
-																		// Individual
-																		// Record
-																		// in
-																		// your
+			List<String> value = (List<String>) listInventory.get(key); // Here is an Individual
+																		// Record in your
 																		// HashMap
 			if (c == groupPos) {
 				temp = value.get(childPos);
@@ -190,7 +187,7 @@ public class InventoryList extends Fragment implements Runnable {
         String userId = "";
 		ParseUser currentUser = ParseUser.getCurrentUser();
         if(currentUser != null) {
-                userId = currentUser.getObjectId();
+                userId = currentUser.getString("Owner_Acc");
         }
        
         //Find all the foods that are tied to this id
