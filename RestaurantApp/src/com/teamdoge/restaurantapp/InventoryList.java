@@ -151,10 +151,11 @@ public class InventoryList extends Fragment implements Runnable {
 
 		public boolean onChildClick(ExpandableListView parent, View v,
 				int groupPosition, int childPosition, long id) {
-			Intent mIntent = new Intent(getActivity(), Edit_item.class);
-			Log.wtf("CLICK: ", getValue(groupPosition, childPosition));
+			Intent mIntent = new Intent(getActivity(), View_Item.class);
+			//Log.wtf("CLICK: ", getValue(groupPosition, childPosition));
 			mIntent.putExtra("item", getValue(groupPosition, childPosition));
 			startActivity(mIntent);
+			
 			return false;
 		}
 
@@ -168,12 +169,8 @@ public class InventoryList extends Fragment implements Runnable {
 													// of the Set
 		for (Iterator<String> i = keys.iterator(); i.hasNext();) {
 			String key = (String) i.next();
-			List<String> value = (List<String>) listInventory.get(key); // Here
-																		// is an
-																		// Individual
-																		// Record
-																		// in
-																		// your
+			List<String> value = (List<String>) listInventory.get(key); // Here is an Individual
+																		// Record in your
 																		// HashMap
 			if (c == groupPos) {
 				temp = value.get(childPos);
@@ -190,7 +187,7 @@ public class InventoryList extends Fragment implements Runnable {
         String userId = "";
 		ParseUser currentUser = ParseUser.getCurrentUser();
         if(currentUser != null) {
-                userId = currentUser.getObjectId();
+                userId = currentUser.getString("Owner_Acc");
         }
        
         //Find all the foods that are tied to this id
@@ -218,6 +215,7 @@ public class InventoryList extends Fragment implements Runnable {
 		// preparing items in category(child)
 		// set a query to check the food items
 		ParseQuery<ParseObject> query = ParseQuery.getQuery("Food");
+		listInventory = new LinkedHashMap<String, List<String>>();
 		for (int i = 0; i < groupList.size(); i++) {
 			int index = 0;
 			// try to find a food with the same name as the one we entered.
@@ -237,18 +235,20 @@ public class InventoryList extends Fragment implements Runnable {
 					index++;
 				}
 				//Log.wtf("Category", ""+category1[0]);
-				listInventory = new LinkedHashMap<String, List<String>>();
-
-				for (String category : groupList) {
-					if (category.equals(groupList.get(i))) {
+				
+				//for (String category : groupList) {
+					//if (category.equals(groupList.get(i))) {
 						//Log.wtf("Equal -> loadchild",category+" "+groupList.get(i));
 						loadChild(category1);
-					}
+					//}
 					//Log.wtf("Category", category+" Item: "+childList.get(0));
-					listInventory.put(category, childList);
-				}
+					//listInventory.put(category, childList);
+				listInventory.put(groupList.get(i).toString(), childList);
+				//}
+				//Log.wtf("List:", listInventory.toString().toString());
 			}
 		}
+		//Log.wtf("List Inventory", listInventory.toString().toString());
 	}
 
 	private void loadChild(String[] itemList) {
