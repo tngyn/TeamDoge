@@ -256,8 +256,9 @@ public class Add_item extends FragmentActivity implements OnItemSelectedListener
     	descrip_box.setText(init);    	
     }
     
-    public void populateCategories(String newCategory) {
-    	//populate the categories dropdown here.
+    public List<String> setAdapterList(String type){
+    	//create the list that will be used to populate the adapters
+    	List<String> added = new ArrayList<String>();
     	
     	//get the current userID
     	String userId = "";
@@ -265,6 +266,7 @@ public class Add_item extends FragmentActivity implements OnItemSelectedListener
 		if(currentUser != null) {
 			userId = currentUser.getString("Owner_Acc");
 		}
+		
 		
 		//Find all the foods that are tied to this id
 		ParseQuery<ParseObject> query = ParseQuery.getQuery("Food");
@@ -276,6 +278,26 @@ public class Add_item extends FragmentActivity implements OnItemSelectedListener
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		// go through the foods and add their units to the units data adapter
+		for (ParseObject food : foods) {
+			String units = food.getString(type);
+			// this if initially adds in a string to added the first time
+			if (added.isEmpty()) {
+				added.add(units);
+			}
+			// added isn't empty, so we will see if it's in there, if it isn't
+			// we add to adapter
+			else if (added.contains(units) == false) {
+				added.add(units);
+			}
+		}
+		
+		return added;
+    }
+    
+    public void populateCategories(String newCategory) {
+    	//populate the categories dropdown here.
 		
 		//list of added categories we'll be checking against for duplicates.
 		List<String> added = new ArrayList<String>();
@@ -310,20 +332,10 @@ public class Add_item extends FragmentActivity implements OnItemSelectedListener
 			categorydataAdapter.add(newCategory);
 		}
 		
-		//go through the foods and add their categories to the category data adapter
-    	for(ParseObject food : foods) {
-    		String category = food.getString("category");
-    		//this if initially adds in a string to added the first time
-    		if(added.isEmpty()) {
-    			added.add(category);
-    			categorydataAdapter.add(category);
-    		}
-    		//added isn't empty, so we will see if it's in there, if it isn't we add to adapter
-    		else if(added.contains(category) == false) {
-    			added.add(category);
-    			categorydataAdapter.add(category);
-    		}
-    	}
+    	added = setAdapterList("category");
+    	
+    	for(String units : added)
+			categorydataAdapter.add(units);
 		
 		//add in the new and select units manually (select category won't show up when dropped down)
     	categorydataAdapter.add("New");
@@ -346,25 +358,7 @@ public class Add_item extends FragmentActivity implements OnItemSelectedListener
 
 		//the list of strings that are added 
 		List<String> added = new ArrayList<String>();
-		
-    	//get the current userID
-    	String userId = "";
-		ParseUser currentUser = ParseUser.getCurrentUser();
-		if(currentUser != null) {
-			userId = currentUser.getString("Owner_Acc");
-		}
-		
-		//Find all the foods that are tied to this id
-		ParseQuery<ParseObject> query = ParseQuery.getQuery("Food");
-		query.whereEqualTo("userId", userId);
-		List<ParseObject> foods = null;
-		try {
-			foods = query.find();
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+
 		//units datadapter that we're making
     	ArrayAdapter<String> unitsdataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item) {
     		@Override
@@ -394,22 +388,11 @@ public class Add_item extends FragmentActivity implements OnItemSelectedListener
 		if (newUnits != "") {
 			unitsdataAdapter.add(newUnits);
 		}
-    	
-		//go through the foods and add their units to the units data adapter
-		for (ParseObject food : foods) {
-			String units = food.getString("units");
-			// this if initially adds in a string to added the first time
-			if (added.isEmpty()) {
-				added.add(units);
-				unitsdataAdapter.add(units);
-			}
-			// added isn't empty, so we will see if it's in there, if it isn't
-			// we add to adapter
-			else if (added.contains(units) == false) {
-				added.add(units);
-				unitsdataAdapter.add(units);
-			}
-		}
+		
+		added = setAdapterList("units");
+		
+		for(String units : added)
+			unitsdataAdapter.add(units);
 		
 		//add in the new and select units manually (select units won't show up when dropped down)
     	unitsdataAdapter.add("New");
