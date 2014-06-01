@@ -99,6 +99,7 @@
         </activity>
         <activity android:name="com.teamdoge.restaurantapp.View_Item"
             android:label="@string/title_activity_view__item"
+            android:noHistory="true"
             >
         </activity>
     </application>

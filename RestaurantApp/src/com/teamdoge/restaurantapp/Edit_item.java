@@ -183,6 +183,7 @@ public class Edit_item extends FragmentActivity implements OnItemSelectedListene
 	    		    		food.put("category", categories);
 	    		    		food.saveInBackground();
 	    		    		onBackPressed();
+	    		    		
 						//}
     		        	
     		        } else {    		            	
