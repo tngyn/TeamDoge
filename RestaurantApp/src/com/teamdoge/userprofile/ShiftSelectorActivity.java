@@ -3,6 +3,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.parse.Parse;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
 import com.teamdoge.userprofile.ExpandableListAdapterTimePicker;
 import com.teamdoge.restaurantapp.R;
 import com.teamdoge.restaurantapp.R.id;
@@ -19,10 +24,12 @@ import android.widget.ExpandableListView.OnChildClickListener;
  
 public class ShiftSelectorActivity extends Activity implements OnClickListener {
  
-    ExpandableListAdapterTimePicker listAdapter;
-    View expListView;
-    List<String> listDataHeader;
-    HashMap<String, List<String>> listDataChild;
+    protected ExpandableListAdapterTimePicker listAdapter;
+    protected View expListView;
+    protected List<String> listDataHeader;
+    protected HashMap<String, List<String>> listDataChild;
+    protected  List<List<String>> parseList;
+    protected ParseQuery<ParseObject> query;
  
     
     public void selectShift(View v) {
@@ -39,6 +46,7 @@ public class ShiftSelectorActivity extends Activity implements OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Parse.initialize(this, "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8", "k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF");
         setContentView(R.layout.fragment_shift_selector);
         Log.d("Debugging", "creating activity");
  
@@ -78,15 +86,31 @@ public class ShiftSelectorActivity extends Activity implements OnClickListener {
         listDataHeader.add("Friday");
         listDataHeader.add("Saturday");
         listDataHeader.add("Sunday");
- 
-        // Adding child data
-        List<String> shifts = new ArrayList<String>();
-        shifts.add("11 am - 2 pm");
-        shifts.add("2 pm - 4 pm");
-        shifts.add("4 pm - 8pm");
+		query = ParseQuery.getQuery("Schedule");
+		ParseUser user = ParseUser.getCurrentUser();
+		String restaurantId = user.getString("Owner_Acc");
+		Log.d("ASD", restaurantId);
+		query.whereEqualTo( "Id", restaurantId );
 
+        
+		try {
+			List<ParseObject> scheduleList = query.find();
+			ParseObject schedule = scheduleList.get(0);
+
+			
+			for (int i = 0; i < listDataHeader.size(); i++) {
+				Log.d("ASDAS","Trying" + listDataHeader.get(i));
+				parseList.add((List) schedule.getList(listDataHeader.get(i)));
+				Log.d("ASDAS","Success" + parseList.get(i).size());
+			}
+		}
+		catch (ParseException e1) {
+			e1.printStackTrace();
+		}
+
+        Log.d("ASDAS","ASD");
         for (int i = 0; i < 7; i++) {
-        	listDataChild.put(listDataHeader.get(i), shifts); // Header, Child data
+        	listDataChild.put(listDataHeader.get(i), parseList.get(i)); // Header, Child data
 
         }
     }
