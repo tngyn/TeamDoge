@@ -14,10 +14,13 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.teamdoge.login.LoginActivity;
 import com.teamdoge.login.SignUpActivity;
+import com.teamdoge.schedules.ListItem;
+import com.teamdoge.schedules.TwoTextArrayAdapter;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -53,6 +56,11 @@ public class DayShiftsManagementActivity extends Activity {
 	private ParseObject scheduleObject;
 	private static boolean[][] working;
 	private static int[] indexArray;
+    private final String AM = ":00 AM";
+    private final String PM = ":00 PM";
+    private final String DASH = " - ";
+    protected static String[][] names;
+    protected static String Day;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -61,60 +69,9 @@ public class DayShiftsManagementActivity extends Activity {
 		
 		Parse.initialize(this, "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8", "k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF");
 		super.onCreate(savedInstanceState);
-		ParseUser curruser = ParseUser.getCurrentUser();
-	    final String DAY = this.getIntent().getStringExtra("Day");
-	    owner = curruser.getString("Owner_Acc");
-		setContentView(R.layout.activity_day_shifts_management_activity);
-		ParseQuery<ParseObject> query = ParseQuery.getQuery("Schedule");
-		query.whereEqualTo("Id", owner);
-
-		Log.d("Check", "So far so good");
-		try {
-			scheduleList = query.find();
-		} catch (ParseException e1) {
-			e1.printStackTrace();
-		}
-		ParseQuery<ParseObject> shiftquery = ParseQuery.getQuery("Shifts");
-		shiftquery.whereEqualTo("Id", owner);
-
-		Log.d("Check", "schedule is fine");
-		try {
-			shiftList = shiftquery.find();
-		} catch (ParseException e1) {
-			e1.printStackTrace();
-		}
-		scheduleObject = scheduleList.get(0);
-	    temp = (ArrayList<?>) scheduleObject.get(DAY);
-		schedules = new String[temp.size()];
-		schedules = copy(temp, schedules);
-		String[][] names = new String[temp.size()][shiftList.size()];
-		working = new boolean[temp.size()][shiftList.size()];
-		userNames = new ArrayList<String>();
-		shiftsArray = new String[shiftList.size()][schedules.length];
-		for (int i = 0;i < schedules.length; i++) {
-			for (int j = 0; j < shiftList.size(); j++) {
-				shiftObject = shiftList.get(j);
-				if (i == 0) {
-				  userNames.add(shiftObject.getString("Name"));
-				}
-				temp = (ArrayList<?>) shiftObject.get(DAY);
-				shiftsArray[j][i] = (String) temp.get(i);
-				if (temp.get(i).equals("2")) 
-				  working[i][j] = true;
-				else
-				  working[i][j] = false;
-				if (!temp.get(i).equals("0")) {
-				  String value = shiftObject.getString("Name") + ":" + shiftObject.getString("Acc_Type");
-				  names[i][j] = value;
-				}
-			}
-		}
-		mContext = this;
-		shiftsList = (ExpandableListView)findViewById(R.id.shifts);
-		shifts = Shifts.getCategories(schedules, names, working);
-		adapter = new SettingsListAdapter(this, 
-				shifts, shiftsList);
-        shiftsList.setAdapter(adapter);
+	    Day = this.getIntent().getStringExtra("Day");
+	    getData();
+		createView();
         shiftsList.setOnChildClickListener(new OnChildClickListener() {
 			
 			@Override
@@ -158,6 +115,7 @@ public class DayShiftsManagementActivity extends Activity {
 						  shiftObject = shiftList.get(i);
 						  Log.d("TESTING", shiftObject.getString("Name"));
 					      Toast.makeText(getApplicationContext(),"Scheduled Compiled", Toast.LENGTH_LONG).show();
+					      final String DAY = Day;
 						  shiftObject.put(DAY, Arrays.asList(shiftsArray[i]));
 						  shiftObject.saveInBackground();
 						  
@@ -167,6 +125,66 @@ public class DayShiftsManagementActivity extends Activity {
 				});
         
         
+	}
+
+	protected void createView() {
+		mContext = this;
+		shiftsList = (ExpandableListView)findViewById(R.id.shifts);
+		shifts = Shifts.getCategories(schedules, names, working);
+		adapter = new SettingsListAdapter(this, 
+				shifts, shiftsList);
+        shiftsList.setAdapter(adapter);
+	}
+
+	protected void getData() {
+		ParseUser curruser = ParseUser.getCurrentUser();
+	    owner = curruser.getString("Owner_Acc");
+		setContentView(R.layout.activity_day_shifts_management_activity);
+		ParseQuery<ParseObject> query = ParseQuery.getQuery("Schedule");
+		query.whereEqualTo("Id", owner);
+
+		Log.d("Check", "So far so good");
+		try {
+			scheduleList = query.find();
+		} catch (ParseException e1) {
+			e1.printStackTrace();
+		}
+		ParseQuery<ParseObject> shiftquery = ParseQuery.getQuery("Shifts");
+		shiftquery.whereEqualTo("Id", owner);
+
+		Log.d("Check", "schedule is fine");
+		try {
+			shiftList = shiftquery.find();
+		} catch (ParseException e1) {
+			e1.printStackTrace();
+		}
+		scheduleObject = scheduleList.get(0);
+	    temp = (ArrayList<?>) scheduleObject.get(Day);
+		schedules = new String[temp.size()];
+		schedules = copy(temp, schedules);
+		names = new String[temp.size()][shiftList.size()];
+		working = new boolean[temp.size()][shiftList.size()];
+		userNames = new ArrayList<String>();
+		shiftsArray = new String[shiftList.size()][schedules.length];
+		convertShifts();
+		for (int i = 0;i < schedules.length; i++) {
+			for (int j = 0; j < shiftList.size(); j++) {
+				shiftObject = shiftList.get(j);
+				if (i == 0) {
+				  userNames.add(shiftObject.getString("Name"));
+				}
+				temp = (ArrayList<?>) shiftObject.get(Day);
+				shiftsArray[j][i] = (String) temp.get(i);
+				if (temp.get(i).equals("2")) 
+				  working[i][j] = true;
+				else
+				  working[i][j] = false;
+				if (!temp.get(i).equals("0")) {
+				  String value = shiftObject.getString("Name") + ":" + shiftObject.getString("Acc_Type");
+				  names[i][j] = value;
+				}
+			}
+		}
 	}
 	
 	public boolean setArray(int i, int j, String value) {
@@ -203,6 +221,52 @@ public class DayShiftsManagementActivity extends Activity {
 		return destination;
 	}
 	
+	private void convertShifts() {
+		for( int shiftCounter = 0; shiftCounter < schedules.length; ++shiftCounter ){
+			// tokenizes the string into two to get times
+			String[] tokens = schedules[shiftCounter].split("[-]");
+			// convert parsed tokens into integers
+	    	int start = Integer.parseInt(tokens[0]);
+	    	int end = Integer.parseInt(tokens[1]);
+	    	
+	    	// checks if start time is 12 AM
+	    	if( start == 0 ) {
+	    		tokens[0] = "12:00 AM";
+	    	}
+	    	
+	    	else if (start == 12) {
+	    		tokens[0] = "12:00 PM";
+	    	}
+	    	
+	    	// otherwise converts start time
+	    	else if( start < 12 ) {
+	    		tokens[0] = "" + start + AM;
+	    	}
+	    	else {
+	    		tokens[0] = "" + (start - 12) + PM;
+	    	}
+	    	
+	    	// checks if end time is 12 AM
+	    	if( end == 0 ) {
+	    		tokens[1] = "12:00 AM";
+	    	}
+	    	
+	    	else if (end == 12) {
+	    		tokens[0] = "12:00 PM";
+	    	}
+	    	//otherwise converts end time
+	    	else if( end < 12 ) {
+	    		tokens[1] = "" + end + AM;
+	    	}
+	    	else {
+	    		tokens[1] = "" + (end - 12) + PM;
+	    	}
+	    	
+	    	// restructures the shift strings
+	       schedules[shiftCounter] = ( tokens[0] + DASH + tokens[1]);
+		}
+	}
+}
 //	@Override
 //	public boolean onCreateOptionsMenu(Menu menu) {
 //		// Inflate the menu; this adds items to the action bar if it is present.
@@ -210,4 +274,3 @@ public class DayShiftsManagementActivity extends Activity {
 //		return true;
 //	}
 
-}
