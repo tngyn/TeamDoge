@@ -51,8 +51,8 @@ public class View_Profile extends Fragment {
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
 		// link to parse
-		Parse.initialize(getActivity(), "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8", 
-				"k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF");
+
+		Parse.initialize(getActivity(), "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8", "k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF");
 	}
 	
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,

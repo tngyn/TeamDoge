@@ -109,6 +109,7 @@ public class Edit_Profile extends Activity {
 		editPNumberText.setText(tempPhone);
 
 
+
 		if (savedInstanceState == null) {
 			getFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
