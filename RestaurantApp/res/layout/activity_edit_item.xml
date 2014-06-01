@@ -55,7 +55,8 @@
     		android:layout_width="fill_parent"
     		android:layout_height="wrap_content" 
     		android:layout_weight="1"
-    		android:spinnerMode="dropdown"/>
+    		android:spinnerMode="dropdown"
+    		android:clickable="false"/>
     
     	<!-- <EditText android:id="@+id/units_box"
         	android:layout_width="fill_parent"
@@ -74,7 +75,8 @@
     	android:layout_width="fill_parent"
     	android:layout_height="wrap_content" 
     	android:spinnerMode="dropdown"
-    	android:paddingTop="5dp"/>
+    	android:paddingTop="5dp"
+    	android:clickable="false"/>
     
     <TextView
         	android:id="@+id/editdescriptionLabelText"

@@ -186,19 +186,6 @@ public class InventoryList extends Fragment {
 	/*************** ExpandableView for Inventory ***********************/
 	private void createGroupList() {
 		groupList = new ArrayList<String>();
-		/*ParseQuery<ParseObject> query = ParseQuery.getQuery("Food");
-		try {
-			category = query.find();
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		for( ParseObject name : category){
-			if(name.getString("category") != null){
-				groupList.add(name.getString("category"));
-				Log.wtf("CATE", name.getString("category"));
-			}
-		}*/
 		//get the current userID
         String userId = "";
 		ParseUser currentUser = ParseUser.getCurrentUser();
@@ -216,7 +203,6 @@ public class InventoryList extends Fragment {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
         }
-        Log.wtf("Array", ""+groupList.isEmpty());
         for(ParseObject food : foods) {
             String category = food.getString("category");
             if(groupList.contains(category) == false || groupList.isEmpty()){
@@ -244,25 +230,21 @@ public class InventoryList extends Fragment {
 			}
 
 			String[] category1 = new String[foodNames.size()];
-			Log.wtf("Food Name Size", ""+foodNames.size());
-			Log.wtf("Category Size", ""+category1.length);
-			for(ParseObject food : foodNames)
-				Log.wtf("Fod Names in foodnames: ", food.getString("name"));
-			Log.wtf("Index before if statement", "" + index);
 			if (foodNames.isEmpty() == false) {
+				//String[] category1 = new String[foodNames.size()];
 				for (ParseObject foodObj : foodNames) {
 					category1[index] = foodObj.getString("name");
-					Log.wtf("index before increment", "" + index);
 					index++;
-					Log.wtf("category1 item added", "index: " + (index - 1) + " name: " + category1[index-1]);
 				}
-				
+				//Log.wtf("Category", ""+category1[0]);
 				listInventory = new LinkedHashMap<String, List<String>>();
 
 				for (String category : groupList) {
 					if (category.equals(groupList.get(i))) {
+						//Log.wtf("Equal -> loadchild",category+" "+groupList.get(i));
 						loadChild(category1);
 					}
+					//Log.wtf("Category", category+" Item: "+childList.get(0));
 					listInventory.put(category, childList);
 				}
 			}
