@@ -41,7 +41,7 @@
         <activity
             android:name="com.teamdoge.login.SignUpActivity"
             android:label="@string/title_activity_signup"
-            android:parentActivityName="com.teamcom.teamdoge.login.LoginActivity"
+            android:parentActivityName="com.teamdoge.login.LoginActivity"
             android:windowSoftInputMode="adjustResize|stateVisible" >
         </activity>
         <activity
@@ -55,7 +55,7 @@
             android:label="@string/inv_item_page" >
         </activity>
         <activity
-            android:name="com.teamdoge.restaurantacom.teamdoge.login.ForgotPassword"
+            android:name="com.teamdoge.login.ForgotPassword"
             android:label="Forgot Password" >
         </activity>
         <activity
