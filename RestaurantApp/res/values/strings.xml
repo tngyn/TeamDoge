@@ -66,5 +66,6 @@
     <string name="paintdis">Set Available Times</string>
     <string name="title_activity_edit__profile">Edit_Profile</string>
     <string name="title_activity_view__item">View Item</string>
+    <string name="title_activity_manager__view__profile">Manager_View_Profile</string>
 
 </resources>

@@ -97,11 +97,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.teamdoge.restaurantapp.View_Profile" />
         </activity>
-        <activity android:name="com.teamdoge.restaurantapp.View_Item"
-            android:label="@string/title_activity_view__item"
-            >
+        <activity
+            android:name="com.teamdoge.restaurantapp.View_Item"
+            android:label="@string/title_activity_view__item" >
+        </activity>
+        <activity
+            android:name="com.teamdoge.restaurantapp.Manager_View_Profile"
+            android:label="@string/title_activity_manager__view__profile" >
         </activity>
     </application>
 
 </manifest>
-
