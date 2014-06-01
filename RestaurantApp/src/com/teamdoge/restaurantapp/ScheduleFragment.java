@@ -164,10 +164,12 @@ public class ScheduleFragment extends ListFragment {
 			for( int headerCount = 0; headerCount < numOfShifts; ++headerCount ){
 				items.add( new ListHeader(displayShift.get(headerCount)) );
 				for( int shiftCount = 0; shiftCount < numOfEmployees; ++shiftCount ) {
+					if (TIME.get(shiftCount).get(headerCount).length() == 1) {
 					int shiftStatus = Integer.parseInt(TIME.get(shiftCount).get(headerCount));
 					if( shiftStatus > 1 ) {
 						items.add( new ScheduleList( 0, NAME.get(shiftCount),
 								POSITION.get(shiftCount) ) );
+						}
 					}
 				}
 			}

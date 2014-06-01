@@ -111,6 +111,12 @@ public class SignUpActivity extends Activity {
 							schedule.put("Friday", Arrays.asList(times));
 							schedule.put("Saturday", Arrays.asList(times));
 							schedule.put("Id", username);
+							try {
+								schedule.save();
+							} catch (ParseException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 						}
 						else {
 							ownerAcc = ((EditText) mViewOwnerAcc).getText().toString();
@@ -197,6 +203,7 @@ public class SignUpActivity extends Activity {
 						  shifts.put("Id", ownerAcc);
 						  shifts.put("Username", username);
 						  shifts.put("Name", name + " " + lastName);
+						  shifts.put("Acc_Type", String.valueOf(spinner.getSelectedItem()));
 						  shifts.saveInBackground();
 						  user.put("Name", name + " " + lastName);
 						  user.put("Remember_Me", false);
