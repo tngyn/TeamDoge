@@ -71,6 +71,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.Fragment;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -90,6 +91,8 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.teamdoge.schedules.ListItem;
+import com.teamdoge.schedules.TwoTextArrayAdapter;
 
 public class Add_item extends FragmentActivity implements OnItemSelectedListener, InvAddPageDropdownFrag.OnFragmentInteractionListener{
 	//used to clear all the text boxes (initialize them for typing)
@@ -127,8 +130,12 @@ public class Add_item extends FragmentActivity implements OnItemSelectedListener
         units_dropdown = (Spinner) findViewById(R.id.units_dropdown);
         //populate our dropdown menus with options and set their item select listeners
         //populate with "" to initialize it to empty
-        populateUnits("");
-    	populateCategories("");
+//        populateUnits("");
+//    	populateCategories("");
+        
+        MyAsyncTaskHelper task = new MyAsyncTaskHelper();
+        task.execute();
+        
         //category_dropdown.
     	
     	//Set Title to add item
@@ -485,6 +492,25 @@ public class Add_item extends FragmentActivity implements OnItemSelectedListener
     		units_dropdown.setSelection(units_dropdown.getAdapter().getCount());
     	}
     }
+    
+	private class MyAsyncTaskHelper extends AsyncTask<Void, Void, List<ParseObject>> {
+
+		@Override
+		protected List<ParseObject> doInBackground(Void... params) {
+			// TODO Auto-generated method stub
+
+			return background();
+		
+		}
+		
+		@Override
+		protected void onPostExecute(List<ParseObject> items) {
+			populateCategories("");
+			populateUnits("");
+			
+		}
+	}
+		
 
 //  public void populateDropdowns() { 	
 //	
