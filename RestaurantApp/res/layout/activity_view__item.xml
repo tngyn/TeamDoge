@@ -5,12 +5,12 @@
     android:orientation="vertical" >
      
     <TextView
-        android:id="@+id/edititemNameLabelText"
+        android:id="@+id/viewItemNameLabelText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/itemNameLabel" />
     
-    <EditText android:id="@+id/edititem_name_box"
+    <EditText android:id="@+id/viewItem_name_box"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:hint="@string/item_name_hint" 
@@ -23,14 +23,14 @@
     		android:paddingTop="10dp">
         
         <TextView
-        	android:id="@+id/editquantLabelText"
+        	android:id="@+id/viewQuantLabelText"
         	android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
         	android:layout_weight="1"
         	android:text="@string/quantityLabel" />
         
         <TextView
-        	android:id="@+id/editunitsLabelText"
+        	android:id="@+id/viewUnitsLabelText"
         	android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
         	android:layout_weight="1"
@@ -44,19 +44,19 @@
     		android:orientation="horizontal" 
     		android:paddingTop="10dp">
     
-        <EditText android:id="@+id/editquant_box"
+        <EditText android:id="@+id/viewQuant_box"
         	android:layout_width="fill_parent"
        		android:layout_height="wrap_content"
         	android:layout_weight="1"
         	android:inputType="phone"
         	android:hint="@string/quantity_hint" />
     	
-    	<Spinner android:id="@+id/editunits_dropdown"
+    	<Spinner android:id="@+id/viewUnits_dropdown"
     		android:layout_width="fill_parent"
     		android:layout_height="wrap_content" 
     		android:layout_weight="1"
     		android:spinnerMode="dropdown"
-    		/>
+    		android:clickable="false"/>
     
     	<!-- <EditText android:id="@+id/units_box"
         	android:layout_width="fill_parent"
@@ -66,26 +66,26 @@
       </LinearLayout>
     
     <TextView
-        	android:id="@+id/editcategoryLabelText"
+        	android:id="@+id/viewCategoryLabelText"
         	android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
         	android:text="@string/categoryLabel" />
     
-    <Spinner android:id="@+id/editcategories_dropdown"
+    <Spinner android:id="@+id/viewCategories_dropdown"
     	android:layout_width="fill_parent"
     	android:layout_height="wrap_content" 
     	android:spinnerMode="dropdown"
     	android:paddingTop="5dp"
-    	/>
+    	android:clickable="false"/>
     
     <TextView
-        	android:id="@+id/editdescriptionLabelText"
+        	android:id="@+id/viewDescriptionLabelText"
         	android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
         	android:text="@string/descriptionBoxLabel" 
         	android:paddingTop = "10dp"/>
     
-    <EditText android:id="@+id/editdescription_box"
+    <EditText android:id="@+id/viewDescription_box"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:inputType="textMultiLine"
