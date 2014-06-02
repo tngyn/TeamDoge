@@ -1,4 +1,4 @@
-package com.teamdoge.restaurantapp;
+package com.teamdoge.restaurantprofile;
 
 import java.util.ArrayList;
 import java.util.List;

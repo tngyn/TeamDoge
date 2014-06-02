@@ -32,6 +32,16 @@
         <item>Profile</item>
         <item>Log Out</item>
     </string-array>
+    
+        <!-- Navigation drawer items for Owner-->
+    <string-array name="drawer_sections_array_for_owner">
+        <item>Schedule</item>
+        <item>Inventory</item>
+        <item>Tracking Menu</item>
+        <item>Profile</item>
+        <item>Restaurant Profile</item>
+        <item>Log Out</item>
+    </string-array>
 
     <!-- activity_inventory_screen string id's are here -->
     <string name="item_label">Item Name:</string>
