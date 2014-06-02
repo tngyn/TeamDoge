@@ -159,88 +159,123 @@ public class Add_item extends FragmentActivity implements OnItemSelectedListener
     	}
     	
     	final String units = units_dropdown.getSelectedItem().toString();
+    	if(units.equalsIgnoreCase("Select Units"))
+    		everythingWorks = false;
     	
     	final String categories = category_dropdown.getSelectedItem().toString();
+    	if(categories.equalsIgnoreCase("Select a Category"))
+    		everythingWorks = false;
     	
-    	//if everythingWorks == true, then all the fields are filled out properly.
-    	if(everythingWorks){
-    		
-    		//set a query to check the food items
-    		ParseQuery<ParseObject> query = ParseQuery.getQuery("Food");
-    		
-    		//try to find a food with the same name as the one we entered.
-    		query.whereEqualTo("userId", foodName);
-    		
-    		query.findInBackground(new FindCallback<ParseObject>() {
-    		    public void done(List<ParseObject> foodNames, ParseException e) {
-    		        if (e == null) {
-    		    		//The item already exists in the database if isEmpty is false
-						if (foodNames.isEmpty() == false) {
-							Context context = getApplicationContext();
-							CharSequence text = "Item Already Exists";
-							int duration = Toast.LENGTH_SHORT;
-							Toast toast = Toast.makeText(context, text, duration);
-							toast.show();
-						}
-						//item doesn't exist yet, add it.
-						else {
-							//clear all the boxes
-	    		        	clearBoxes();
-	    		    		
-	    		        	//send a toast to show that it's been submitted to the DB
-	    		    		Context context = getApplicationContext();
-	    		    		CharSequence text = "Item Added";
-	    		    		int duration = Toast.LENGTH_SHORT;
-	    		    		Toast toast = Toast.makeText(context, text, duration);
-	    		    		toast.show();
-	    		    		
-	    		    		//get current user, they're id is tagged to each food that's created
-	    		    		String userId = "";
-	    		    		ParseUser currentUser = ParseUser.getCurrentUser();
-	    		    		if(currentUser != null) {
-	    		    			userId = currentUser.getString("Owner_Acc");
-	    		    		}
-	    		    		
-	    		    		//send the information to the DB.
-	    		    		ParseObject food = new ParseObject("Food");
-	    		    		//name of the food
-	    		    		food.put("name", foodName);
-	    		    		//quantity of the food to track original value
-	    		    		food.put("quantity", quan);
-	    		    		//shrink tracking quantity for reduction when meals ordered
-	    		    		food.put("shrinkTrackQuantity", quan);
-	    		    		//description of food
-	    		    		food.put("description", description);
-	    		    		//units of food e.g. oz. lbs. kg.
-	    		    		food.put("units", units);
-	    		    		//categories of the food
-	    		    		food.put("category", categories);
-	    		    		//userId associated with each food.
-	    		    		food.put("userId", userId);
-	    		    		food.saveInBackground();
-	    		    		onBackPressed();
-						}
-    		        	
-    		        } else {    		            	
-    		        	//fatal error, this should never happen
-    		        	Context context = getApplicationContext();
-    		    		CharSequence text = "Error";
-    		    		int duration = Toast.LENGTH_SHORT;
-    		    		Toast toast = Toast.makeText(context, text, duration);
-    		    		toast.show();
-    		        }
-    		    }
-    		});
-    	}
-    	//if any fields are missing, we send a toast about missing fields.
-    	else {
-    		Context context = getApplicationContext();
-    		CharSequence text = "Missing Fields";
-    		int duration = Toast.LENGTH_SHORT;
-    		Toast toast = Toast.makeText(context, text, duration);
-    		toast.show();
-    		
-    	}
+		// if everythingWorks == true, then all the fields are filled out
+		// properly.
+		if (everythingWorks) {
+			String userId = "";
+			ParseUser currentUser = ParseUser.getCurrentUser();
+
+			if (currentUser != null) {
+				userId = currentUser.getString("Owner_Acc");
+			}
+
+			// set a query to check the food items
+			ParseQuery<ParseObject> query = ParseQuery.getQuery("Food");
+
+			// try to find a food with the same name as the one we entered.
+			query.whereEqualTo("userId", userId);
+
+			List<ParseObject> foodNames = null;
+			try {
+				foodNames = query.find();
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (foodNames.isEmpty() == false) {
+				boolean exists = false;
+				for(ParseObject food : foodNames) {
+					if(food.getString("name").equalsIgnoreCase(foodName))
+						exists = true;
+				}
+				//if exists = true then don't create it 
+				if (exists) {
+					Context context = getApplicationContext();
+					CharSequence text = "Item Already Exists";
+					int duration = Toast.LENGTH_SHORT;
+					Toast toast = Toast.makeText(context, text, duration);
+					toast.show();
+				} else {
+					// clear all the boxes
+					clearBoxes();
+
+					// send a toast to show that it's been submitted to the DB
+					Context context = getApplicationContext();
+					CharSequence text = "Item Added";
+					int duration = Toast.LENGTH_SHORT;
+					Toast toast = Toast.makeText(context, text, duration);
+					toast.show();
+
+					// send the information to the DB.
+					ParseObject food = new ParseObject("Food");
+					// name of the food
+					food.put("name", foodName);
+					// quantity of the food to track original value
+					food.put("quantity", quan);
+
+					food.put("shrinkTrackQuantity", quan);
+
+					food.put("description", description);
+					// units of food e.g. oz. lbs. kg.
+					food.put("units", units);
+					// categories of the food
+					food.put("category", categories);
+
+					// userId associated with each food.
+
+					food.put("userId", userId);
+					food.saveInBackground();
+					onBackPressed();
+				}
+			} else {
+				// clear all the boxes
+				clearBoxes();
+
+				// send a toast to show that it's been submitted to the DB
+				Context context = getApplicationContext();
+				CharSequence text = "Item Added";
+				int duration = Toast.LENGTH_SHORT;
+				Toast toast = Toast.makeText(context, text, duration);
+				toast.show();
+
+				// send the information to the DB.
+				ParseObject food = new ParseObject("Food");
+				// name of the food
+				food.put("name", foodName);
+				// quantity of the food to track original value
+				food.put("quantity", quan);
+
+				food.put("shrinkTrackQuantity", quan);
+
+				food.put("description", description);
+				// units of food e.g. oz. lbs. kg.
+				food.put("units", units);
+				// categories of the food
+				food.put("category", categories);
+
+				// userId associated with each food.
+
+				food.put("userId", userId);
+				food.saveInBackground();
+				onBackPressed();
+			}
+		}
+		// if any fields are missing, we send a toast about missing fields.
+		else {
+			Context context = getApplicationContext();
+			CharSequence text = "Missing Fields";
+			int duration = Toast.LENGTH_SHORT;
+			Toast toast = Toast.makeText(context, text, duration);
+			toast.show();
+
+		}
     	
     }
     

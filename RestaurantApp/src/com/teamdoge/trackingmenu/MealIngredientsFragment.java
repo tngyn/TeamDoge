@@ -1,19 +1,29 @@
 package com.teamdoge.trackingmenu;
 
-import com.teamdoge.restaurantapp.R;
-import com.teamdoge.restaurantapp.R.layout;
+import java.util.ArrayList;
+import java.util.List;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.TextView;
+
+import com.parse.Parse;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
+import com.teamdoge.restaurantapp.R;
 
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass. Activities that
@@ -48,6 +58,8 @@ public class MealIngredientsFragment extends DialogFragment {
 	private String mParam1;
 	private String mParam2;
 	
+	private Spinner units_dropdown;
+	
 	private OnFragmentInteractionListener mListener;
 
 	/**
@@ -66,6 +78,7 @@ public class MealIngredientsFragment extends DialogFragment {
 	}
 	
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
+		
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 		
 		LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -83,6 +96,15 @@ public class MealIngredientsFragment extends DialogFragment {
 				mListener.onDialogNegativeClick(MealIngredientsFragment.this);					
 			}
 		});
+		
+		Log.wtf("WE ARE HERE", "BEFORE PARSE INITIALIZE");
+		
+		Parse.initialize(getActivity(), "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8", "k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF");
+		Log.wtf("WE ARE HERE", "AFTER PARSE INITIALIZE");
+		units_dropdown = (Spinner) getView().findViewById(R.id.new_ingredient_units_dropdown);
+		Log.wtf("WE ARE HERE", "BEFORE POPULATE");
+		populateUnits("");
+		Log.wtf("WE ARE HERE", "AFTER POPULATE");
 	return builder.create();
 	}
 
@@ -106,6 +128,92 @@ public class MealIngredientsFragment extends DialogFragment {
 		super.onDetach();
 		mListener = null;
 	}
+	
+	public void populateUnits(String newUnits) {
+    	//populate the units dropdown here
+
+		//the list of strings that are added 
+		List<String> added = new ArrayList<String>();
+		
+    	//get the current userID
+    	String userId = "";
+		ParseUser currentUser = ParseUser.getCurrentUser();
+		if(currentUser != null) {
+			userId = currentUser.getString("Owner_Acc");
+		}
+		
+		//Find all the foods that are tied to this id
+		ParseQuery<ParseObject> query = ParseQuery.getQuery("Food");
+		query.whereEqualTo("userId", userId);
+		List<ParseObject> foods = null;
+		try {
+			foods = query.find();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		//units datadapter that we're making
+    	ArrayAdapter<String> unitsdataAdapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), 
+    			                                    android.R.layout.simple_spinner_dropdown_item) {
+    		@Override
+    	    public View getView(int position, View convertView, ViewGroup parent) {
+
+    	        View v = super.getView(position, convertView, parent);
+    	        if (position == getCount()) {
+    	            ((TextView)v.findViewById(android.R.id.text1)).setText("");
+    	            ((TextView)v.findViewById(android.R.id.text1)).setHint(getItem(getCount())); //"Hint to be displayed"
+    	        }
+
+    	        return v;
+    	    }
+    		@Override
+    	    public int getCount() {
+    	        return super.getCount()-1; // you dont display last item. It is used as hint.
+    	    }
+    	};
+    	
+    	unitsdataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		
+		//position we'll set the selection to
+    	int position = 0;
+    	
+    	//if the newCategory is empty, we don't do add anything to the 0'th position
+    	//otherwise we set the newCategory as the 0'th position.
+		if (newUnits != "") {
+			unitsdataAdapter.add(newUnits);
+		}
+    	
+		//go through the foods and add their units to the units data adapter
+		for (ParseObject food : foods) {
+			String units = food.getString("units");
+			// this if initially adds in a string to added the first time
+			if (added.isEmpty()) {
+				added.add(units);
+				unitsdataAdapter.add(units);
+			}
+			// added isn't empty, so we will see if it's in there, if it isn't
+			// we add to adapter
+			else if (added.contains(units) == false) {
+				added.add(units);
+				unitsdataAdapter.add(units);
+			}
+		}
+		
+		//add in the new and select units manually (select units won't show up when dropped down)
+    	unitsdataAdapter.add("New");
+    	unitsdataAdapter.add("Select Units");
+    	
+    	//one more check for if newCategory is empty or not since we have to set the position if it is.
+    	if (newUnits == "") {
+			position = unitsdataAdapter.getCount();
+		}
+    	
+    	units_dropdown.setAdapter(unitsdataAdapter);
+    	units_dropdown.setSelection(position);
+    	Log.wtf("DO WE GET HERE", "WE DOOOOO");
+    	units_dropdown.setOnItemSelectedListener((OnItemSelectedListener) getActivity());
+    }
 
 //	@Override
 //	public void onCreate(Bundle savedInstanceState) {

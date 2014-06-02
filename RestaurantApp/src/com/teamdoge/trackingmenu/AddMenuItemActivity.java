@@ -9,13 +9,17 @@ import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,6 +42,7 @@ public class AddMenuItemActivity extends FragmentActivity
 		private EditText meal_name_box;
 		private EditText descrip_box;
 		private Spinner category_dropdown;
+		private Button addIngredient;
 		private List ingredientListItemList;
 		
 		private List<String> categorylist;
@@ -48,7 +53,25 @@ public class AddMenuItemActivity extends FragmentActivity
 	        
 	        getActionBar().setDisplayHomeAsUpEnabled(true);
 			
-			setContentView(R.layout.activity_add_menu_item);
+			//setContentView(R.layout.activity_add_menu_item);
+			
+			ScrollView sv = new ScrollView(this);
+			        LinearLayout ll = new LinearLayout(this);
+			        ll.setOrientation(LinearLayout.VERTICAL);
+			        sv.addView(ll);
+			        
+			        TextView tv = new TextView(this);
+			                tv.setText("Dynamic layouts ftw!");
+			                ll.addView(tv);
+			                
+			                EditText et = new EditText(this);
+			                        et.setText("weeeeeeeeeee~!");
+			                        ll.addView(et);
+			                        this.setContentView(sv);
+
+
+
+
 			
 //			if (savedInstanceState == null) {
 //		        getSupportFragmentManager().beginTransaction()
@@ -68,6 +91,8 @@ public class AddMenuItemActivity extends FragmentActivity
 	        descrip_box = (EditText) findViewById(R.id.mealDescription_box);
 	        //call the method that initializes all the textboxes. We set everything to empty.
 	        clearBoxes();
+	        
+	        addIngredient = (Button) findViewById(R.id.menuAddIngredient);
 
 	        //get out dropdown objects here
 	        category_dropdown = (Spinner) findViewById(R.id.meal_categories_dropdown);
@@ -173,6 +198,16 @@ public class AddMenuItemActivity extends FragmentActivity
 	    		toast.show();
 	    		
 	    	}
+	    }
+	    
+	    public void addIngredientPressed(View view){
+	    	DialogFragment newFragment = new MealIngredientsFragment();
+	    	newFragment.show(this.getFragmentManager(), "Ingredient Name");
+	    }
+	    
+	    public void addUnitPressed(View view){
+	    //	DialogFragment newFragment = new MealIngredientUnitFrag();
+	    //	newFragment.show(this.getFragmentManager(), "Ingredient Units");
 	    }
 	    
 	    public void cancel(View view){
@@ -299,37 +334,6 @@ public class AddMenuItemActivity extends FragmentActivity
 			//This method does nothing, but we need it because we implement OnItemSelectedListener
 			//has to be implemented or we get compile errors		
 		}
-	    
-	    @Override
-	    public void onDialogPositiveClick(DialogFragment dialog) {
-	    	
-	    	//get the name of the new item to add from the fragment
-	    	Dialog dialogView = dialog.getDialog();
-			EditText newItemToAdd = (EditText) dialogView.findViewById(R.id.new_item_box);
-			String newItemAdding = newItemToAdd.getText().toString();
-			
-//			Always gonna be categories if there's no units.
-//	    	Fragment prev = getFragmentManager().findFragmentByTag("categories");
-//			if (prev != null) {
-				//the fragment is called by categories dropdown
-				populateCategories(newItemAdding);
-//			}
-//			else {
-//				//the fragment is called by units dropdown
-//				populateUnits(newItemAdding);
-//			}
-	    }
-	    
-	    @Override
-	    public void onDialogNegativeClick(DialogFragment dialog) {
-	    	//check which dropdown called this
-	    	Fragment prev = getFragmentManager().findFragmentByTag("categories");
-	    	if(prev != null) {
-	    		//category dropdown called it
-	    		category_dropdown.setSelection(category_dropdown.getAdapter().getCount()); 
-	    	}
-	    }
-
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -346,6 +350,26 @@ public class AddMenuItemActivity extends FragmentActivity
 	    }
 
 	}
+	
+    @Override
+    public void onDialogPositiveClick(DialogFragment dialog) {
+    	Dialog dialogView = dialog.getDialog();
+		EditText newIngredientToAdd = (EditText) dialogView.findViewById(R.id.new_ingredient_box);
+		String newIngredientAdding = newIngredientToAdd.getText().toString();
+		
+		EditText newIngredientQuantityValue = (EditText) dialogView.findViewById(R.id.new_ingredients_quant_box);
+		String newIngredQuantVal = newIngredientQuantityValue.getText().toString();
+		
+		Spinner newIngredientUnits = (Spinner) dialogView.findViewById(R.id.new_ingredient_units_dropdown);
+		String  newIngredientUnitType = newIngredientUnits.getSelectedItem().toString();
+		
+		Log.wtf("THIS WAS DONE", newIngredientAdding + " " + newIngredQuantVal + " " + newIngredientUnitType);
+    }
+	
+	@Override
+    public void onDialogNegativeClick(DialogFragment dialog) {
+		//doNothing
+    }
 
 	//we don't need units as far as I know
 //    public void populateUnits(String newCategory) {

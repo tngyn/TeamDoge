@@ -32,6 +32,7 @@
         android:layout_height="50dp"
         android:text="@string/addIngredient" 
         android:layout_gravity="center_horizontal"
+        android:onClick="addIngredientPressed"
         style="?android:attr/borderlessButtonStyle"/>
     
     <TextView
