@@ -36,6 +36,7 @@
              <activity
             android:name="com.teamdoge.restaurantapp.InventoryList"
             android:label="@string/title_activity_inventory_list" >
+<<<<<<< HEAD
 		</activity>
         -->
         <activity
@@ -99,10 +100,12 @@
         </activity>
         <activity android:name="com.teamdoge.restaurantapp.View_Item"
             android:label="@string/title_activity_view__item"
-            android:noHistory="true"
-            >
+            android:noHistory="true" >
+		</activity>
+        <activity
+            android:name="com.teamdoge.restaurantapp.Manager_View_Profile"
+            android:label="@string/title_activity_manager__view__profile" >
         </activity>
     </application>
 
 </manifest>
-

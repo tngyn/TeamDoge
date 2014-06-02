@@ -72,6 +72,7 @@
 
     <string name="add_ingredients_dialog_box">Please Add a New ingredient</string>
     <string name="add">Add</string>
+    <string name="title_activity_manager__view__profile">Manager_View_Profile</string>
 
 
 </resources>
