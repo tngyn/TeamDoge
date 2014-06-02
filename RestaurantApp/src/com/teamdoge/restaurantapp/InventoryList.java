@@ -28,6 +28,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.teamdoge.restaurantapp.ManagerFragment.OnFragmentInteractionListener;
+import com.teamdoge.userprofile.Edit_Profile;
 
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass. Activities that
@@ -266,19 +267,20 @@ public class InventoryList extends Fragment implements Runnable {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		
+		if (item.getItemId()== R.id.item_add){
+        	Intent intent = new Intent(getActivity(), Add_item.class);
+        	startActivity(intent);
+        	return true;
+        }
+           
+        	else
+            return super.onOptionsItemSelected(item);
+	
+    }
 
-		switch (item.getItemId()) {
 
-		case R.id.item_add:
-			Intent intent = new Intent(getActivity(), Add_item.class);
-			startActivity(intent);
-			return true;
 
-		default:
-			return super.onOptionsItemSelected(item);
-		}
-
-	}
 
 	@Override
 	public void run() {

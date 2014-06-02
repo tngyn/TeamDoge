@@ -125,15 +125,17 @@ public class View_Profile extends Fragment {
 		// Handle action bar item clicks here. The action bar will
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
-		switch (item.getItemId()) {
+		//switch (item.getItemId()) {
 
-        case R.id.actionEdit:
+        if (item.getItemId()== R.id.actionEdit){
         	Intent intent = new Intent(getActivity(), Edit_Profile.class);
         	startActivity(intent);
         	return true;
+        }
            
-        default:
+        	else
             return super.onOptionsItemSelected(item);
+	
     }
-	}
 }
+
