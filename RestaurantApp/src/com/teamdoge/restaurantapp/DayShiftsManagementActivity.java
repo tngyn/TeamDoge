@@ -16,11 +16,15 @@ import com.teamdoge.login.LoginActivity;
 import com.teamdoge.login.SignUpActivity;
 import com.teamdoge.schedules.ListItem;
 import com.teamdoge.schedules.TwoTextArrayAdapter;
+import com.teamdoge.userprofile.ShiftSelectorActivity.MyAsyncTaskHelper;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -52,11 +56,10 @@ public class DayShiftsManagementActivity extends Activity {
 	private View button;
 	private ParseObject shiftObject;
 	private String[] schedules;
-	private ArrayList temp;
+	private ArrayList<?> temp;
 	private ParseObject scheduleObject;
 	private static boolean[][] working;
-	private static int[] indexArray;
-    private final String AM = ":00 AM";
+	private final String AM = ":00 AM";
     private final String PM = ":00 PM";
     private final String DASH = " - ";
     protected static String[][] names;
@@ -70,70 +73,20 @@ public class DayShiftsManagementActivity extends Activity {
 		Parse.initialize(this, "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8", "k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF");
 		super.onCreate(savedInstanceState);
 	    Day = this.getIntent().getStringExtra("Day");
-	    getData();
-		createView();
-        shiftsList.setOnChildClickListener(new OnChildClickListener() {
-			
-			@Override
-			public boolean onChildClick(ExpandableListView parent, View v,
-					int groupPosition, int childPosition, long id) {
-
-				
-				CheckedTextView checkbox = (CheckedTextView)v.findViewById(R.id.list_item_text_child);
-				checkbox.toggle();
-				
-				
-				// find parent view by tag
-				View parentView = shiftsList.findViewWithTag(shifts.get(groupPosition).name);
-				if(parentView != null) {
-					TextView sub = (TextView)parentView.findViewById(R.id.list_item_text_subscriptions);
-					
-					if(sub != null) {
-						Shifts category = shifts.get(groupPosition);
-						if(checkbox.isChecked()) {
-							
-							index = userNames.indexOf(checkbox.getText().toString());
-							setArray(index,groupPosition,"2");
-						}
-						else {
-							index = userNames.indexOf(checkbox.getText().toString());
-							setArray(index,groupPosition,"1");
-						}		
-						
-						// display selection list
-						sub.setText(category.selection.toString());
-					}
-				}				
-				return true;
-			}
-		});
-		button = findViewById(R.id.refresh);
-		button.setOnClickListener(new View.OnClickListener() {
-					@Override
-					public void onClick(View view) {
-					  for (int i = 0; i < shiftList.size(); i++) {
-						  shiftObject = shiftList.get(i);
-						  Log.d("TESTING", shiftObject.getString("Name"));
-					      Toast.makeText(getApplicationContext(),"Scheduled Compiled", Toast.LENGTH_LONG).show();
-					      final String DAY = Day;
-						  shiftObject.put(DAY, Arrays.asList(shiftsArray[i]));
-						  shiftObject.saveInBackground();
-						  
-					  }
-					  onBackPressed();
-					}
-				});
+		MyAsyncTaskHelper task = new MyAsyncTaskHelper();
+		task.execute();
+       
         
         
 	}
 
 	protected void createView() {
-		mContext = this;
-		shiftsList = (ExpandableListView)findViewById(R.id.shifts);
-		shifts = Shifts.getCategories(schedules, names, working);
+		
 		adapter = new SettingsListAdapter(this, 
 				shifts, shiftsList);
         shiftsList.setAdapter(adapter);
+		button = findViewById(R.id.refresh);
+		button.setVisibility(View.VISIBLE);
 	}
 
 	protected void getData() {
@@ -185,6 +138,9 @@ public class DayShiftsManagementActivity extends Activity {
 				}
 			}
 		}
+		mContext = this;
+		shiftsList = (ExpandableListView)findViewById(R.id.shifts);
+		shifts = Shifts.getCategories(schedules, names, working);
 	}
 	
 	public boolean setArray(int i, int j, String value) {
@@ -266,6 +222,74 @@ public class DayShiftsManagementActivity extends Activity {
 	       schedules[shiftCounter] = ( tokens[0] + DASH + tokens[1]);
 		}
 	}
+
+	public class MyAsyncTaskHelper extends AsyncTask<Void, Void, Boolean>{
+
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+    	    getData();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+
+    		createView();
+            super.onPostExecute(result);
+            shiftsList.setOnChildClickListener(new OnChildClickListener() {
+    			
+    			@Override
+    			public boolean onChildClick(ExpandableListView parent, View v,
+    					int groupPosition, int childPosition, long id) {
+
+    				
+    				CheckedTextView checkbox = (CheckedTextView)v.findViewById(R.id.list_item_text_child);
+    				checkbox.toggle();
+    				
+    				
+    				// find parent view by tag
+    				View parentView = shiftsList.findViewWithTag(shifts.get(groupPosition).name);
+    				if(parentView != null) {
+    					TextView sub = (TextView)parentView.findViewById(R.id.list_item_text_subscriptions);
+    					
+    					if(sub != null) {
+    						Shifts category = shifts.get(groupPosition);
+    						if(checkbox.isChecked()) {
+    							
+    							index = userNames.indexOf(checkbox.getText().toString());
+    							setArray(index,groupPosition,"2");
+    						}
+    						else {
+    							index = userNames.indexOf(checkbox.getText().toString());
+    							setArray(index,groupPosition,"1");
+    						}		
+    						
+    						// display selection list
+    						sub.setText(category.selection.toString());
+    					}
+    				}				
+    				return true;
+    			}
+    		});
+    		button = findViewById(R.id.refresh);
+    		button.setOnClickListener(new View.OnClickListener() {
+    					@Override
+    					public void onClick(View view) {
+    					  for (int i = 0; i < shiftList.size(); i++) {
+    						  shiftObject = shiftList.get(i);
+    						  Log.d("TESTING", shiftObject.getString("Name"));
+    					      Toast.makeText(getApplicationContext(),"Scheduled Compiled", Toast.LENGTH_LONG).show();
+    					      final String DAY = Day;
+    						  shiftObject.put(DAY, Arrays.asList(shiftsArray[i]));
+    						  shiftObject.saveInBackground();
+    						  
+    					  }
+    					  onBackPressed();
+    					}
+    				});
+        }
+    }
 }
 //	@Override
 //	public boolean onCreateOptionsMenu(Menu menu) {
