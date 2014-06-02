@@ -22,7 +22,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     private Activity context;
     private Map<String, List<String>> categoryList;
     private List<String> items;
- 
+    
     public ExpandableListAdapter(Activity context, List<String> items,
             Map<String, List<String>> categoryList) {
         this.context = context;
@@ -51,6 +51,13 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         TextView item = (TextView) convertView.findViewById(R.id.categoryList);
         item.setText(Citem);
         
+        /**************************ADDED***************************/
+        ImageView icon = (ImageView) convertView.findViewById(R.id.rowicon);
+        if (icon != null) 
+        {
+           icon.setImageResource(R.drawable.ic_action_discard);
+        }
+        /********************************************************/
         return convertView;
     }
  

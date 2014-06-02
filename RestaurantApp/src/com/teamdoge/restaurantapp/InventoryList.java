@@ -203,11 +203,11 @@ public class InventoryList extends Fragment implements Runnable {
         for(ParseObject food : foods) {
             String category = food.getString("category");
             if(groupList.contains(category) == false || groupList.isEmpty()){
-            	Log.wtf("category", category);
+            	//Log.wtf("category", category);
             	groupList.add(category);
             }
         }
-        Log.wtf("Array", ""+groupList.size());
+        //Log.wtf("Array", ""+groupList.size());
         
 	}
 
