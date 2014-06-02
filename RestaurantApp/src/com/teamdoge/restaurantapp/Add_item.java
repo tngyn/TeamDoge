@@ -136,6 +136,29 @@ public class Add_item extends FragmentActivity implements OnItemSelectedListener
       
     }
     
+    public List<ParseObject> background(){
+    	//get the current userID
+    	String userId = "";
+		ParseUser currentUser = ParseUser.getCurrentUser();
+		if(currentUser != null) {
+			userId = currentUser.getString("Owner_Acc");
+		}
+		
+		
+		//Find all the foods that are tied to this id
+		ParseQuery<ParseObject> query = ParseQuery.getQuery("Food");
+		query.whereEqualTo("userId", userId);
+		List<ParseObject> foods = null;
+		try {
+			foods = query.find();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return foods;
+    }
+    
     public void submit(View view){
     	boolean everythingWorks = true;
     	final String foodName = item_name_box.getText().toString();
@@ -162,77 +185,68 @@ public class Add_item extends FragmentActivity implements OnItemSelectedListener
     	
     	final String categories = category_dropdown.getSelectedItem().toString();
     	
-    	//if everythingWorks == true, then all the fields are filled out properly.
-    	if(everythingWorks){
-    		
-    		//set a query to check the food items
-    		ParseQuery<ParseObject> query = ParseQuery.getQuery("Food");
-    		
-    		//try to find a food with the same name as the one we entered.
-    		query.whereEqualTo("userId", foodName);
-    		
-    		query.findInBackground(new FindCallback<ParseObject>() {
-    		    public void done(List<ParseObject> foodNames, ParseException e) {
-    		        if (e == null) {
-    		    		//The item already exists in the database if isEmpty is false
-						if (foodNames.isEmpty() == false) {
-							Context context = getApplicationContext();
-							CharSequence text = "Item Already Exists";
-							int duration = Toast.LENGTH_SHORT;
-							Toast toast = Toast.makeText(context, text, duration);
-							toast.show();
-						}
-						//item doesn't exist yet, add it.
-						else {
-							//clear all the boxes
-	    		        	clearBoxes();
-	    		    		
-	    		        	//send a toast to show that it's been submitted to the DB
-	    		    		Context context = getApplicationContext();
-	    		    		CharSequence text = "Item Added";
-	    		    		int duration = Toast.LENGTH_SHORT;
-	    		    		Toast toast = Toast.makeText(context, text, duration);
-	    		    		toast.show();
-	    		    		
-	    		    		String userId ="";
-	    		    		ParseUser currentUser = ParseUser.getCurrentUser();
-	    		    		if(currentUser != null){
-	    		    			userId = currentUser.getString("Owner_Acc");
-	    		    		}
-	    		    		
-	    		    		//send the information to the DB.
-	    		    		ParseObject food = new ParseObject("Food");
-	    		    		//name of the food
-	    		    		food.put("name", foodName);
-	    		    		//quantity of the food to track original value
-	    		    		food.put("quantity", quan);
-	    		    		
-	    		    		food.put("shrinkTrackQuantity", quan);
+		// if everythingWorks == true, then all the fields are filled out
+		// properly.
+		if (everythingWorks) {
+			String userId = "";
+			ParseUser currentUser = ParseUser.getCurrentUser();
 
-	    		    		food.put("description", description);
-	    		    		//units of food e.g. oz. lbs. kg.
-	    		    		food.put("units", units);
-	    		    		//categories of the food
-	    		    		food.put("category", categories);
+			if (currentUser != null) {
+				userId = currentUser.getString("Owner_Acc");
+			}
 
-	    		    		//userId associated with each food.
+			// set a query to check the food items
+			ParseQuery<ParseObject> query = ParseQuery.getQuery("Food");
 
-	    		    		food.put("userId", userId);
-	    		    		food.saveInBackground();
-	    		    		onBackPressed();
-						}
-    		        	
-    		        } else {    		            	
-    		        	//fatal error, this should never happen
-    		        	Context context = getApplicationContext();
-    		    		CharSequence text = "Error";
-    		    		int duration = Toast.LENGTH_SHORT;
-    		    		Toast toast = Toast.makeText(context, text, duration);
-    		    		toast.show();
-    		        }
-    		    }
-    		});
-    	}
+			// try to find a food with the same name as the one we entered.
+			query.whereEqualTo("userId", userId);
+
+			List<ParseObject> foodNames = null;
+			try {
+				foodNames = query.find();
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (foodNames.isEmpty() == false) {
+				Context context = getApplicationContext();
+				CharSequence text = "Item Already Exists";
+				int duration = Toast.LENGTH_SHORT;
+				Toast toast = Toast.makeText(context, text, duration);
+				toast.show();
+			} else {
+				// clear all the boxes
+				clearBoxes();
+
+				// send a toast to show that it's been submitted to the DB
+				Context context = getApplicationContext();
+				CharSequence text = "Item Added";
+				int duration = Toast.LENGTH_SHORT;
+				Toast toast = Toast.makeText(context, text, duration);
+				toast.show();
+
+				// send the information to the DB.
+				ParseObject food = new ParseObject("Food");
+				// name of the food
+				food.put("name", foodName);
+				// quantity of the food to track original value
+				food.put("quantity", quan);
+
+				food.put("shrinkTrackQuantity", quan);
+
+				food.put("description", description);
+				// units of food e.g. oz. lbs. kg.
+				food.put("units", units);
+				// categories of the food
+				food.put("category", categories);
+
+				// userId associated with each food.
+
+				food.put("userId", userId);
+				food.saveInBackground();
+				onBackPressed();
+			}
+		}
     	//if any fields are missing, we send a toast about missing fields.
     	else {
     		Context context = getApplicationContext();
@@ -257,26 +271,45 @@ public class Add_item extends FragmentActivity implements OnItemSelectedListener
     	descrip_box.setText(init);    	
     }
     
-    public void populateCategories(String newCategory) {
-    	//populate the categories dropdown here.
+    public List<String> setAdapterList(String type){
+    	//create the list that will be used to populate the adapters
+    	List<String> added = new ArrayList<String>();
     	
-    	//get the current userID
-    	String userId = "";
-		ParseUser currentUser = ParseUser.getCurrentUser();
-		if(currentUser != null) {
-			userId = currentUser.getString("Owner_Acc");
+//    	String userId = "";
+//    	ParseUser currentUser = ParseUser.getCurrentUser();
+//    	if(currentUser != null)
+//    		userId = currentUser.getString("Owner_Acc");
+//    	
+//    	ParseQuery<ParseObject> query = ParseQuery.getQuery("Food");
+//    	query.whereEqualTo("userId", userId);
+//    	List<ParseObject> foods = null;
+//    	try{
+//    		foods = query.find();
+//    	} catch (ParseException e){
+//    		e.printStackTrace();
+//    	}
+    	
+    	List<ParseObject> foods = background();
+		
+		// go through the foods and add their units to the units data adapter
+		for (ParseObject food : foods) {
+			String units = food.getString(type);
+			// this if initially adds in a string to added the first time
+			if (added.isEmpty()) {
+				added.add(units);
+			}
+			// added isn't empty, so we will see if it's in there, if it isn't
+			// we add to adapter
+			else if (added.contains(units) == false) {
+				added.add(units);
+			}
 		}
 		
-		//Find all the foods that are tied to this id
-		ParseQuery<ParseObject> query = ParseQuery.getQuery("Food");
-		query.whereEqualTo("userId", userId);
-		List<ParseObject> foods = null;
-		try {
-			foods = query.find();
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		return added;
+    }
+    
+    public void populateCategories(String newCategory) {
+    	//populate the categories dropdown here.
 		
 		//list of added categories we'll be checking against for duplicates.
 		List<String> added = new ArrayList<String>();
@@ -311,20 +344,10 @@ public class Add_item extends FragmentActivity implements OnItemSelectedListener
 			categorydataAdapter.add(newCategory);
 		}
 		
-		//go through the foods and add their categories to the category data adapter
-    	for(ParseObject food : foods) {
-    		String category = food.getString("category");
-    		//this if initially adds in a string to added the first time
-    		if(added.isEmpty()) {
-    			added.add(category);
-    			categorydataAdapter.add(category);
-    		}
-    		//added isn't empty, so we will see if it's in there, if it isn't we add to adapter
-    		else if(added.contains(category) == false) {
-    			added.add(category);
-    			categorydataAdapter.add(category);
-    		}
-    	}
+    	added = setAdapterList("category");
+    	
+    	for(String units : added)
+			categorydataAdapter.add(units);
 		
 		//add in the new and select units manually (select category won't show up when dropped down)
     	categorydataAdapter.add("New");
@@ -338,6 +361,8 @@ public class Add_item extends FragmentActivity implements OnItemSelectedListener
     	category_dropdown.setAdapter(categorydataAdapter);
     	category_dropdown.setSelection(position);
     	category_dropdown.setOnItemSelectedListener(this);
+    	
+    	
     }
     
     public void populateUnits(String newUnits) {
@@ -345,25 +370,7 @@ public class Add_item extends FragmentActivity implements OnItemSelectedListener
 
 		//the list of strings that are added 
 		List<String> added = new ArrayList<String>();
-		
-    	//get the current userID
-    	String userId = "";
-		ParseUser currentUser = ParseUser.getCurrentUser();
-		if(currentUser != null) {
-			userId = currentUser.getString("Owner_Acc");
-		}
-		
-		//Find all the foods that are tied to this id
-		ParseQuery<ParseObject> query = ParseQuery.getQuery("Food");
-		query.whereEqualTo("userId", userId);
-		List<ParseObject> foods = null;
-		try {
-			foods = query.find();
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+
 		//units datadapter that we're making
     	ArrayAdapter<String> unitsdataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item) {
     		@Override
@@ -393,31 +400,21 @@ public class Add_item extends FragmentActivity implements OnItemSelectedListener
 		if (newUnits != "") {
 			unitsdataAdapter.add(newUnits);
 		}
-    	
-		//go through the foods and add their units to the units data adapter
-		for (ParseObject food : foods) {
-			String units = food.getString("units");
-			// this if initially adds in a string to added the first time
-			if (added.isEmpty()) {
-				added.add(units);
-				unitsdataAdapter.add(units);
-			}
-			// added isn't empty, so we will see if it's in there, if it isn't
-			// we add to adapter
-			else if (added.contains(units) == false) {
-				added.add(units);
-				unitsdataAdapter.add(units);
-			}
-		}
+		
+		added = setAdapterList("units");
+		
+		for(String units : added)
+			unitsdataAdapter.add(units);
 		
 		//add in the new and select units manually (select units won't show up when dropped down)
     	unitsdataAdapter.add("New");
     	unitsdataAdapter.add("Select Units");
     	
     	//one more check for if newCategory is empty or not since we have to set the position if it is.
-    	if (newUnits == "") {
-			position = unitsdataAdapter.getCount();
-		}
+//    	if (newUnits == "") {
+//			position = unitsdataAdapter.getCount();
+//		}
+    	position = unitsdataAdapter.getCount();
     	
     	units_dropdown.setAdapter(unitsdataAdapter);
     	units_dropdown.setSelection(position);
