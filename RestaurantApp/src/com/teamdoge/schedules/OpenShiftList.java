@@ -5,21 +5,28 @@ import com.teamdoge.schedules.TwoTextArrayAdapter.RowType;
 
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 
-public class MyShiftList implements ListItem {
+public class OpenShiftList implements ListItem {
+	// R.id number linked to the drawable profile image
+	private final int image;
 	// Original hour block of the shift
 	private String shift;
 	// Display string for shift
 	private String displayShift;
+	// Name of the owner of the shift
+    public final String name;
     // Position the employee has for that shift
     private final String position;
     // Status of shift
     private String status;
-    public int i;
-    public int j;
     
+    // counter integers
+    public int weekDay;
+    public int empNum;
+    public int shiftNumber;
     
     // Strings for formating shift
     private final String AM = ":00 AM";
@@ -27,42 +34,33 @@ public class MyShiftList implements ListItem {
     private final String DASH = " - ";
 
     // Constructor to create a schedule list item
-    public MyShiftList( String time, String pos, String stat ) {
+    public OpenShiftList(int img, String time, String n, String p, String stat, int w, int s, int num) {
+    	this.image = img;
     	this.shift = time;
-    	this.displayShift = time;
-        this.position = pos;
+        this.name = n;
+        this.position = p;
         this.status = stat;
+        this.weekDay = w;
+        this.empNum = s;
+        this.shiftNumber = num;
     }
     
-    public MyShiftList( String time, String pos, String stat, int i , int j) {
+    public OpenShiftList( int img, String time, String n, String p, String num ) {
+    	this.image = img;
     	this.shift = time;
-    	this.displayShift = time;
-        this.position = pos;
-        this.status = stat;
-        this.i = i;
-        this.j = j;
+        this.name = n;
+        this.displayShift = time;
+        this.position = p;
+        this.status = num;
+        this.weekDay = -1;
+        this.empNum = -1;
+        this.shiftNumber = -1;
     }
 
     // implementation needed for the TwoTextArrayAdapter
     @Override
     public int getViewType() {
         return RowType.LIST_ITEM.ordinal();
-    }
-    
-    public void setStatus( int stat ) {
-    	switch(stat) {
-    		case 0:
-    			status = " ";
-    			break;
-    		case 1:
-    			status = "Trade pending";
-    			break;
-    		case 2:
-    			status = "Pending approval";
-    			break;
-    		default:
-    			status = " ";
-    	}
     }
 
     // Correlates the passed in strings and images to the fields in the layout to
@@ -71,22 +69,25 @@ public class MyShiftList implements ListItem {
     public View getView(LayoutInflater inflater, View convertView) {
         View view;
         if (convertView == null) {
-            //view = (View) inflater.inflate(R.layout.schedule_list_items, null);
-            view = (View) inflater.inflate(R.layout.fragment_my_shift_list_item, null);
+            view = (View) inflater.inflate(R.layout.fragment_open_shift_list_item, null);
             // Do some initialization
         } else {
             view = convertView;
         }
 
-        TextView time = (TextView) view.findViewById(R.id.shift_hours);
+        ImageView profileImg = (ImageView) view.findViewById(R.id.user_image);
+        TextView hours = (TextView) view.findViewById(R.id.shift_hours);
+        TextView username = (TextView) view.findViewById(R.id.user_name);
         TextView role = (TextView) view.findViewById(R.id.position);
         TextView stat = (TextView) view.findViewById(R.id.status);
-       
-    	if( new String("No Shift").equals(shift) == false ) {
-          convertShift();
-    	}
         
-        time.setText(displayShift);
+        if( shift.length() < 6 ) {
+        	convertShift();
+        }
+       
+        profileImg.setImageResource(image);
+        hours.setText(displayShift);
+        username.setText(name);
         role.setText(position);
         stat.setText(status);
 
@@ -105,11 +106,16 @@ public class MyShiftList implements ListItem {
     	if( start == 0 ) {
     		tokens[0] = "12:00 AM";
     	}
+    	
+    	// checks if start time is 12 AM
+    	if( start == 0 ) {
+    		tokens[0] = "12:00 AM";
+    	}
     	// checks if start time is 12 PM
-    	else if( start == 12 ) {
+    	else if ( start == 12 ) {
     		tokens[0] = "12:00 PM";
     	}
-    	// otherwise converts start time
+    	// converts start time
     	else if( start < 12 ) {
     		tokens[0] = "" + start + AM;
     	}
@@ -121,11 +127,11 @@ public class MyShiftList implements ListItem {
     	if( end == 0 ) {
     		tokens[1] = "12:00 AM";
     	}
-    	// checks if end time is 12 PM
-    	else if( end == 12 ) {
+    	// checks if start time is 12 PM
+    	else if ( end == 12 ) {
     		tokens[1] = "12:00 PM";
     	}
-    	//otherwise converts end time
+    	//converts end time
     	else if( end < 12 ) {
     		tokens[1] = "" + end + AM;
     	}
