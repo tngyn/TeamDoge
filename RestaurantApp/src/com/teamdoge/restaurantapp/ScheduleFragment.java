@@ -163,14 +163,19 @@ public class ScheduleFragment extends ListFragment {
 		
 			for( int headerCount = 0; headerCount < numOfShifts; ++headerCount ){
 				items.add( new ListHeader(displayShift.get(headerCount)) );
+				int postCount = 0;
 				for( int shiftCount = 0; shiftCount < numOfEmployees; ++shiftCount ) {
 					if (TIME.get(shiftCount).get(headerCount).length() == 1) {
 					int shiftStatus = Integer.parseInt(TIME.get(shiftCount).get(headerCount));
 					if( shiftStatus > 1 ) {
 						items.add( new ScheduleList( 0, NAME.get(shiftCount),
 								POSITION.get(shiftCount) ) );
+						++postCount;
 						}
 					}
+				}
+				if( postCount == 0 ) {
+					items.add( new ScheduleList( 0, "No Employees Assigned", " ") );
 				}
 			}
         }
@@ -191,26 +196,32 @@ public class ScheduleFragment extends ListFragment {
 	    	if( start == 0 ) {
 	    		tokens[0] = "12:00 AM";
 	    	}
-	    	
+	    	// checks if start time is 12 PM
+	    	else if( start == 12 ) {
+	    		tokens[0] = "12:00 PM";
+	    	}
 	    	// otherwise converts start time
-	    	if( start < 12 ) {
+	    	else if( start < 12 ) {
 	    		tokens[0] = "" + start + AM;
 	    	}
 	    	else {
-	    		tokens[0] = "" + start + PM;
+	    		tokens[0] = "" + (start - 12) + PM;
 	    	}
 	    	
 	    	// checks if end time is 12 AM
 	    	if( end == 0 ) {
 	    		tokens[1] = "12:00 AM";
 	    	}
-	    	
+	    	// checks if end time is 12 PM
+	    	else if( end == 12 ) {
+	    		tokens[1] = "12:00 PM";
+	    	}
 	    	//otherwise converts end time
-	    	if( end < 12 ) {
+	    	else if( end < 12 ) {
 	    		tokens[1] = "" + end + AM;
 	    	}
 	    	else {
-	    		tokens[1] = "" + end + PM;
+	    		tokens[1] = "" + (end - 12) + PM;
 	    	}
 	    	
 	    	// restructures the shift strings

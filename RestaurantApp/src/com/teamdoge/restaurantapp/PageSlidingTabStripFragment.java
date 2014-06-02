@@ -115,6 +115,9 @@ public class PageSlidingTabStripFragment extends Fragment {
 			case 1:
 				ScheduleFragment schedule = new ScheduleFragment();
 				return schedule;
+			case 2:
+				OpenShiftFragment openShift = new OpenShiftFragment();
+				return openShift;
 			default:
 				return SuperAwesomeCardFragment.newInstance(position);
 			}

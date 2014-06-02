@@ -10,5 +10,7 @@
     <!-- OTHER -->
     <string name="header">HEADER</string>
     <string name="sample">SAMPLE</string>
+    <string name="total_hours">Infinite Hours</string>
+    <string name="hours_worked">Moar hours</string>
     
 </resources>

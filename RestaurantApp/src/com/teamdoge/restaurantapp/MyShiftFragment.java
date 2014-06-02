@@ -1,13 +1,18 @@
 package com.teamdoge.restaurantapp;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,6 +57,7 @@ public class MyShiftFragment extends ListFragment {
     private String username;
     private List<String> temp;
 	private static ParseObject shiftObject;
+	
 	// List to hold all headers and shifts, the week's schedule,
 	// and the user's schedule
 	private List<ListItem> items;
@@ -99,42 +105,15 @@ public class MyShiftFragment extends ListFragment {
 		
 		// Initializes connectivity to specific Parse database
 		Parse.initialize(getActivity(), parse_key1, parse_key2);
-		
+		  
 		// Gets current Parse user
 		user = ParseUser.getCurrentUser();
 		
 		// Gets restaurant ID
 		restaurantID = user.getString("Owner_Acc");
 		username = user.getString("username");
-		weekSchedule = new ArrayList<ArrayList<String>>();
-		userSchedule = new ArrayList<ArrayList<String>>();
 		
-		ParseQuery<ParseObject> scheduleQuery = ParseQuery.getQuery("Schedule");
-		scheduleQuery.whereEqualTo( "Id", restaurantID );
-		try{
-			List<ParseObject> scheduleList = scheduleQuery.find();
-			ParseObject schedule = scheduleList.get(0);
-			for( int dayCounter = 0; dayCounter < daysOfWeek; ++dayCounter ) {
-				weekSchedule.add( (ArrayList)schedule.getList(day[dayCounter]));
-			}	
-		}
-		catch(ParseException e1) {
-			e1.printStackTrace();
-		}
-		
-		
-		ParseQuery<ParseObject> shiftQuery = ParseQuery.getQuery("Shifts");
-		shiftQuery.whereEqualTo( "Username", username );
-		try {
-			List<ParseObject> shiftList = shiftQuery.find();
-			shiftObject = shiftList.get(0);
-			for( int dayCounter = 0; dayCounter < daysOfWeek; ++dayCounter ) {
-				userSchedule.add( (ArrayList)shiftObject.getList(day[dayCounter]));
-			}	
-		}
-		catch(ParseException e2) {
-			e2.printStackTrace();
-		}
+		createLists();
 		
 	}
 	
@@ -326,11 +305,6 @@ public class MyShiftFragment extends ListFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		
-//		prepareMyShiftList();
-
-//        TwoTextArrayAdapter adapter = new TwoTextArrayAdapter(getActivity().getBaseContext(), items);
-//        setListAdapter(adapter);
-		
 		MyAsyncTaskHelper task = new MyAsyncTaskHelper();
 		task.execute();
 		
@@ -346,12 +320,30 @@ public class MyShiftFragment extends ListFragment {
 	
 	// PREPARES MY SHIFT LISTS
 	private void prepareMyShiftList() {	
-		int counter = 0;
+		SimpleDateFormat weekdayFormat = new SimpleDateFormat("EEEE", Locale.US);
+		Calendar calendar = Calendar.getInstance();
+		String today = weekdayFormat.format(calendar.getTime());
 		
+		String[] date = new String[7];
+		SimpleDateFormat datesFormat = new SimpleDateFormat( "MMMM d" );
+		for( int h = 0; h < 7; ++h ) {
+			date[h] = datesFormat.format(calendar.getTime());
+			calendar.add(Calendar.DATE, 1);
+		}
+		
+		int headerCount = 0;
+		while( !day[headerCount].equals(today) ) {
+			++headerCount;
+		}
+		
+		int counter = 0;
+		int dayCount = 0;
         items = new ArrayList<ListItem>();
         
-        for( int headerCount = 0; headerCount < daysOfWeek; ++headerCount ) {
-        	items.add( new ListHeader(day[headerCount]) );
+        //for( int headerCount = 0; headerCount < daysOfWeek; ++headerCount ) {
+        while( dayCount < daysOfWeek ) {
+        	//items.add( new ListHeader(day[headerCount]) );
+        	items.add( new ListHeader( day[headerCount] + ", " + date[dayCount] ));
         	headerID[headerCount] = counter;
         	int curCount = counter;
         	int scheduleBound = userSchedule.get(headerCount).size();
@@ -386,11 +378,49 @@ public class MyShiftFragment extends ListFragment {
         	  ++counter;
         	}
         	++counter;
+        	++dayCount;
+        	if( headerCount == (daysOfWeek - 1) ) {
+        		headerCount = 0;
+        	}
+        	else {
+        		++headerCount;
+        	}
         }	
 		
 	}
 	
-	private void postShift() {
+	private void createLists() {
+		
+		
+		weekSchedule = new ArrayList<ArrayList<String>>();
+		userSchedule = new ArrayList<ArrayList<String>>();
+		
+		ParseQuery<ParseObject> scheduleQuery = ParseQuery.getQuery("Schedule");
+		scheduleQuery.whereEqualTo( "Id", restaurantID );
+		try{
+			List<ParseObject> scheduleList = scheduleQuery.find();
+			ParseObject schedule = scheduleList.get(0);
+			for( int dayCounter = 0; dayCounter < daysOfWeek; ++dayCounter ) {
+				weekSchedule.add( (ArrayList)schedule.getList(day[dayCounter]));
+			}	
+		}
+		catch(ParseException e1) {
+			e1.printStackTrace();
+		}
+		
+		
+		ParseQuery<ParseObject> shiftQuery = ParseQuery.getQuery("Shifts");
+		shiftQuery.whereEqualTo( "Username", username );
+		try {
+			List<ParseObject> shiftList = shiftQuery.find();
+			shiftObject = shiftList.get(0);
+			for( int dayCounter = 0; dayCounter < daysOfWeek; ++dayCounter ) {
+				userSchedule.add( (ArrayList)shiftObject.getList(day[dayCounter]));
+			}	
+		}
+		catch(ParseException e2) {
+			e2.printStackTrace();
+		}
 	
 	}
 	
