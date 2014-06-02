@@ -37,7 +37,7 @@ public class Edit_item extends FragmentActivity implements OnItemSelectedListene
 	private EditText descrip_box;
 	private Spinner category_dropdown;
 	private Spinner units_dropdown;
-	
+	private String item;
 	List<String> categorylist;
     
     @Override
@@ -45,7 +45,7 @@ public class Edit_item extends FragmentActivity implements OnItemSelectedListene
     	super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_item);
         Intent intent = getIntent();
-        String item = intent.getStringExtra("item");
+        item = intent.getStringExtra("item");
         Log.wtf("IN EDIT", item);
         //Parse.initialize(this, "fb0rPJ5AFeAx5JNdMV7Yxlcw3paruRc2XNPjOUWo", "fDpkgdVM4vwTTjYdQSq5kMRyuoEQzt6JCuI3ivWC");
         
@@ -114,7 +114,8 @@ public class Edit_item extends FragmentActivity implements OnItemSelectedListene
     
     public void submit(View view){
     	boolean everythingWorks = true;
-    	final String foodName = item_name_box.getText().toString();
+    	final String foodName = item;
+    	final String newName = item_name_box.getText().toString();
     	if(foodName == ""){
     		everythingWorks = false;
     	}
@@ -175,13 +176,14 @@ public class Edit_item extends FragmentActivity implements OnItemSelectedListene
 	    		    		//send the information to the DB.
 	    		    		//ParseObject food = new ParseObject("Food");
 	    		    		ParseObject food = foodNames.get(0);
-	    		    		food.put("name", foodName);
+	    		    		food.put("name", newName);
 	    		    		food.put("quantity", quan);
 	    		    		food.put("description", description);
 	    		    		food.put("units", units);
 	    		    		food.put("category", categories);
 	    		    		food.saveInBackground();
 	    		    		onBackPressed();
+	    		    		
 						//}
     		        	
     		        } else {    		            	
