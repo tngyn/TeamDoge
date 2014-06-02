@@ -236,10 +236,12 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 				ft.hide(frag2);
 				ft.hide(frag3);
 				ft.show(frag0);
+				ft.hide(frag4);
 				isFrag0Visible = true;
 				isFrag1Visible = false;
 				isFrag2Visible = false;
 				isFrag3Visible = false;
+				isFrag4Visible = false;
 			}
 			ft.commit();
 			
@@ -263,10 +265,12 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 				ft.hide(frag2);
 				ft.hide(frag3);
 				ft.show(frag1);
+				ft.hide(frag4);
 				isFrag0Visible = false;
 				isFrag1Visible = true;
 				isFrag2Visible = false;
 				isFrag3Visible = false;
+				isFrag4Visible = false;
 			}
 			ft.commit();
 			
@@ -288,10 +292,12 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 				ft.hide(frag1);
 				ft.hide(frag3);
 				ft.show(frag2);
+				ft.hide(frag4);
 				isFrag0Visible = false;
 				isFrag1Visible = false;
 				isFrag2Visible = true;
 				isFrag3Visible = false;
+				isFrag4Visible = false;
 			}
 			ft.commit();
 			
@@ -313,10 +319,12 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 				ft.hide(frag1);
 				ft.hide(frag2);
 				ft.show(frag3);
+				ft.hide(frag4);
 				isFrag0Visible = false;
 				isFrag1Visible = false;
 				isFrag2Visible = false;
 				isFrag3Visible = true;
+				isFrag4Visible = false;
 			}
 			ft.commit();
 			
