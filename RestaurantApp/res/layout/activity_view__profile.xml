@@ -7,77 +7,89 @@
     tools:context="com.teamdoge.restaurantapp.View_Profile"
     tools:ignore="MergeRootFrame" >
 
-
-
-    <com.teamdoge.restaurantapp.TouchHighlightImageButton
-        android:id="@+id/image_button_1"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:src="@drawable/blank_profile"
-        android:scaleType="centerCrop" />
-     
-     <ImageView
-        android:id="@+id/expanded_image"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="invisible" />
-    
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="200dp"
+        android:layout_height="80dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="40dp"
+        android:onClick="setAvailableTimes"
+        android:text="Set Available Times" />
 
     <TextView
         android:id="@+id/userNameText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/image_button_1"
-        android:text="Name" />
+        android:layout_below="@+id/change_profile_picture_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="Name"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/userUserNameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/userNameText"
+        android:layout_centerHorizontal="true"
+        android:text="UserName"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/userAcctText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/userNameText"
+        android:layout_below="@+id/userUserNameText"
+        android:text="Account"
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/userPNumberText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/userAcctText"
-        android:layout_toRightOf="@+id/image_button_1"
-        android:layout_marginTop="12dp"
-        android:text="555-555-5555" />
-
-    <TextView
-        android:id="@+id/userAcctText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/userNameText"
-        android:layout_toRightOf="@+id/image_button_1"
-        android:layout_marginTop="12dp"
-        android:text="Account" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="28dp"
+        android:text="555-555-5555"
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/userEmailText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/userUserNameText"
         android:layout_below="@+id/userPNumberText"
-        android:layout_marginTop="12dp"
-        android:text="Email" />
+        android:layout_centerHorizontal="true"
+        android:text="Email"
+        android:textSize="20sp"
+        android:text_size="30sp" />
 
-    <TextView
-        android:id="@+id/userUserNameText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/userNameText"
-        android:layout_below="@+id/userEmailText"
-        android:layout_marginTop="12dp"
-        android:text="UserName" />
+    <com.teamdoge.restaurantapp.TouchHighlightImageButton
+        android:id="@+id/image_button_1"
+        android:layout_width="100dp"
+        android:layout_height="75dp"
+        android:layout_alignLeft="@+id/userUserNameText"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="14dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/blank_profile" />
 
     <Button
-        android:id="@+id/button1"
-        android:layout_width="200dp"
-        android:layout_height="80dp"
-        android:layout_below="@+id/image_button_1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="103dp"
-        android:text="Set Available Times"
-        android:onClick="setAvailableTimes" />
+        android:id="@+id/change_profile_picture_button"
+        android:layout_width="85dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/image_button_1"
+        android:layout_alignRight="@+id/button1"
+        android:layout_toRightOf="@+id/userPNumberText"
+        android:text="∆" />
 
+    <ImageView
+        android:id="@+id/expanded_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:visibility="invisible" />
 
 </RelativeLayout>
