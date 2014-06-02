@@ -40,8 +40,8 @@
         android:id="@+id/userAcctText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/userNameText"
-        android:layout_below="@+id/userUserNameText"
+        android:layout_centerHorizontal="true"
+
         android:text="Account"
         android:textSize="20sp" />
 
@@ -62,8 +62,7 @@
         android:layout_below="@+id/userPNumberText"
         android:layout_centerHorizontal="true"
         android:text="Email"
-        android:textSize="20sp"
-        android:text_size="30sp" />
+        android:textSize="20sp"/>
 
     <com.teamdoge.restaurantapp.TouchHighlightImageButton
         android:id="@+id/image_button_1"

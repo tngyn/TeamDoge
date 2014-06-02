@@ -78,19 +78,19 @@ public class View_Profile extends FragmentActivity {
 		Parse.initialize(this, "fb0rPJ5AFeAx5JNdMV7Yxlcw3paruRc2XNPjOUWo", "fDpkgdVM4vwTTjYdQSq5kMRyuoEQzt6JCuI3ivWC");
 
 		// pull values from data base
-//		ParseUser user = ParseUser.getCurrentUser();
-//		String tempUserName = user.getUsername();
-//		String tempEmail = user.getEmail();
-//		String accountType = user.getString("Acc_Type");
-//		String tempRegName = user.getString("Name");
-//		String tempPhone = user.getString("PhoneNumber");
+		ParseUser user = ParseUser.getCurrentUser();
+		String tempUserName = user.getUsername();
+		String tempEmail = user.getEmail();
+		String accountType = user.getString("Acc_Type");
+		String tempRegName = user.getString("Name");
+		String tempPhone = user.getString("PhoneNumber");
 
 		// set text equal to data base values
-		userNameText.setText("Hannah");
-		userUserNameText.setText("Hannah");
-		userEmailText.setText("Hannah");
-		userAcctText.setText("Hannah");
-		userPNumberText.setText("Hannah");
+		userNameText.setText(tempRegName);
+		userUserNameText.setText(tempUserName);
+		userEmailText.setText(tempEmail);
+		userAcctText.setText(accountType);
+		userPNumberText.setText(tempPhone);
 		
 		final View thumb1View = findViewById(R.id.image_button_1);
         thumb1View.setOnClickListener(new View.OnClickListener() {
