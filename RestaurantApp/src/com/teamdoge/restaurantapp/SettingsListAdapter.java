@@ -81,16 +81,8 @@ public class SettingsListAdapter extends BaseExpandableListAdapter {
         TextView textView = (TextView) view.findViewById(R.id.list_item_text_view);
         
         //"i" is the position of the parent/group in the list
-        textView.setText(getGroup(i).toString());
-        
-        TextView sub = (TextView) view.findViewById(R.id.list_item_text_subscriptions);        
-        
-        if(mParent.get(i).selection.size()>0) {
-        	sub.setText(mParent.get(i).selection.toString());
-        }
-        else {
-        	sub.setText("");
-        }
+        textView.setText(getGroup(i).toString());    
+  
         
         //return the entire view
         return view;
@@ -112,14 +104,8 @@ public class SettingsListAdapter extends BaseExpandableListAdapter {
         //"i1" is the position of the child
         textView.setText(mParent.get(i).children.get(i1).name);
         textView1.setText(mParent.get(i).children.get(i1).position);
+        textView.setChecked(mParent.get(i).children.get(i1).checked);
  
-        // set checked if parent category selection contains child category
-        if(mParent.get(i).selection.contains(textView.getText().toString())) {
-    		textView.setChecked(true);
-        }
-        else {
-        	textView.setChecked(false);
-        }
         
         //return the entire view
         return view;

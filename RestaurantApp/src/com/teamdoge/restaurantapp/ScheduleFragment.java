@@ -13,11 +13,17 @@ import com.parse.ParseUser;
 import com.parse.ParseException;
 import com.teamdoge.schedules.*;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 public class ScheduleFragment extends ListFragment {
 	
@@ -48,8 +54,8 @@ public class ScheduleFragment extends ListFragment {
 	private ArrayList<String> NAME;
 	private ArrayList<String> POSITION;
 	private List<List<String>> TIME;
+
 	
-    
     // Array of integers points to images stored in /res/drawable/
     // Needs access to individual photos
     int[] img = new int[]{
@@ -93,10 +99,14 @@ public class ScheduleFragment extends ListFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		
-		createScheduleList();
+//		createScheduleList();
+		
 
-        TwoTextArrayAdapter adapter = new TwoTextArrayAdapter(getActivity().getBaseContext(), items);
-        setListAdapter(adapter);
+//		TwoTextArrayAdapter adapter = new TwoTextArrayAdapter(getActivity().getBaseContext(), items);
+//        setListAdapter(adapter);
+		
+		MyAsyncTaskHelper task = new MyAsyncTaskHelper();
+		task.execute();
        
 		return super.onCreateView(inflater, container, savedInstanceState);		
 	}
@@ -153,12 +163,19 @@ public class ScheduleFragment extends ListFragment {
 		
 			for( int headerCount = 0; headerCount < numOfShifts; ++headerCount ){
 				items.add( new ListHeader(displayShift.get(headerCount)) );
+				int postCount = 0;
 				for( int shiftCount = 0; shiftCount < numOfEmployees; ++shiftCount ) {
+					if (TIME.get(shiftCount).get(headerCount).length() == 1) {
 					int shiftStatus = Integer.parseInt(TIME.get(shiftCount).get(headerCount));
 					if( shiftStatus > 1 ) {
 						items.add( new ScheduleList( 0, NAME.get(shiftCount),
 								POSITION.get(shiftCount) ) );
+						++postCount;
+						}
 					}
+				}
+				if( postCount == 0 ) {
+					items.add( new ScheduleList( 0, "No Employees Assigned", " ") );
 				}
 			}
         }
@@ -179,26 +196,32 @@ public class ScheduleFragment extends ListFragment {
 	    	if( start == 0 ) {
 	    		tokens[0] = "12:00 AM";
 	    	}
-	    	
+	    	// checks if start time is 12 PM
+	    	else if( start == 12 ) {
+	    		tokens[0] = "12:00 PM";
+	    	}
 	    	// otherwise converts start time
-	    	if( start < 12 ) {
+	    	else if( start < 12 ) {
 	    		tokens[0] = "" + start + AM;
 	    	}
 	    	else {
-	    		tokens[0] = "" + start + PM;
+	    		tokens[0] = "" + (start - 12) + PM;
 	    	}
 	    	
 	    	// checks if end time is 12 AM
 	    	if( end == 0 ) {
 	    		tokens[1] = "12:00 AM";
 	    	}
-	    	
+	    	// checks if end time is 12 PM
+	    	else if( end == 12 ) {
+	    		tokens[1] = "12:00 PM";
+	    	}
 	    	//otherwise converts end time
-	    	if( end < 12 ) {
+	    	else if( end < 12 ) {
 	    		tokens[1] = "" + end + AM;
 	    	}
 	    	else {
-	    		tokens[1] = "" + end + PM;
+	    		tokens[1] = "" + (end - 12) + PM;
 	    	}
 	    	
 	    	// restructures the shift strings
@@ -206,5 +229,23 @@ public class ScheduleFragment extends ListFragment {
 		}
 	}
 	
+	private class MyAsyncTaskHelper extends AsyncTask<Void, Void, List<ListItem>> {
 
+		@Override
+		protected List<ListItem> doInBackground(Void... params) {
+			// TODO Auto-generated method stub
+			createScheduleList();
+			
+			return items;
+			
+		}
+		
+		@Override
+		protected void onPostExecute(List<ListItem> items) {
+			TwoTextArrayAdapter adapter = new TwoTextArrayAdapter(getActivity().getBaseContext(), items);
+	        setListAdapter(adapter);
+		}
+		
+	}
+	
 }

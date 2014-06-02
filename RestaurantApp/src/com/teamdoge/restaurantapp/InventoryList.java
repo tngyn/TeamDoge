@@ -1,9 +1,11 @@
 package com.teamdoge.restaurantapp;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -24,6 +26,7 @@ import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 import com.teamdoge.restaurantapp.ManagerFragment.OnFragmentInteractionListener;
 
 /**
@@ -34,7 +37,7 @@ import com.teamdoge.restaurantapp.ManagerFragment.OnFragmentInteractionListener;
  * to create an instance of this fragment.
  * 
  */
-public class InventoryList extends Fragment {
+public class InventoryList extends Fragment implements Runnable {
 	// TODO: Rename parameter arguments, choose names that match
 	// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 	private static final String ARG_PARAM1 = "param1";
@@ -44,6 +47,7 @@ public class InventoryList extends Fragment {
 	private String mParam1;
 	private String mParam2;
 	private List<ParseObject> foodNames;
+	private List<ParseObject> category;
 
 	private OnFragmentInteractionListener mListener;
 
@@ -92,9 +96,9 @@ public class InventoryList extends Fragment {
 		// View v = inflater.inflate(R.layout.fragment_manager, container,
 		// false);
 		/*************** ExpandableView for Inventory ***********************/
-		createGroupList();
-
-		createCollection();
+		
+		run();
+		
 		View v = inflater.inflate(R.layout.activity_inventory_list, container,
 				false);
 		expListView = (ExpandableListView) v.findViewById(R.id.categoryList);
@@ -147,56 +151,104 @@ public class InventoryList extends Fragment {
 
 		public boolean onChildClick(ExpandableListView parent, View v,
 				int groupPosition, int childPosition, long id) {
-			Intent mIntent = new Intent(getActivity(), Edit_item.class);
+			Intent mIntent = new Intent(getActivity(), View_Item.class);
+			//Log.wtf("CLICK: ", getValue(groupPosition, childPosition));
+			mIntent.putExtra("item", getValue(groupPosition, childPosition));
 			startActivity(mIntent);
+			
 			return false;
 		}
 
 	};
 
+	private String getValue(int groupPos, int childPos) {
+		int c = 0;
+		String temp = "";
+		Set<String> keys = listInventory.keySet(); // It will return you all the
+													// keys in Map in the form
+													// of the Set
+		for (Iterator<String> i = keys.iterator(); i.hasNext();) {
+			String key = (String) i.next();
+			List<String> value = (List<String>) listInventory.get(key); // Here is an Individual
+																		// Record in your
+																		// HashMap
+			if (c == groupPos) {
+				temp = value.get(childPos);
+			}
+			c++;
+		}
+		return temp;
+	}
+
 	/*************** ExpandableView for Inventory ***********************/
 	private void createGroupList() {
 		groupList = new ArrayList<String>();
-		groupList.add(getString(R.string.category1));
-		groupList.add(getString(R.string.category2));
+		//get the current userID
+        String userId = "";
+		ParseUser currentUser = ParseUser.getCurrentUser();
+        if(currentUser != null) {
+                userId = currentUser.getString("Owner_Acc");
+        }
+       
+        //Find all the foods that are tied to this id
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Food");
+        query.whereEqualTo("userId", userId);
+        List<ParseObject> foods = null;
+        try {
+                foods = query.find();
+        } catch (ParseException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+        }
+        for(ParseObject food : foods) {
+            String category = food.getString("category");
+            if(groupList.contains(category) == false || groupList.isEmpty()){
+            	Log.wtf("category", category);
+            	groupList.add(category);
+            }
+        }
+        Log.wtf("Array", ""+groupList.size());
+        
 	}
 
 	private void createCollection() {
-		int index = 0;
 		// preparing items in category(child)
 		// set a query to check the food items
 		ParseQuery<ParseObject> query = ParseQuery.getQuery("Food");
-
-		// try to find a food with the same name as the one we entered.
-		query.whereEqualTo("category", "Fruit");
-
-		try {
-			foodNames = query.find();
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		String[] category1 = new String[foodNames.size()];
-		String[] category2 = { getString(R.string.item),
-				getString(R.string.item), getString(R.string.item) };
-		if (foodNames.isEmpty() == false) {
-			for (ParseObject foodObj : foodNames) {
-				category1[index] = foodObj.getString("name");
-				index++;
+		listInventory = new LinkedHashMap<String, List<String>>();
+		for (int i = 0; i < groupList.size(); i++) {
+			int index = 0;
+			// try to find a food with the same name as the one we entered.
+			query.whereEqualTo("category", groupList.get(i));
+			try {
+				foodNames = query.find();
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			listInventory = new LinkedHashMap<String, List<String>>();
 
-			for (String category : groupList) {
-				if (category.equals("Fruit")) {
-					Log.wtf("THIS IS A TAG", "WE GO IN HERE");
-					loadChild(category1);
-				} else if (category.equals("Category Two"))
-					loadChild(category2);
-
-				listInventory.put(category, childList);
+			String[] category1 = new String[foodNames.size()];
+			if (foodNames.isEmpty() == false) {
+				//String[] category1 = new String[foodNames.size()];
+				for (ParseObject foodObj : foodNames) {
+					category1[index] = foodObj.getString("name");
+					index++;
+				}
+				//Log.wtf("Category", ""+category1[0]);
+				
+				//for (String category : groupList) {
+					//if (category.equals(groupList.get(i))) {
+						//Log.wtf("Equal -> loadchild",category+" "+groupList.get(i));
+						loadChild(category1);
+					//}
+					//Log.wtf("Category", category+" Item: "+childList.get(0));
+					//listInventory.put(category, childList);
+				listInventory.put(groupList.get(i).toString(), childList);
+				//}
+				//Log.wtf("List:", listInventory.toString().toString());
 			}
 		}
+		//Log.wtf("List Inventory", listInventory.toString().toString());
 	}
 
 	private void loadChild(String[] itemList) {
@@ -226,6 +278,16 @@ public class InventoryList extends Fragment {
 			return super.onOptionsItemSelected(item);
 		}
 
+	}
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
+		
+		createGroupList();
+
+		createCollection();
 	}
 
 }

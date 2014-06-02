@@ -36,12 +36,13 @@
              <activity
             android:name="com.teamdoge.restaurantapp.InventoryList"
             android:label="@string/title_activity_inventory_list" >
+<<<<<<< HEAD
 		</activity>
         -->
         <activity
             android:name="com.teamdoge.login.SignUpActivity"
             android:label="@string/title_activity_signup"
-            android:parentActivityName="com.teamcom.teamdoge.login.LoginActivity"
+            android:parentActivityName="com.teamdoge.login.LoginActivity"
             android:windowSoftInputMode="adjustResize|stateVisible" >
         </activity>
         <activity
@@ -55,7 +56,7 @@
             android:label="@string/inv_item_page" >
         </activity>
         <activity
-            android:name="com.teamdoge.restaurantacom.teamdoge.login.ForgotPassword"
+            android:name="com.teamdoge.login.ForgotPassword"
             android:label="Forgot Password" >
         </activity>
         <activity
@@ -97,7 +98,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.teamdoge.restaurantapp.View_Profile" />
         </activity>
+        <activity android:name="com.teamdoge.restaurantapp.View_Item"
+            android:label="@string/title_activity_view__item"
+            android:noHistory="true" >
+		</activity>
+        <activity
+            android:name="com.teamdoge.restaurantapp.Manager_View_Profile"
+            android:label="@string/title_activity_manager__view__profile" >
+        </activity>
     </application>
 
 </manifest>
-

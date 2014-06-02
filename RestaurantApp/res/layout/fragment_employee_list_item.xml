@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="5dip" >
+
+    <!-- ListRow Left Thumbnail image -->
+
+    <LinearLayout
+        android:id="@+id/thumbnail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginRight="5dip"
+        android:padding="3dip" >
+
+        <ImageView
+            android:id="@+id/user_image"
+            android:layout_width="35dip"
+            android:layout_height="35dip"
+            android:contentDescription="@string/image_desc" />
+
+    </LinearLayout>  
+    
+    <!-- USERNAME -->
+
+    <TextView
+        android:id="@+id/user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/thumbnail"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:text="@string/user_name"
+        android:clickable="false"
+        android:linksClickable="false"
+        android:textColor="#040404"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:typeface="sans"
+        android:paddingLeft="5dip" />
+
+    <!-- TOTAL HOURS WORKED -->
+
+     <TextView
+        android:id="@+id/total_hours"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/thumbnail"
+        android:layout_below="@id/user_name"
+        android:layout_marginTop="1dip"
+        android:layout_marginBottom="1dip"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:text="@string/total_hours"
+        android:clickable="false"
+        android:linksClickable="false"
+        android:longClickable="false"
+        android:textColor="#343434"
+        android:textSize="12sp"
+        tools:ignore="SmallSp" />
+     
+     
+	 <!-- POSITION -->
+     
+     <TextView
+        android:id="@+id/position"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@id/user_name"
+        android:layout_marginRight="5dip"
+        android:gravity="right"
+        android:text="@string/position"
+        android:textColor="#10bcc9"
+        android:textSize="13sp"
+        tools:ignore="SmallSp" />
+    
+    
+    
+     <!-- HOURS WORKED -->
+     
+     <TextView
+        android:id="@+id/hours_worked"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+         android:layout_below="@id/user_name"
+        android:layout_alignBottom="@id/total_hours"
+        android:layout_marginRight="5dip"
+        android:gravity="right"
+        android:text="@string/hours_worked"
+        android:textSize="12sp"
+        tools:ignore="SmallSp" />
+
+
+</RelativeLayout>

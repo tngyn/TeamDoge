@@ -1,10 +1,12 @@
 package com.teamdoge.login;
 
 import java.util.Arrays;
+import java.util.List;
 
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 import com.teamdoge.restaurantapp.R;
@@ -97,10 +99,43 @@ public class SignUpActivity extends Activity {
 						rpassword = rePassword.getText().toString(); //String of the confirmation password
 						name = ((EditText) findViewById(R.id.name)).getText().toString(); //String of the name
 						lastName = ((EditText) findViewById(R.id.last_name)).getText().toString(); //String of the Last Name
-						if (String.valueOf(spinner.getSelectedItem()).equals("Owner"))
+						if (String.valueOf(spinner.getSelectedItem()).equals("Owner")) {
 							ownerAcc = username;
-						else
+							ParseObject schedule = new ParseObject("Schedule");
+							String[] times = {"12-15","15-18", "18-21","21-0"};
+							schedule.put("Sunday", Arrays.asList(times));
+							schedule.put("Monday", Arrays.asList(times));
+							schedule.put("Tuesday", Arrays.asList(times));
+							schedule.put("Wednesday", Arrays.asList(times));
+							schedule.put("Thursday", Arrays.asList(times));
+							schedule.put("Friday", Arrays.asList(times));
+							schedule.put("Saturday", Arrays.asList(times));
+							schedule.put("Id", username);
+							try {
+								schedule.save();
+							} catch (ParseException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+						else {
 							ownerAcc = ((EditText) mViewOwnerAcc).getText().toString();
+							ParseQuery query = ParseUser.getQuery();
+							query.whereEqualTo("username",ownerAcc);
+							query.whereEqualTo("Acc_Type", "Owner");
+							try {
+								List tested = query.find();
+								if (tested.isEmpty()){
+									((EditText) mViewOwnerAcc).setError("Owner Does Not Exist");
+									((EditText) mViewOwnerAcc).requestFocus();
+									keepGoing = false;
+								}
+							} catch (ParseException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+
+						}
 						//Setting all the boxes error to null
 					    ePassword.setError(null);
 					    eUsername.setError(null);
@@ -110,6 +145,11 @@ public class SignUpActivity extends Activity {
 					    eUsername.setError(null);
 					    rePassword.setError(null);
 					    //If username box is empty show error and prevent register
+					    if (username.length() <= 1) {
+					        eUsername.setError("Username too short");
+					        eUsername.requestFocus();
+					        keepGoing = false;
+					    }
 					    if (TextUtils.isEmpty(username)) {
 					    	eUsername.setError(getString(R.string.error_field_required));
 					    	eUsername.requestFocus();
@@ -168,6 +208,7 @@ public class SignUpActivity extends Activity {
 						  shifts.put("Id", ownerAcc);
 						  shifts.put("Username", username);
 						  shifts.put("Name", name + " " + lastName);
+						  shifts.put("Acc_Type", String.valueOf(spinner.getSelectedItem()));
 						  shifts.saveInBackground();
 						  user.put("Name", name + " " + lastName);
 						  user.put("Remember_Me", false);

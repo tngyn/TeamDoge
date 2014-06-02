@@ -22,6 +22,7 @@ import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 import com.teamdoge.restaurantapp.R;
+import com.teamdoge.trackingmenu.AddMenuItemActivity;
 
 public class View_Profile extends Fragment {
 
@@ -48,9 +49,10 @@ public class View_Profile extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-	
+		setHasOptionsMenu(true);
 		// link to parse
-		Parse.initialize(getActivity(), "fb0rPJ5AFeAx5JNdMV7Yxlcw3paruRc2XNPjOUWo", "fDpkgdVM4vwTTjYdQSq5kMRyuoEQzt6JCuI3ivWC");
+
+		Parse.initialize(getActivity(), "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8", "k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF");
 	}
 	
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -64,7 +66,7 @@ public class View_Profile extends Fragment {
 		userUserNameText = (TextView) view.findViewById(R.id.userUserNameText);
 		userEmailText = (TextView) view.findViewById(R.id.userEmailText);
 		userAcctText = (TextView) view.findViewById(R.id.userAcctText);
-		editButton = (Button) view.findViewById(R.id.button2);
+		userPNumberText = (TextView) view.findViewById(R.id.userPNumberText);
 		shiftsButton = (Button) view.findViewById(R.id.button1);
 		
 		// pull values from data base
@@ -73,19 +75,20 @@ public class View_Profile extends Fragment {
 		String tempEmail = user.getEmail();
 		String accountType = user.getString("Acc_Type");
 		String tempRegName = user.getString("Name");
+		String tempPhone = user.getString("Phone_Number");
 		
-		editButton.setOnClickListener(
-				new View.OnClickListener() {
-					
-					@Override
-					public void onClick(View v) {
-						// TODO Auto-generated method stub
-//						editProfile(editButton);
-						Intent intent = new Intent(getActivity(), Edit_Profile.class);
-						
-						startActivity(intent);
-					}
-				});	
+//		editButton.setOnClickListener(
+//				new View.OnClickListener() {
+//					
+//					@Override
+//					public void onClick(View v) {
+//						// TODO Auto-generated method stub
+////						editProfile(editButton);
+//						Intent intent = new Intent(getActivity(), Edit_Profile.class);
+//						
+//						startActivity(intent);
+//					}
+//				});	
 		
 		
 		shiftsButton.setOnClickListener(
@@ -100,12 +103,13 @@ public class View_Profile extends Fragment {
 						startActivity(intent);
 					}
 				});
-		
+
 		// set text equal to data base values
 		userNameText.setText(tempRegName);
 		userUserNameText.setText(tempUserName);
 		userEmailText.setText(tempEmail);
 		userAcctText.setText(accountType);
+		userPNumberText.setText(tempPhone);
 		
 		
 	}
@@ -121,10 +125,15 @@ public class View_Profile extends Fragment {
 		// Handle action bar item clicks here. The action bar will
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
+		switch (item.getItemId()) {
+
+        case R.id.actionEdit:
+        	Intent intent = new Intent(getActivity(), Edit_Profile.class);
+        	startActivity(intent);
+        	return true;
+           
+        default:
+            return super.onOptionsItemSelected(item);
+    }
 	}
 }

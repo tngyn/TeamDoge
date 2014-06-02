@@ -4,11 +4,12 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation= "vertical"
-    tools:context="com.teamdoge.userprofile.View_Profile"
+    tools:context="com.teamdoge.userprofile.Manager_View_Profile"
     tools:ignore="MergeRootFrame" >
+    
 
-    <ImageView
-        android:id="@+id/imageView1"
+ <ImageView
+        android:id="@+id/imageView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -16,58 +17,57 @@
         android:src="@drawable/blank_profile" />
 
     <TextView
-        android:id="@+id/userNameText"
+        android:id="@+id/lookuserNameText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/imageView1"
+        android:layout_toRightOf="@+id/imageView2"
         android:text="Name" />
 
     <TextView
-        android:id="@+id/userPNumberText"
+        android:id="@+id/lookuserPNumberText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/userAcctText"
-        android:layout_toRightOf="@+id/imageView1"
+        android:layout_below="@+id/lookuserAcctText"
+        android:layout_toRightOf="@+id/imageView2"
         android:layout_marginTop="12dp"
         android:text="555-555-5555" />
 
     <TextView
-        android:id="@+id/userAcctText"
+        android:id="@+id/lookuserAcctText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/userNameText"
-        android:layout_toRightOf="@+id/imageView1"
+        android:layout_below="@+id/lookuserNameText"
+        android:layout_toRightOf="@+id/imageView2"
         android:layout_marginTop="12dp"
         android:text="Account" />
 
     <TextView
-        android:id="@+id/userEmailText"
+        android:id="@+id/lookuserEmailText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/userUserNameText"
-        android:layout_below="@+id/userPNumberText"
+        android:layout_alignLeft="@+id/lookuserUserNameText"
+        android:layout_below="@+id/lookuserPNumberText"
         android:layout_marginTop="12dp"
         android:text="Email" />
 
     <TextView
-        android:id="@+id/userUserNameText"
+        android:id="@+id/lookuserUserNameText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/userNameText"
-        android:layout_below="@+id/userEmailText"
+        android:layout_alignLeft="@+id/lookuserNameText"
+        android:layout_below="@+id/lookuserEmailText"
         android:layout_marginTop="12dp"
         android:text="UserName" />
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/button2"
         android:layout_width="200dp"
         android:layout_height="80dp"
-        android:layout_below="@+id/imageView1"
+        android:layout_below="@+id/imageView2"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="103dp"
-        android:text="Set Available Times"
-        android:onClick="setAvailableTimes" />
+        android:text="Make Manager"
+        android:onClick="make_manager" />
 
 </RelativeLayout>
-   
