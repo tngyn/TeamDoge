@@ -56,11 +56,10 @@ public class DayShiftsManagementActivity extends Activity {
 	private View button;
 	private ParseObject shiftObject;
 	private String[] schedules;
-	private ArrayList temp;
+	private ArrayList<?> temp;
 	private ParseObject scheduleObject;
 	private static boolean[][] working;
-	private static int[] indexArray;
-    private final String AM = ":00 AM";
+	private final String AM = ":00 AM";
     private final String PM = ":00 PM";
     private final String DASH = " - ";
     protected static String[][] names;
