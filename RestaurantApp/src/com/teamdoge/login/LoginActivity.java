@@ -12,6 +12,7 @@ import com.teamdoge.restaurantapp.R;
 import com.teamdoge.restaurantapp.R.id;
 import com.teamdoge.restaurantapp.R.layout;
 import com.teamdoge.restaurantapp.R.string;
+import com.teamdoge.userprofile.View_Profile;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;

@@ -21,7 +21,6 @@
     <string name="title_activity_add__item">Add_Item</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_add_item">Add_item</string>
-
     <string name="addIngredient">Add Ingredient</string>
 
     <!-- Navigation drawer items -->
@@ -32,8 +31,8 @@
         <item>Profile</item>
         <item>Log Out</item>
     </string-array>
-    
-        <!-- Navigation drawer items for Owner-->
+
+    <!-- Navigation drawer items for Owner -->
     <string-array name="drawer_sections_array_for_owner">
         <item>Schedule</item>
         <item>Inventory</item>
@@ -77,12 +76,11 @@
     <string name="title_activity_view__profile">View_Profile</string>
     <string name="paintdis">Set Available Times</string>
     <string name="title_activity_edit__profile">Edit_Profile</string>
-
     <string name="title_activity_view__item">View Item</string>
-
     <string name="add_ingredients_dialog_box">Please Add a New ingredient</string>
     <string name="add">Add</string>
     <string name="title_activity_manager__view__profile">Manager_View_Profile</string>
-
+    <string name="title_activity_profile__picture__select">Profile_Picture_Select</string>
+    <string name="title_activity_profile__picture">Profile_Picture</string>
 
 </resources>

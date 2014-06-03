@@ -6,6 +6,7 @@ import com.parse.Parse;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,9 +16,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.os.Build;
+
+import com.parse.GetDataCallback;
 import com.parse.LogInCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
+import com.parse.ParseFile;
+import com.parse.ParseImageView;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
@@ -35,10 +40,12 @@ public class View_Profile extends Fragment {
 	private TextView userUserNameText;
 	private Button editButton;
 	private Button shiftsButton;
+	private ParseImageView profile_pic;
 	
 	
-	///** Called when the user clicks the set Available shifts button */
 	
+	
+	// new fragement creation
 	public static View_Profile newInstance() {
 	View_Profile fragment = new View_Profile();
 	Bundle args = new Bundle();
@@ -46,13 +53,13 @@ public class View_Profile extends Fragment {
 	return fragment;
 	}
 		
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
 		// link to parse
-
-		Parse.initialize(getActivity(), "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8", "k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF");
+Parse.initialize(getActivity(), "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8", "k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF");
 	}
 	
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -69,6 +76,22 @@ public class View_Profile extends Fragment {
 		userPNumberText = (TextView) view.findViewById(R.id.userPNumberText);
 		shiftsButton = (Button) view.findViewById(R.id.button1);
 		
+		
+		// Load the profile picture from parse
+		// note the image must be stored as a .bmp
+		profile_pic = (ParseImageView) view.findViewById(R.id.profile_pic);
+		Parse.initialize(getActivity(), "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8", "k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF");
+		ParseFile photoFile = ParseUser.getCurrentUser().getParseFile("Profile_Pic");
+	    if (photoFile != null) {
+	    	profile_pic.setParseFile(photoFile);
+	    	profile_pic.loadInBackground(new GetDataCallback() {
+	            @Override
+	            public void done(byte[] data, ParseException e) {
+	            	profile_pic.setVisibility(View.VISIBLE);
+	            }
+	    	});
+	    
+		
 		// pull values from data base
 		ParseUser user = ParseUser.getCurrentUser();
 		String tempUserName = user.getUsername();
@@ -77,33 +100,22 @@ public class View_Profile extends Fragment {
 		String tempRegName = user.getString("Name");
 		String tempPhone = user.getString("Phone_Number");
 		
-//		editButton.setOnClickListener(
-//				new View.OnClickListener() {
-//					
-//					@Override
-//					public void onClick(View v) {
-//						// TODO Auto-generated method stub
-////						editProfile(editButton);
-//						Intent intent = new Intent(getActivity(), Edit_Profile.class);
-//						
-//						startActivity(intent);
-//					}
-//				});	
 		
 		
-		shiftsButton.setOnClickListener(
-				new View.OnClickListener() {
+
+	// shift selector	
+	shiftsButton.setOnClickListener(
+	new View.OnClickListener() {
 					
-					@Override
-					public void onClick(View v) {
-						// TODO Auto-generated method stub
-//						editProfile(editButton);
-						Intent intent = new Intent(getActivity(), ShiftSelectorActivity.class);
-						
-						startActivity(intent);
+	@Override
+	public void onClick(View v) {
+		Intent intent = new Intent(getActivity(), ShiftSelectorActivity.class);
+		
+	startActivity(intent);
 					}
 				});
-
+		
+		
 		// set text equal to data base values
 		userNameText.setText(tempRegName);
 		userUserNameText.setText(tempUserName);
@@ -111,7 +123,8 @@ public class View_Profile extends Fragment {
 		userAcctText.setText(accountType);
 		userPNumberText.setText(tempPhone);
 		
-		
+	
+	    }
 	}
 
 	
@@ -122,10 +135,6 @@ public class View_Profile extends Fragment {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		//switch (item.getItemId()) {
 
         if (item.getItemId()== R.id.actionEdit){
         	Intent intent = new Intent(getActivity(), Edit_Profile.class);

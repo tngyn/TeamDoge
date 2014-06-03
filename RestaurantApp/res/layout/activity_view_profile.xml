@@ -7,10 +7,10 @@
     tools:context="com.teamdoge.userprofile.View_Profile"
     tools:ignore="MergeRootFrame" >
 
-    <ImageView
-        android:id="@+id/imageView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <com.parse.ParseImageView
+        android:id="@+id/profile_pic"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:src="@drawable/blank_profile" />
@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/imageView1"
+        android:layout_toRightOf="@+id/profile_pic"
         android:text="Name" />
 
     <TextView
@@ -28,7 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/userAcctText"
-        android:layout_toRightOf="@+id/imageView1"
+        android:layout_toRightOf="@+id/profile_pic"
         android:layout_marginTop="12dp"
         android:text="555-555-5555" />
 
@@ -37,7 +37,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/userNameText"
-        android:layout_toRightOf="@+id/imageView1"
+        android:layout_toRightOf="@+id/profile_pic"
         android:layout_marginTop="12dp"
         android:text="Account" />
 
@@ -63,7 +63,7 @@
         android:id="@+id/button1"
         android:layout_width="200dp"
         android:layout_height="80dp"
-        android:layout_below="@+id/imageView1"
+        android:layout_below="@+id/profile_pic"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="103dp"
         android:text="Set Available Times"

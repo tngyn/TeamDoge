@@ -14,13 +14,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.os.Build;
 import com.parse.LogInCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
+import com.parse.ParseFile;
+import com.parse.ParseImageView;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
 import com.teamdoge.restaurantapp.R;
 import com.teamdoge.restaurantapp.R.id;
@@ -36,6 +40,9 @@ public class Edit_Profile extends Activity {
 	private Button submitBtn;
 	private Button cancelBtn;
 
+	
+
+	
 
 
 	///** Called when the user clicks the set Confirm button */
@@ -46,7 +53,8 @@ public class Edit_Profile extends Activity {
 		editNameText = (EditText) findViewById(R.id.editNameText);
 		editEmailText = (EditText) findViewById(R.id.editEmailText);
 		editPNumberText = (EditText) findViewById(R.id.editPNumberText);
-    
+		
+		
     	
     	//get the information from the edit text fields
     	EditText editNameText = (EditText) findViewById(R.id.editNameText);
@@ -90,6 +98,7 @@ public class Edit_Profile extends Activity {
 		editPNumberText = (EditText) findViewById(R.id.editPNumberText);
 		submitBtn = (Button) findViewById(R.id.submit_btn);
 		cancelBtn = (Button) findViewById(R.id.cancel_btn);
+		
 
 		// link to parse
 		Parse.initialize(this, "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8", 
@@ -107,9 +116,8 @@ public class Edit_Profile extends Activity {
 		editNameText.setText(tempName);
 		editEmailText.setText(tempEmail);
 		editPNumberText.setText(tempPhone);
-
-
-
+		
+		
 		if (savedInstanceState == null) {
 			getFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
@@ -157,13 +165,6 @@ public class Edit_Profile extends Activity {
 		
 	}
 
-//	@Override
-//	public boolean onCreateOptionsMenu(Menu menu) {
-//
-//		// Inflate the menu; this adds items to the action bar if it is present.
-//		getMenuInflater().inflate(R.menu.edit__profile, menu);
-//		return true;
-//	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
