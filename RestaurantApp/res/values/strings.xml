@@ -82,5 +82,6 @@
     <string name="title_activity_manager__view__profile">Manager_View_Profile</string>
     <string name="title_activity_profile__picture__select">Profile_Picture_Select</string>
     <string name="title_activity_profile__picture">Profile_Picture</string>
+    <string name="title_activity_profile__gallery">Profile_Gallery</string>
 
 </resources>

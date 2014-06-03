@@ -40,7 +40,7 @@
             android:name="com.teamdoge.restaurantapp.InventoryList"
             android:label="@string/title_activity_inventory_list" >
 <<<<<<< HEAD
-		</activity>
+		</activity>
         -->
         <activity
             android:name="com.teamdoge.login.SignUpActivity"
@@ -117,6 +117,10 @@
         <activity
             android:name="com.teamdoge.restaurantapp.Profile_Picture"
             android:label="@string/title_activity_profile__picture" >
+        </activity>
+        <activity
+            android:name="com.teamdoge.restaurantapp.Profile_Gallery"
+            android:label="@string/title_activity_profile__gallery" >
         </activity>
     </application>
 

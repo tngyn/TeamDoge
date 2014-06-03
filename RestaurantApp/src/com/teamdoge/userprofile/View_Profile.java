@@ -29,6 +29,28 @@ import com.parse.SignUpCallback;
 import com.teamdoge.restaurantapp.R;
 import com.teamdoge.trackingmenu.AddMenuItemActivity;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.BitmapFactory;
+import android.graphics.Point;
+import android.graphics.Rect;
+import android.net.Uri;
+import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.v4.app.FragmentActivity;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.animation.DecelerateInterpolator;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+
 public class View_Profile extends Fragment {
 
 	
@@ -42,7 +64,7 @@ public class View_Profile extends Fragment {
 	private Button shiftsButton;
 	private ParseImageView profile_pic;
 	
-	
+
 	
 	
 	// new fragement creation
@@ -59,7 +81,8 @@ public class View_Profile extends Fragment {
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
 		// link to parse
-Parse.initialize(getActivity(), "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8", "k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF");
+Parse.initialize(getActivity(), "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8", 
+		"k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF");
 	}
 	
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -100,6 +123,13 @@ Parse.initialize(getActivity(), "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8", "k5i
 		String tempRegName = user.getString("Name");
 		String tempPhone = user.getString("Phone_Number");
 		
+		// set text equal to data base values
+		userNameText.setText(tempRegName);
+		userUserNameText.setText(tempUserName);
+		userEmailText.setText(tempEmail);
+		userAcctText.setText(accountType);
+		userPNumberText.setText(tempPhone);
+		
 		
 		
 
@@ -110,22 +140,20 @@ Parse.initialize(getActivity(), "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8", "k5i
 	@Override
 	public void onClick(View v) {
 		Intent intent = new Intent(getActivity(), ShiftSelectorActivity.class);
-		
-	startActivity(intent);
-					}
+		startActivity(intent);
+	}
+
 				});
-		
-		
-		// set text equal to data base values
-		userNameText.setText(tempRegName);
-		userUserNameText.setText(tempUserName);
-		userEmailText.setText(tempEmail);
-		userAcctText.setText(accountType);
-		userPNumberText.setText(tempPhone);
-		
 	
+	
+		
+		
+		
 	    }
 	}
+		
+		
+	
 
 	
 	@Override
