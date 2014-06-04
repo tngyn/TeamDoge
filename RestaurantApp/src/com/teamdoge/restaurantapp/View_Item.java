@@ -30,6 +30,7 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.teamdoge.userprofile.Edit_Profile;
 
 public class View_Item extends FragmentActivity implements OnItemSelectedListener, InvAddPageDropdownFrag.OnFragmentInteractionListener{
 	//used to clear all the text boxes (initialize them for typing)
@@ -553,19 +554,18 @@ public class View_Item extends FragmentActivity implements OnItemSelectedListene
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 
-		switch (item.getItemId()) {
-
-		case R.id.actionEdit:
-			Intent intent = new Intent(View_Item.this, Edit_item.class);
-			intent.putExtra("item", itemName);
+        if (item.getItemId()== R.id.actionEdit){
+        	Intent intent = new Intent(View_Item.this, Edit_item.class);
+        	intent.putExtra("item", itemName);
 			startActivity(intent);
-			return true;
+        	return true;
+        }
+           
+        	else
+            return super.onOptionsItemSelected(item);
+	
+    }
 
-		default:
-			return super.onOptionsItemSelected(item);
-		}
-
-	}
 
 	private class MyAsyncTaskHelper extends AsyncTask<Void, Void, List<ParseObject>> {
 

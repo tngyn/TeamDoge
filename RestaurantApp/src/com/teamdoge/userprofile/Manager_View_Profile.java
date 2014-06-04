@@ -27,60 +27,31 @@ import com.teamdoge.trackingmenu.AddMenuItemActivity;
 
 public class Manager_View_Profile extends Fragment {
 	
-	
-	// establish Text views
+	// establish Textviews/buttons
 	private TextView lookuserNameText;
 	private TextView lookuserEmailText;
 	private TextView lookuserAcctText;
 	private TextView lookuserPNumberText;
 	private TextView lookuserUserNameText;
 	private Button changeTypeButton;
+	
+	
+	
+	// new fragment created when called
+	public static Manager_View_Profile newInstance() {
+	Manager_View_Profile fragment = new Manager_View_Profile();
+	Bundle args = new Bundle();
+	fragment.setArguments(args);
+	return fragment;
+	}
 
-	///** Called when the user clicks the set changeTypeButton button */
-	public void make_manager(View view) {
-    	
-    
-		// This will need to be changed to the user the manager clicked on ***//
-		Parse.initialize(getActivity(), "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8", "k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF");
-		ParseUser user = ParseUser.getCurrentUser();
-		// ****************************************************//
-		// get initial account value
-    	String accountType = user.getString("Acc_Type");
-    	
-    	// check to see what type before changing
-    	if (accountType == "Employee"){
-    		user.put("Acc_Type", "Manager");
-    			}
-    	else if (accountType == "Manager"){
-    		user.put("Acc_Type", "Employee");
-    			}
-    	
-    	  	
-		// refresh all the values for view
-    	accountType = user.getString("Acc_Type");// get the new string value
-    	
-    	// update button label
-		if (accountType == "Employee"){
-			changeTypeButton.setText("Make Manager");
-				}
-		else if (accountType == "Manager"){
-			changeTypeButton.setText("Make Employee");
-				}
-		// update account type label
-		lookuserAcctText.setText(accountType);
-    	// End refresh views
-
-		
-	}	
 	
 		
-	
+	// link to parse
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
-		// link to parse
-
 		Parse.initialize(getActivity(), "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8", "k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF");
 	}
 
@@ -88,6 +59,8 @@ public class Manager_View_Profile extends Fragment {
 			Bundle savedInstanceState) {
 		return inflater.inflate(R.layout.activity_manager__view__profile, container, false);
 	}
+	
+	
 	
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		// setup initial Text views
@@ -98,35 +71,79 @@ public class Manager_View_Profile extends Fragment {
 		lookuserPNumberText = (TextView) view.findViewById(R.id.lookuserPNumberText);
 		changeTypeButton = (Button) view.findViewById(R.id.button2);
 		
-		// pull values from data base
 		
 		// This will need to be changed to the user the manager clicked on ***//
 		ParseUser user = ParseUser.getCurrentUser();
 		// ****************************************************//
-		String tempUserName = user.getUsername();
-		String tempEmail = user.getEmail();
-		String accountType = user.getString("Acc_Type");
-		String tempRegName = user.getString("Name");
-		String tempPhone = user.getString("Phone_Number");
 		
-
-
+		// pull values from database
+		String looktempUserName = user.getUsername();
+		String looktempEmail = user.getEmail();
+		String lookaccountType = user.getString("Acc_Type");
+		String looktempRegName = user.getString("Name");
+		String looktempPhone = user.getString("Phone_Number");
+		
 		// set text equal to data base values
-		lookuserNameText.setText(tempRegName);
-		lookuserUserNameText.setText(tempUserName);
-		lookuserEmailText.setText(tempEmail);
-		lookuserAcctText.setText(accountType);
-		lookuserPNumberText.setText(tempPhone);
+		lookuserNameText.setText(looktempRegName);
+		lookuserUserNameText.setText(looktempUserName);
+		lookuserEmailText.setText(looktempEmail);
+		lookuserAcctText.setText(lookaccountType);
+		lookuserPNumberText.setText(looktempPhone);
 		
 		// change button text based on type
-		if (accountType == "Employee"){
+		if (lookaccountType == "Employee"){
 		changeTypeButton.setText("Make Manager");}
 		
-		if (accountType == "Manager"){
-		changeTypeButton.setText("Make Employee");}
-			
-	}
+		//else if (accountType == "Manager"){
+		//changeTypeButton.setText("Make Employee");}
+		
+		
+	////	// change employee type///////////////
+		changeTypeButton.setOnClickListener(
+				new View.OnClickListener() {
+					
+		@Override
+		public void onClick(View v) {
+
+		// This will need to be changed to the user the manager clicked on ***//
+		Parse.initialize(getActivity(), "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8", "k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF");
+		ParseUser user = ParseUser.getCurrentUser();
+		// ****************************************************//
+						
+		// get initial account value
+		//String accountType = user.getString("Acc_Type");
+				    	
+		// check to see what type before changing
+		//if (accountType == "Employee"){
+			user.put("Acc_Type", "Manager");
+				//    }
+		//else if (accountType == "Manager"){
+		//	user.put("Acc_Type", "Employee");
+				//    }
+				    	
+				    	  	
+		// refresh all the values for view
+		//accountType = user.getString("Acc_Type");// get the new string value
+				    	
+		// update button label
+		//if (accountType == "Employee"){
+		//changeTypeButton.setText("Make Manager");
+		//		}
+		//else if (accountType == "Manager"){
+		//changeTypeButton.setText("Make Employee");
+		//		}
+		// update account type label
+		//lookuserAcctText.setText(accountType);
+		// End refresh views
+			}
+		});// end of click
+		
+	}// end of on create
 	
+	
+	
+	
+	// menu and menu item section
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 	   inflater.inflate(R.menu.manager__view__profile, menu);
@@ -141,7 +158,5 @@ public class Manager_View_Profile extends Fragment {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-
-	
 
 }

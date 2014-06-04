@@ -51,8 +51,8 @@ public class InventoryList extends Fragment implements Runnable {
 	private String mParam2;
 	private List<ParseObject> foodNames;
 	private List<ParseObject> category;
-	
-	
+
+
 	private Menu optionsMenu;
 
 	private OnFragmentInteractionListener mListener;
@@ -106,8 +106,8 @@ public class InventoryList extends Fragment implements Runnable {
 		View v = inflater.inflate(R.layout.activity_inventory_list, container,
 				false);
 		expListView = (ExpandableListView) v.findViewById(R.id.categoryList);
-		
-		
+
+
 		run();
 //		asyncCaller();
 
@@ -163,7 +163,7 @@ public class InventoryList extends Fragment implements Runnable {
 			//Log.wtf("CLICK: ", getValue(groupPosition, childPosition));
 			mIntent.putExtra("item", getValue(groupPosition, childPosition));
 			startActivity(mIntent);
-			
+
 			return false;
 		}
 
@@ -243,7 +243,7 @@ public class InventoryList extends Fragment implements Runnable {
 					index++;
 				}
 				//Log.wtf("Category", ""+category1[0]);
-				
+
 				//for (String category : groupList) {
 					//if (category.equals(groupList.get(i))) {
 						//Log.wtf("Equal -> loadchild",category+" "+groupList.get(i));
@@ -282,7 +282,7 @@ public class InventoryList extends Fragment implements Runnable {
 			setRefreshActionButtonState(true);
 			asyncCaller();
 			return true;
-		
+
 		case R.id.item_add:
 			Intent intent = new Intent(getActivity(), Add_item.class);
 			startActivity(intent);
@@ -293,45 +293,45 @@ public class InventoryList extends Fragment implements Runnable {
 		}
 
 	}
-	
-	
+
+
 
 	public void asyncCaller() {
 		Log.wtf("CMONNN", "INSIDE ASYNCCALLERRR");
 		new MyAsyncTaskHelper().execute();
 	}
-	
+
 	private class MyAsyncTaskHelper extends AsyncTask<Void, Void, List<String>> {
 
 		@Override
 		protected List<String> doInBackground(Void... params) {
 			// TODO Auto-generated method stub
 			Log.wtf("TESTINGGG", "IM IN DO IN BACKGROUND AFTER CREATING STUFF");
-			
+
 			createGroupList();
 
 			createCollection();
-			
+
 			Log.wtf("TESTINGGG", "IM IN DO IN BACKGROUND AFTER CREATING STUFF");
 			return groupList;
 		}
-		
+
 		@Override
 		protected void onPostExecute(List<String> item) {
 			Log.wtf("TESTINGGG", "IM IN ON POST EXECUTE");
 			//dff
 			ExpandableListAdapter expListAdapter = new ExpandableListAdapter(
 					getActivity(), item, listInventory);
-			
+
 			Log.wtf("TESTINGGG", "IM IN ON POST EXECUTE");
 			expListView.setAdapter(expListAdapter);
-			
+
 			setRefreshActionButtonState(false);
-			
+
 		}
-		
+
 	}
-	
+
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
@@ -355,5 +355,5 @@ public class InventoryList extends Fragment implements Runnable {
 	        }
 	    }
 	}
-	
+
 }

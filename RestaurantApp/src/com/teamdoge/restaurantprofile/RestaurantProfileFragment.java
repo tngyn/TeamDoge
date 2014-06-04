@@ -4,6 +4,7 @@ import com.teamdoge.restaurantapp.ManagerFragment.OnFragmentInteractionListener;
 import com.teamdoge.restaurantapp.R;
 import com.teamdoge.restaurantapp.SuperAwesomeCardFragment;
 import com.teamdoge.trackingmenu.AddMenuItemActivity;
+import com.teamdoge.userprofile.Edit_Profile;
 import com.astuetz.PagerSlidingTabStrip;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
@@ -160,20 +161,25 @@ public class RestaurantProfileFragment extends Fragment {
 	   inflater.inflate(R.menu.menu, menu);
 	}
 
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle action bar item clicks here. The action bar will
+		// automatically handle clicks on the Home/Up button, so long
+		// as you specify a parent activity in AndroidManifest.xml.
+		//switch (item.getItemId()) {
 
-	    switch (item.getItemId()) {
+        if (item.getItemId()== R.id.item_add){
+        	Intent intent = new Intent(getActivity(), AddMenuItemActivity.class);
+        	startActivity(intent);
+        	return true;
+        }
+           
+        	else
+            return super.onOptionsItemSelected(item);
+	
+    }
 
-	        case R.id.item_add:
-	        	Intent intent = new Intent(getActivity(), AddMenuItemActivity.class);
-	        	startActivity(intent);
-	        	return true;
-	           
-	        default:
-	            return super.onOptionsItemSelected(item);
-	    }
-
-	}
+	   
 
 }

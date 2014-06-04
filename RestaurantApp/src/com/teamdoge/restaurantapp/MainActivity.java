@@ -15,6 +15,7 @@ import com.teamdoge.restaurantprofile.RestaurantProfileFragment;
 import com.teamdoge.schedules.ListItem;
 import com.teamdoge.schedules.TwoTextArrayAdapter;
 import com.teamdoge.trackingmenu.TrackingMenuFragment;
+import com.teamdoge.userprofile.Manager_View_Profile;
 import com.teamdoge.userprofile.View_Profile;
 
 import android.net.Uri;
