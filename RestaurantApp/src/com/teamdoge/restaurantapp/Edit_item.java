@@ -100,8 +100,6 @@ public class Edit_item extends FragmentActivity implements
 		for (int i = 0; i < units_dropdown.getCount(); i++) {
 			if (unit.equalsIgnoreCase(units_dropdown.getItemAtPosition(i)
 					.toString())) {
-				// Log.wtf("Units dropdown name", ""+
-				// units_dropdown.getItemAtPosition(i).toString());
 				units_dropdown.setSelection(i);
 			}
 
@@ -658,8 +656,7 @@ public class Edit_item extends FragmentActivity implements
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-				}
-			
+				}	
 			});
 			onBackPressed();
 			return true;

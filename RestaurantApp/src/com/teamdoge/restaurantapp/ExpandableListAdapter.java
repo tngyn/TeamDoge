@@ -52,11 +52,11 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         item.setText(Citem);
         
         /**************************ADDED***************************/
-        ImageView icon = (ImageView) convertView.findViewById(R.id.rowicon);
-        if (icon != null) 
-        {
-           icon.setImageResource(R.drawable.ic_action_discard);
-        }
+//        ImageView icon = (ImageView) convertView.findViewById(R.id.rowicon);
+//        if (icon != null) 
+//        {
+//           icon.setImageResource(R.drawable.ic_action_discard);
+//        }
         /********************************************************/
         return convertView;
     }
