@@ -69,7 +69,8 @@ public class DayShiftsManagementActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-		
+
+		setContentView(R.layout.activity_day_shifts_management_activity);
 		Parse.initialize(this, "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8", "k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF");
 		super.onCreate(savedInstanceState);
 	    Day = this.getIntent().getStringExtra("Day");
@@ -92,7 +93,6 @@ public class DayShiftsManagementActivity extends Activity {
 	protected void getData() {
 		ParseUser curruser = ParseUser.getCurrentUser();
 	    owner = curruser.getString("Owner_Acc");
-		setContentView(R.layout.activity_day_shifts_management_activity);
 		ParseQuery<ParseObject> query = ParseQuery.getQuery("Schedule");
 		query.whereEqualTo("Id", owner);
 
