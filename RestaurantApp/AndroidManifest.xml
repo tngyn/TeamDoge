@@ -40,7 +40,7 @@
             android:name="com.teamdoge.restaurantapp.InventoryList"
             android:label="@string/title_activity_inventory_list" >
 <<<<<<< HEAD
-		</activity>
+		</activity>
         -->
         <activity
             android:name="com.teamdoge.login.SignUpActivity"
