@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.os.Build;
 
@@ -29,27 +30,7 @@ import com.parse.SignUpCallback;
 import com.teamdoge.restaurantapp.R;
 import com.teamdoge.trackingmenu.AddMenuItemActivity;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
-import android.content.Context;
-import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.BitmapFactory;
-import android.graphics.Point;
-import android.graphics.Rect;
-import android.net.Uri;
-import android.os.Bundle;
-import android.provider.MediaStore;
-import android.support.v4.app.FragmentActivity;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.animation.DecelerateInterpolator;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
+
 
 public class View_Profile extends Fragment {
 
@@ -63,6 +44,7 @@ public class View_Profile extends Fragment {
 	private Button editButton;
 	private Button shiftsButton;
 	private ParseImageView profile_pic;
+
 	
 
 	
@@ -74,8 +56,9 @@ public class View_Profile extends Fragment {
 	fragment.setArguments(args);
 	return fragment;
 	}
-		
 	
+	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -111,9 +94,10 @@ Parse.initialize(getActivity(), "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8",
 	            @Override
 	            public void done(byte[] data, ParseException e) {
 	            	profile_pic.setVisibility(View.VISIBLE);
+	            
 	            }
 	    	});
-	    
+	    }
 		
 		// pull values from data base
 		ParseUser user = ParseUser.getCurrentUser();
@@ -133,28 +117,17 @@ Parse.initialize(getActivity(), "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8",
 		
 		
 
-	// shift selector	
-	shiftsButton.setOnClickListener(
-	new View.OnClickListener() {
-					
-	@Override
-	public void onClick(View v) {
-		Intent intent = new Intent(getActivity(), ShiftSelectorActivity.class);
-		startActivity(intent);
+		// shift selector	
+		shiftsButton.setOnClickListener(
+		new View.OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			Intent intent = new Intent(getActivity(), ShiftSelectorActivity.class);
+			startActivity(intent);
+				}
+			});
+		
 	}
-
-				});
-	
-	
-		
-		
-		
-	    }
-	}
-		
-		
-	
-
 	
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

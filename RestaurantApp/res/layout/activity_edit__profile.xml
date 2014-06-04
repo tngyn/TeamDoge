@@ -36,7 +36,7 @@
         android:ems="10"
         android:inputType="phone" >
 
-        <requestFocus />
+     
     </EditText>
 
     <EditText
@@ -97,7 +97,15 @@
         android:text="Email"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-
+    <Button
+        android:id="@+id/changeProfilePic"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/cancel_btn"
+        android:layout_below="@+id/cancel_btn"
+        android:layout_toLeftOf="@+id/textView4"
+        android:text="Change Profile Picture" />
    
 </RelativeLayout>
 
