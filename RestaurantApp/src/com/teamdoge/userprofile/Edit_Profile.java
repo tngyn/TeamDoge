@@ -2,6 +2,7 @@ package com.teamdoge.userprofile;
 
 
 import java.io.ByteArrayOutputStream;
+import java.util.List;
 
 import android.app.Activity;
 import android.app.ActionBar;
@@ -31,6 +32,7 @@ import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseImageView;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
@@ -38,6 +40,7 @@ import com.teamdoge.restaurantapp.R;
 import com.teamdoge.restaurantapp.R.id;
 import com.teamdoge.restaurantapp.R.layout;
 import com.teamdoge.restaurantapp.R.menu;
+
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
@@ -72,8 +75,7 @@ public class Edit_Profile extends Activity {
 	private ParseFile sendProfilePic;
 	private Bitmap newProfilePic;
 	private byte[] getPhotoData;
-
-	
+	private ParseObject shifts;
 	
 	// Hold a reference to the current animator,
     // so that it can be canceled mid-way.
@@ -148,12 +150,22 @@ public class Edit_Profile extends Activity {
 
 		// get current user
 		final ParseUser user = ParseUser.getCurrentUser();
-
+		
 		// pull values from data base
 		String tempName = user.getString("Name");
 		String tempEmail = user.getEmail();
 		String tempPhone = user.getString("PhoneNumber");
-
+		
+		ParseQuery<ParseObject>query = new ParseQuery<ParseObject>("Shifts");
+		query.whereEqualTo("Username", user.getUsername());
+		try {
+			List<ParseObject> list = query.find();
+			shifts = list.get(0);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		// set text equal to data base values
 		editNameText.setText(tempName);
 		editEmailText.setText(tempEmail);
@@ -199,11 +211,12 @@ public class Edit_Profile extends Activity {
 				    	Log.d("ASDASD", user.getUsername());
 				    	
 				    	//store the information back in the database
+				    	shifts.put("Name", userName);
 				    	user.setEmail(userEmail);
 				    	user.put("Name", userName);
 				    	user.put("Phone_Number", userPhone);
 				    	user.saveInBackground();
-
+				    	shifts.saveInBackground();
 						onBackPressed();
 					}
 				});
