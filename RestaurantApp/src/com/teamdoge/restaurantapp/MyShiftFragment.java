@@ -260,6 +260,7 @@ public class MyShiftFragment extends ListFragment {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
+							asyncCaller();
 						} 
 						else {
 							for(; start < end; ++start ) {
@@ -288,6 +289,7 @@ public class MyShiftFragment extends ListFragment {
 							end = 0;
 							entireDay = false;
 							index = -1;
+							asyncCaller();
 						}			
 						dialog.dismiss();
 					}
@@ -309,7 +311,7 @@ public class MyShiftFragment extends ListFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		
-		asyncCaller();
+		new MyAsyncTaskHelper().execute();
 		
 		return super.onCreateView(inflater, container, savedInstanceState);		
 	}
@@ -449,6 +451,7 @@ public class MyShiftFragment extends ListFragment {
 	
 	public void asyncCaller() {
 		Log.wtf("CMONNN", "INSIDE ASYNCCALLERRR");
+		setRefreshActionButtonState(true);
 		new MyAsyncTaskHelper().execute();
 	}
 	
@@ -464,7 +467,6 @@ public class MyShiftFragment extends ListFragment {
 	    switch (item.getItemId()) {
 
 	        case R.id.menu_refresh:
-	        	setRefreshActionButtonState(true);
 	        	asyncCaller();
 	        	return true;
 	           

@@ -229,7 +229,7 @@ public class OpenShiftFragment extends ListFragment {
 			Bundle savedInstanceState) {
 		
 		
-		asyncCaller();
+		new MyAsyncTaskHelper().execute();
 		
 		return super.onCreateView(inflater, container, savedInstanceState);		
 	}
@@ -358,7 +358,7 @@ public class OpenShiftFragment extends ListFragment {
 		catch (ParseException e) {
 			e.printStackTrace();
 		}
-		
+		asyncCaller();
 	}
 	
 	
@@ -396,6 +396,7 @@ public class OpenShiftFragment extends ListFragment {
 		catch (ParseException e) {
 			e.printStackTrace();
 		}
+		asyncCaller();
 	}
 	
 	
@@ -459,6 +460,7 @@ public class OpenShiftFragment extends ListFragment {
 		catch (ParseException e) {
 			e.printStackTrace();
 		}
+		asyncCaller();
 	}
 	
 	
@@ -534,6 +536,7 @@ public class OpenShiftFragment extends ListFragment {
 	
 	public void asyncCaller() {
 		Log.wtf("CMONNN", "INSIDE ASYNCCALLERRR");
+    	setRefreshActionButtonState(true);
 		new MyAsyncTaskHelper().execute();
 	}
 	
@@ -568,7 +571,6 @@ public class OpenShiftFragment extends ListFragment {
 	    switch (item.getItemId()) {
 
 	        case R.id.menu_refresh:
-	        	setRefreshActionButtonState(true);
 	        	asyncCaller();
 	        	return true;
 	           

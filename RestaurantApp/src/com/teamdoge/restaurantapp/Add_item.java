@@ -75,6 +75,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -110,6 +111,7 @@ public class Add_item extends FragmentActivity implements OnItemSelectedListener
     protected void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inventory_screen);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         
         //Parse.initialize(this, "fb0rPJ5AFeAx5JNdMV7Yxlcw3paruRc2XNPjOUWo", "fDpkgdVM4vwTTjYdQSq5kMRyuoEQzt6JCuI3ivWC");
         
@@ -532,6 +534,20 @@ public class Add_item extends FragmentActivity implements OnItemSelectedListener
     		//units dropdown called it
     		units_dropdown.setSelection(units_dropdown.getAdapter().getCount());
     	}
+    }
+    
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+	    switch (item.getItemId()) {
+	        case android.R.id.home:	
+	        	onBackPressed();
+	            this.finish();
+
+	            return true;
+
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
     }
     
 	private class MyAsyncTaskHelper extends AsyncTask<Void, Void, List<ParseObject>> {

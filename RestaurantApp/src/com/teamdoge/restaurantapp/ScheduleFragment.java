@@ -117,7 +117,7 @@ public class ScheduleFragment extends ListFragment {
 //		MyAsyncTaskHelper task = new MyAsyncTaskHelper();
 //		task.execute();
        
-		asyncCaller();
+		new MyAsyncTaskHelper().execute();
 		
 		return super.onCreateView(inflater, container, savedInstanceState);		
 	}
@@ -242,6 +242,7 @@ public class ScheduleFragment extends ListFragment {
 	
 	public void asyncCaller() {
 		Log.wtf("CMONNN", "INSIDE ASYNCCALLERRR");
+    	setRefreshActionButtonState(true);
 		new MyAsyncTaskHelper().execute();
 	}
 	
@@ -277,7 +278,6 @@ public class ScheduleFragment extends ListFragment {
 	    switch (item.getItemId()) {
 
 	        case R.id.menu_refresh:
-	        	setRefreshActionButtonState(true);
 	        	asyncCaller();
 	        	return true;
 	           

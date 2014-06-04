@@ -12,6 +12,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -45,8 +46,13 @@ public class Edit_item extends FragmentActivity implements OnItemSelectedListene
     protected void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_item);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        
+        
         Intent intent = getIntent();
         item = intent.getStringExtra("item");
+        getActionBar().setTitle("Edit " + item);
+        
         Log.wtf("IN EDIT", item);
         //Parse.initialize(this, "fb0rPJ5AFeAx5JNdMV7Yxlcw3paruRc2XNPjOUWo", "fDpkgdVM4vwTTjYdQSq5kMRyuoEQzt6JCuI3ivWC");
         
@@ -616,6 +622,20 @@ public class Edit_item extends FragmentActivity implements OnItemSelectedListene
 		}
     }
     
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+	    switch (item.getItemId()) {
+	        case android.R.id.home:	
+	        	onBackPressed();
+	            this.finish();
+
+	            return true;
+
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
+    }
+    
     @Override
     public void onDialogNegativeClick(DialogFragment dialog) {
     	//check which dropdown called this
@@ -629,6 +649,8 @@ public class Edit_item extends FragmentActivity implements OnItemSelectedListene
     		units_dropdown.setSelection(units_dropdown.getAdapter().getCount());
     	}
     }
+    
+    
 
     private class MyAsyncTaskHelper extends AsyncTask<Void, Void, List<ParseObject>> {
 

@@ -27,7 +27,7 @@
     <string-array name="drawer_sections_array">
         <item>Schedule</item>
         <item>Inventory</item>
-        <item>Tracking Menu</item>
+        <!-- <item>Tracking Menu</item> -->
         <item>Profile</item>
         <item>Log Out</item>
     </string-array>
@@ -36,9 +36,9 @@
     <string-array name="drawer_sections_array_for_owner">
         <item>Schedule</item>
         <item>Inventory</item>
-        <item>Tracking Menu</item>
+      <!--   <item>Tracking Menu</item> -->
         <item>Profile</item>
-        <item>Restaurant Profile</item>
+        <item>Management</item>
         <item>Log Out</item>
     </string-array>
 

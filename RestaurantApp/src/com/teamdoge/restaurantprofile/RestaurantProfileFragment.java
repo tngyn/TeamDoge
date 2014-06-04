@@ -1,5 +1,6 @@
 package com.teamdoge.restaurantprofile;
 
+import com.teamdoge.restaurantapp.ManagerFragment;
 import com.teamdoge.restaurantapp.ManagerFragment.OnFragmentInteractionListener;
 import com.teamdoge.restaurantapp.R;
 import com.teamdoge.restaurantapp.SuperAwesomeCardFragment;
@@ -127,8 +128,8 @@ public class RestaurantProfileFragment extends Fragment {
 //				"    Schedule    ",
 //				"Open Shifts" };
 
-		private String[] TITLES = { "Employees",
-				"Profile" };
+		private String[] TITLES = { "Shifts",
+				"Employees" };
 		
 		@Override
 		public CharSequence getPageTitle(int position) {
@@ -146,6 +147,9 @@ public class RestaurantProfileFragment extends Fragment {
 			switch(position) {
 			
 			case 0:
+				ManagerFragment m = new ManagerFragment();
+				return m;
+			case 1:
 				EmployeeListFragment frag = EmployeeListFragment.newInstance();
 				return frag;
 				

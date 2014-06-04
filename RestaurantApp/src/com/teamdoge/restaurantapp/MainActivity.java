@@ -72,7 +72,7 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 	private Boolean isFrag4Visible;
 	private PageSlidingTabStripFragment frag0 ;
 	private InventoryList frag1;
-	private TrackingMenuFragment frag2;
+//	private TrackingMenuFragment frag2;
 	private View_Profile frag3;
 	private RestaurantProfileFragment frag4;
 
@@ -234,7 +234,7 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 			}
 			else {
 				ft.hide(frag1);
-				ft.hide(frag2);
+//				ft.hide(frag2);
 				ft.hide(frag3);
 				ft.show(frag0);
 				ft.hide(frag4);
@@ -263,7 +263,7 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 			}
 			else {
 				ft.hide(frag0);
-				ft.hide(frag2);
+//				ft.hide(frag2);
 				ft.hide(frag3);
 				ft.show(frag1);
 				ft.hide(frag4);
@@ -282,35 +282,35 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 			getActionBar().setTitle("Inventory");
 			break;
 
-		// Tracking Menu
-		case 2:
-			
-			if (isFrag2Visible) {
-				ft.show(frag2);
-			}
-			else {
-				ft.hide(frag0);
-				ft.hide(frag1);
-				ft.hide(frag3);
-				ft.show(frag2);
-				ft.hide(frag4);
-				isFrag0Visible = false;
-				isFrag1Visible = false;
-				isFrag2Visible = true;
-				isFrag3Visible = false;
-				isFrag4Visible = false;
-			}
-			ft.commit();
-			
-//			getSupportFragmentManager().beginTransaction()
-//				.replace(R.id.content,
-//					TrackingMenuFragment.newInstance()).commit();
-			
-			getActionBar().setTitle("Tracking Menu");
-			break;
+//		// Tracking Menu
+//		case 2:
+//			
+//			if (isFrag2Visible) {
+//				ft.show(frag2);
+//			}
+//			else {
+//				ft.hide(frag0);
+//				ft.hide(frag1);
+//				ft.hide(frag3);
+//				ft.show(frag2);
+//				ft.hide(frag4);
+//				isFrag0Visible = false;
+//				isFrag1Visible = false;
+//				isFrag2Visible = true;
+//				isFrag3Visible = false;
+//				isFrag4Visible = false;
+//			}
+//			ft.commit();
+//			
+////			getSupportFragmentManager().beginTransaction()
+////				.replace(R.id.content,
+////					TrackingMenuFragment.newInstance()).commit();
+//			
+//			getActionBar().setTitle("Tracking Menu");
+//			break;
 
 		// Profile
-		case 3:
+		case 2:
 
 			if (isFrag3Visible) {
 				ft.show(frag3);
@@ -318,7 +318,7 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 			else {
 				ft.hide(frag0);
 				ft.hide(frag1);
-				ft.hide(frag2);
+//				ft.hide(frag2);
 				ft.show(frag3);
 				ft.hide(frag4);
 				isFrag0Visible = false;
@@ -337,14 +337,14 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 			break;
 		
 		// Restaurant Profile
-		case 4:
+		case 3:
 			if (isFrag4Visible) {
 				ft.show(frag4);
 			}
 			else {
 				ft.hide(frag0);
 				ft.hide(frag1);
-				ft.hide(frag2);
+//				ft.hide(frag2);
 				ft.hide(frag3);
 				ft.show(frag4);
 				isFrag0Visible = false;
@@ -359,11 +359,11 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 //				.replace(R.id.content,
 //						View_Profile.newInstance()).commit();
 			
-			getActionBar().setTitle("Restaurant Profile");
+			getActionBar().setTitle("Management");
 			break;
 			
 		// Logout
-		case 5:
+		case 4:
 
 			Intent intent = new Intent(MainActivity.this, LoginActivity.class);
 	    	startActivity(intent);
@@ -401,7 +401,7 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 			}
 			else {
 				ft.hide(frag1);
-				ft.hide(frag2);
+//				ft.hide(frag2);
 				ft.hide(frag3);
 				ft.show(frag0);
 				isFrag0Visible = true;
@@ -428,7 +428,7 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 			}
 			else {
 				ft.hide(frag0);
-				ft.hide(frag2);
+//				ft.hide(frag2);
 				ft.hide(frag3);
 				ft.show(frag1);
 				isFrag0Visible = false;
@@ -446,32 +446,32 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 			break;
 
 		// Tracking Menu
-		case 2:
-			
-			if (isFrag2Visible) {
-				ft.show(frag2);
-			}
-			else {
-				ft.hide(frag0);
-				ft.hide(frag1);
-				ft.hide(frag3);
-				ft.show(frag2);
-				isFrag0Visible = false;
-				isFrag1Visible = false;
-				isFrag2Visible = true;
-				isFrag3Visible = false;
-			}
-			ft.commit();
-			
-//			getSupportFragmentManager().beginTransaction()
-//				.replace(R.id.content,
-//					TrackingMenuFragment.newInstance()).commit();
-			
-			getActionBar().setTitle("Tracking Menu");
-			break;
+//		case 2:
+//			
+//			if (isFrag2Visible) {
+//				ft.show(frag2);
+//			}
+//			else {
+//				ft.hide(frag0);
+//				ft.hide(frag1);
+//				ft.hide(frag3);
+//				ft.show(frag2);
+//				isFrag0Visible = false;
+//				isFrag1Visible = false;
+//				isFrag2Visible = true;
+//				isFrag3Visible = false;
+//			}
+//			ft.commit();
+//			
+////			getSupportFragmentManager().beginTransaction()
+////				.replace(R.id.content,
+////					TrackingMenuFragment.newInstance()).commit();
+//			
+//			getActionBar().setTitle("Tracking Menu");
+//			break;
 
 		// Profile
-		case 3:
+		case 2:
 
 			if (isFrag3Visible) {
 				ft.show(frag3);
@@ -479,7 +479,7 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 			else {
 				ft.hide(frag0);
 				ft.hide(frag1);
-				ft.hide(frag2);
+//				ft.hide(frag2);
 				ft.show(frag3);
 				isFrag0Visible = false;
 				isFrag1Visible = false;
@@ -496,7 +496,7 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 			break;
 		
 		// Logout
-		case 4:
+		case 3:
 
 			Intent intent = new Intent(MainActivity.this, LoginActivity.class);
 	    	startActivity(intent);
@@ -523,7 +523,7 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 		
 		frag0 = PageSlidingTabStripFragment.newInstance();
 		frag1 = InventoryList.newInstance();
-		frag2 = TrackingMenuFragment.newInstance();
+//		frag2 = TrackingMenuFragment.newInstance();
 		frag3 = View_Profile.newInstance();
 		
 		isFrag0Visible = true;
@@ -534,7 +534,7 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 		ft.add(R.id.content, frag0);
 		ft.add(R.id.content, frag1);
-		ft.add(R.id.content, frag2);
+//		ft.add(R.id.content, frag2);
 		ft.add(R.id.content, frag3);
 		
 		if (accountType.equals("Owner")) {
@@ -545,7 +545,7 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 		}
 		
 		ft.hide(frag1);
-		ft.hide(frag2);
+//		ft.hide(frag2);
 		ft.hide(frag3);
 
 		

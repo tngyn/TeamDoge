@@ -76,7 +76,7 @@ public class DayShiftsManagementActivity extends Activity {
 		MyAsyncTaskHelper task = new MyAsyncTaskHelper();
 		task.execute();
        
-        
+		getActionBar().setTitle("Assign Shifts");
         
 	}
 
