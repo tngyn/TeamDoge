@@ -14,6 +14,9 @@ import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -31,6 +34,8 @@ import com.teamdoge.schedules.OpenShiftList;
 import com.teamdoge.schedules.TwoTextArrayAdapter;
 
 public class OpenShiftFragment extends ListFragment {
+	
+	private Menu optionsMenu;
 	
 	// number of elements to display; if the number cannot be get from the
     // initial access, find the size from an array
@@ -98,7 +103,7 @@ public class OpenShiftFragment extends ListFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+		setHasOptionsMenu(true);
 		// Initializes connectivity to specific Parse database
 		Parse.initialize(getActivity(), parse_key1, parse_key2);
 		
@@ -224,8 +229,7 @@ public class OpenShiftFragment extends ListFragment {
 			Bundle savedInstanceState) {
 		
 		
-		MyAsyncTaskHelper task = new MyAsyncTaskHelper();
-		task.execute();
+		asyncCaller();
 		
 		return super.onCreateView(inflater, container, savedInstanceState);		
 	}
@@ -528,7 +532,10 @@ public class OpenShiftFragment extends ListFragment {
 		
 	}
 	
-	
+	public void asyncCaller() {
+		Log.wtf("CMONNN", "INSIDE ASYNCCALLERRR");
+		new MyAsyncTaskHelper().execute();
+	}
 	
 	private class MyAsyncTaskHelper extends AsyncTask<Void, Void, List<ListItem>> {
 		@Override
@@ -544,8 +551,45 @@ public class OpenShiftFragment extends ListFragment {
 		protected void onPostExecute(List<ListItem> items) {
 			TwoTextArrayAdapter adapter = new TwoTextArrayAdapter(getActivity().getBaseContext(), items);
 	        setListAdapter(adapter);
+	        setRefreshActionButtonState(false);
 		}
 		
+	}
+	
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		this.optionsMenu = menu;
+		inflater.inflate(R.menu.refresh, menu);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+	    switch (item.getItemId()) {
+
+	        case R.id.menu_refresh:
+	        	setRefreshActionButtonState(true);
+	        	asyncCaller();
+	        	return true;
+	           
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
+
+	}
+	
+	public void setRefreshActionButtonState(final boolean refreshing) {
+	    if (optionsMenu != null) {
+	        final MenuItem refreshItem = optionsMenu
+	            .findItem(R.id.menu_refresh);
+	        if (refreshItem != null) {
+	            if (refreshing) {
+	                refreshItem.setActionView(R.layout.actionbar_indeterminate_progress);
+	            } else {
+	                refreshItem.setActionView(null);
+	            }
+	        }
+	    }
 	}
 	
 }

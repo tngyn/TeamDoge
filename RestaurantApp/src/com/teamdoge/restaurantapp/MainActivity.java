@@ -335,6 +335,7 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 			getActionBar().setTitle("Profile");
 			break;
 		
+		// Restaurant Profile
 		case 4:
 			if (isFrag4Visible) {
 				ft.show(frag4);
@@ -357,7 +358,7 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 //				.replace(R.id.content,
 //						View_Profile.newInstance()).commit();
 			
-			getActionBar().setTitle("Profile");
+			getActionBar().setTitle("Restaurant Profile");
 			break;
 			
 		// Logout

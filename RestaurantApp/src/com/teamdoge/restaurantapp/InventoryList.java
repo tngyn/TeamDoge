@@ -10,6 +10,7 @@ import java.util.Set;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -28,6 +29,8 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.teamdoge.restaurantapp.ManagerFragment.OnFragmentInteractionListener;
+import com.teamdoge.schedules.ListItem;
+import com.teamdoge.schedules.TwoTextArrayAdapter;
 
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass. Activities that
@@ -48,6 +51,9 @@ public class InventoryList extends Fragment implements Runnable {
 	private String mParam2;
 	private List<ParseObject> foodNames;
 	private List<ParseObject> category;
+	
+	
+	private Menu optionsMenu;
 
 	private OnFragmentInteractionListener mListener;
 
@@ -96,17 +102,19 @@ public class InventoryList extends Fragment implements Runnable {
 		// View v = inflater.inflate(R.layout.fragment_manager, container,
 		// false);
 		/*************** ExpandableView for Inventory ***********************/
-		
-		run();
-		
+
 		View v = inflater.inflate(R.layout.activity_inventory_list, container,
 				false);
 		expListView = (ExpandableListView) v.findViewById(R.id.categoryList);
-		final ExpandableListAdapter expListAdapter = new ExpandableListAdapter(
+		
+		
+		run();
+//		asyncCaller();
+
+		ExpandableListAdapter expListAdapter = new ExpandableListAdapter(
 				getActivity(), groupList, listInventory);
 		expListView.setAdapter(expListAdapter);
 		expListView.setOnChildClickListener(ExpandList_ItemClicked);
-
 		/*****************************************************************/
 
 		return v;
@@ -261,7 +269,8 @@ public class InventoryList extends Fragment implements Runnable {
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		inflater.inflate(R.menu.menu, menu);
+		this.optionsMenu = menu;
+		inflater.inflate(R.menu.inventorylist_menu, menu);
 	}
 
 	@Override
@@ -269,6 +278,11 @@ public class InventoryList extends Fragment implements Runnable {
 
 		switch (item.getItemId()) {
 
+		case R.id.menu_refresh:
+			setRefreshActionButtonState(true);
+			asyncCaller();
+			return true;
+		
 		case R.id.item_add:
 			Intent intent = new Intent(getActivity(), Add_item.class);
 			startActivity(intent);
@@ -279,15 +293,67 @@ public class InventoryList extends Fragment implements Runnable {
 		}
 
 	}
+	
+	
 
+	public void asyncCaller() {
+		Log.wtf("CMONNN", "INSIDE ASYNCCALLERRR");
+		new MyAsyncTaskHelper().execute();
+	}
+	
+	private class MyAsyncTaskHelper extends AsyncTask<Void, Void, List<String>> {
+
+		@Override
+		protected List<String> doInBackground(Void... params) {
+			// TODO Auto-generated method stub
+			Log.wtf("TESTINGGG", "IM IN DO IN BACKGROUND AFTER CREATING STUFF");
+			
+			createGroupList();
+
+			createCollection();
+			
+			Log.wtf("TESTINGGG", "IM IN DO IN BACKGROUND AFTER CREATING STUFF");
+			return groupList;
+		}
+		
+		@Override
+		protected void onPostExecute(List<String> item) {
+			Log.wtf("TESTINGGG", "IM IN ON POST EXECUTE");
+			//dff
+			ExpandableListAdapter expListAdapter = new ExpandableListAdapter(
+					getActivity(), item, listInventory);
+			
+			Log.wtf("TESTINGGG", "IM IN ON POST EXECUTE");
+			expListView.setAdapter(expListAdapter);
+			
+			setRefreshActionButtonState(false);
+			
+		}
+		
+	}
+	
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
 		android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
-		
+
 		createGroupList();
 
 		createCollection();
 	}
 
+	public void setRefreshActionButtonState(final boolean refreshing) {
+	    if (optionsMenu != null) {
+	        final MenuItem refreshItem = optionsMenu
+	            .findItem(R.id.menu_refresh);
+	        if (refreshItem != null) {
+	            if (refreshing) {
+	                refreshItem.setActionView(R.layout.actionbar_indeterminate_progress);
+	            } else {
+	                refreshItem.setActionView(null);
+	            }
+	        }
+	    }
+	}
+	
 }

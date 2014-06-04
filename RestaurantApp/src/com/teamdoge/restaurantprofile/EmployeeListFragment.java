@@ -63,6 +63,10 @@ public class EmployeeListFragment extends ListFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
+		initParse();
+	}
+
+	private void initParse() {
 		// Initializes connectivity to specific Parse database
 		Parse.initialize(getActivity(), parse_key1, parse_key2);
 		
@@ -150,6 +154,7 @@ public class EmployeeListFragment extends ListFragment {
 
 		@Override
 		protected List<ListItem> doInBackground(Void... params) {
+			initParse();
 			createEmployeeList();
 			
 			return items;

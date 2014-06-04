@@ -6,6 +6,7 @@ import com.teamdoge.restaurantapp.SuperAwesomeCardFragment;
 import com.teamdoge.trackingmenu.AddMenuItemActivity;
 import com.astuetz.PagerSlidingTabStrip;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -54,7 +55,6 @@ public class RestaurantProfileFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 	}
 
 	@Override
@@ -143,7 +143,11 @@ public class RestaurantProfileFragment extends Fragment {
 		@Override
 		public Fragment getItem(int position) {
 			switch(position) {
-
+			
+			case 0:
+				EmployeeListFragment frag = EmployeeListFragment.newInstance();
+				return frag;
+				
 			default:
 				return SuperAwesomeCardFragment.newInstance(position);
 			}

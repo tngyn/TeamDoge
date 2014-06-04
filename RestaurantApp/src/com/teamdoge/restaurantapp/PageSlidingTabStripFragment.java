@@ -12,11 +12,15 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.parse.Parse;
 import com.parse.ParseUser;
+import com.teamdoge.trackingmenu.AddMenuItemActivity;
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass. Activities that
  * contain this fragment must implement the
@@ -30,6 +34,7 @@ public class PageSlidingTabStripFragment extends Fragment {
 	ParseUser user;
 	private String accountType;
 	
+	
 	public static final String TAG = PageSlidingTabStripFragment.class
 			.getSimpleName();
 
@@ -41,6 +46,7 @@ public class PageSlidingTabStripFragment extends Fragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setRetainInstance(true);
+		
 		Parse.initialize(getActivity(), "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8", "k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF");
 		
 		user = ParseUser.getCurrentUser();
@@ -62,7 +68,7 @@ public class PageSlidingTabStripFragment extends Fragment {
 				.findViewById(R.id.tabs);
 		ViewPager pager = (ViewPager) view.findViewById(R.id.pager);
 		MyPagerAdapter adapter = new MyPagerAdapter(getChildFragmentManager());
-		
+
 		tabs.setShouldExpand(true);
 		
 		pager.setAdapter(adapter);
@@ -124,8 +130,7 @@ public class PageSlidingTabStripFragment extends Fragment {
 		}
 
 	}
-
-
+	
 }
 	
 	
