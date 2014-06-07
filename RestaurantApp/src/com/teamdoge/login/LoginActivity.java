@@ -3,6 +3,8 @@ package com.teamdoge.login;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.LogInCallback;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.teamdoge.restaurantapp.MainActivity;
 import com.teamdoge.restaurantapp.R;
@@ -73,6 +75,15 @@ public class LoginActivity extends Activity {
 				Log.d("ASD", "true");
 		}
 		if (user != null && remember) {
+			ParseQuery<ParseObject> shiftQuery = ParseQuery.getQuery("Shifts");
+			shiftQuery.whereEqualTo("Username", user.getUsername());
+			try {
+				user.put("Acc_Type", shiftQuery.find().get(0).getString("Acc_Type"));
+			} catch (ParseException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			user.saveInBackground();
 			Intent intent = new Intent(LoginActivity.this, MainActivity.class);
 			startActivity(intent);
 			finish();
@@ -237,7 +248,14 @@ public class LoginActivity extends Activity {
 				    if (user != null) {
 				      //Toast.makeText(getApplicationContext(),"Success", Toast.LENGTH_SHORT).show();
 				    	user.put("Remember_Me", remember);
-
+						ParseQuery<ParseObject> shiftQuery = ParseQuery.getQuery("Shifts");
+						shiftQuery.whereEqualTo("Username", user.getUsername());
+						try {
+							user.put("Acc_Type", shiftQuery.find().get(0).getString("Acc_Type"));
+						} catch (ParseException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 				    	user.saveInBackground(); 
 						Intent intent = new Intent(LoginActivity.this, MainActivity.class);
 
