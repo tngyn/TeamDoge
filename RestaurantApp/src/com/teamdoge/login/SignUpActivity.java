@@ -49,7 +49,6 @@ public class SignUpActivity extends Activity {
 	private EditText eEmail;
 	private String email;
 	private Spinner spinner;
-	private static String type;
 	private String name;
 	private String lastName;
 	private boolean keepGoing;

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 
 import com.parse.Parse;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.teamdoge.login.LoginActivity;
 import com.teamdoge.restaurantapp.ManagerFragment.OnFragmentInteractionListener;
@@ -36,6 +37,7 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 	private String[] mDrawerSections;
 
 	static ParseUser user;
+	static ParseObject shiftUser;
 	private static String accountType;
 	
 	ProgressBar bar;
