@@ -75,7 +75,7 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 			      WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
 
-		if (accountType.equals("Owner")) {
+		if (accountType.equals("Owner") || accountType.equals("Manager")) {
 
 			mDrawerSections = getResources().getStringArray(R.array.drawer_sections_array_for_owner);
 
@@ -398,7 +398,7 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 		ft.add(R.id.content, frag1);
 		ft.add(R.id.content, frag2);
 		
-		if (accountType.equals("Owner")) {
+		if (accountType.equals("Owner") || accountType.equals("Manager")) {
 			frag3 = RestaurantProfileFragment.newInstance();
 			isFrag3Visible = false;
 			ft.add(R.id.content, frag3);
