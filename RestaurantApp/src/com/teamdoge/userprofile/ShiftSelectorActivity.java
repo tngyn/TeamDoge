@@ -120,6 +120,9 @@ public class ShiftSelectorActivity extends Activity {
         shiftsList.setAdapter(adapter);
 
 		Log.d("ASD","ASD");
+
+		button = findViewById(R.id.refresh);
+		button.setVisibility(View.VISIBLE);
 		MyAsyncTaskHelper task = new MyAsyncTaskHelper();
 		task.execute();
     }

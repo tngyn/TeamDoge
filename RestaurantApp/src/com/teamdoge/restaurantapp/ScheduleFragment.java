@@ -12,15 +12,21 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.ParseException;
 import com.teamdoge.schedules.*;
+import com.teamdoge.trackingmenu.AddMenuItemActivity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -28,6 +34,8 @@ import android.widget.TextView;
 public class ScheduleFragment extends ListFragment {
 	
 //	private OnFragmentInteractionListener mListener;
+	
+	private Menu optionsMenu;
 	
 	// number of elements to display; if the number cannot be get from the
     // initial access, find the size from an array
@@ -55,6 +63,7 @@ public class ScheduleFragment extends ListFragment {
 	private ArrayList<String> POSITION;
 	private List<List<String>> TIME;
 
+	
 	
     // Array of integers points to images stored in /res/drawable/
     // Needs access to individual photos
@@ -84,7 +93,7 @@ public class ScheduleFragment extends ListFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+		setHasOptionsMenu(true);
 		// Initializes connectivity to specific Parse database
 				Parse.initialize(getActivity(), parse_key1, parse_key2);
 				
@@ -105,9 +114,11 @@ public class ScheduleFragment extends ListFragment {
 //		TwoTextArrayAdapter adapter = new TwoTextArrayAdapter(getActivity().getBaseContext(), items);
 //        setListAdapter(adapter);
 		
-		MyAsyncTaskHelper task = new MyAsyncTaskHelper();
-		task.execute();
+//		MyAsyncTaskHelper task = new MyAsyncTaskHelper();
+//		task.execute();
        
+		new MyAsyncTaskHelper().execute();
+		
 		return super.onCreateView(inflater, container, savedInstanceState);		
 	}
 	
@@ -229,6 +240,12 @@ public class ScheduleFragment extends ListFragment {
 		}
 	}
 	
+	public void asyncCaller() {
+		Log.wtf("CMONNN", "INSIDE ASYNCCALLERRR");
+    	setRefreshActionButtonState(true);
+		new MyAsyncTaskHelper().execute();
+	}
+	
 	private class MyAsyncTaskHelper extends AsyncTask<Void, Void, List<ListItem>> {
 
 		@Override
@@ -244,8 +261,44 @@ public class ScheduleFragment extends ListFragment {
 		protected void onPostExecute(List<ListItem> items) {
 			TwoTextArrayAdapter adapter = new TwoTextArrayAdapter(getActivity().getBaseContext(), items);
 	        setListAdapter(adapter);
+	        setRefreshActionButtonState(false);
 		}
 		
+	}
+	
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		this.optionsMenu = menu;
+		inflater.inflate(R.menu.refresh, menu);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+	    switch (item.getItemId()) {
+
+	        case R.id.menu_refresh:
+	        	asyncCaller();
+	        	return true;
+	           
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
+
+	}
+	
+	public void setRefreshActionButtonState(final boolean refreshing) {
+	    if (optionsMenu != null) {
+	        final MenuItem refreshItem = optionsMenu
+	            .findItem(R.id.menu_refresh);
+	        if (refreshItem != null) {
+	            if (refreshing) {
+	                refreshItem.setActionView(R.layout.actionbar_indeterminate_progress);
+	            } else {
+	                refreshItem.setActionView(null);
+	            }
+	        }
+	    }
 	}
 	
 }

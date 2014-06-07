@@ -30,6 +30,7 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.teamdoge.userprofile.Edit_Profile;
 
 public class View_Item extends FragmentActivity implements OnItemSelectedListener, InvAddPageDropdownFrag.OnFragmentInteractionListener{
 	//used to clear all the text boxes (initialize them for typing)
@@ -47,8 +48,12 @@ public class View_Item extends FragmentActivity implements OnItemSelectedListene
     protected void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view__item);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        
         Intent intent = getIntent();
         itemName = intent.getStringExtra("item");
+        
+        getActionBar().setTitle(itemName);
         //Log.wtf("In EDIT", item);
         //Parse.initialize(this, "fb0rPJ5AFeAx5JNdMV7Yxlcw3paruRc2XNPjOUWo", "fDpkgdVM4vwTTjYdQSq5kMRyuoEQzt6JCuI3ivWC");
         
@@ -553,19 +558,35 @@ public class View_Item extends FragmentActivity implements OnItemSelectedListene
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 
-		switch (item.getItemId()) {
+//        if (item.getItemId()== R.id.actionEdit){
+//        	Intent intent = new Intent(View_Item.this, Edit_item.class);
+//        	intent.putExtra("item", itemName);
+//			startActivity(intent);
+//        	return true;
+//        }
+//           
+//        	else
+//            return super.onOptionsItemSelected(item);
+        
+	    switch (item.getItemId()) {
+	    
+        	case android.R.id.home:	
+        		onBackPressed();
+        		this.finish();
+        		return true;
+        	case R.id.actionEdit:
+            	Intent intent = new Intent(View_Item.this, Edit_item.class);
+            	intent.putExtra("item", itemName);
+    			startActivity(intent);
+            	return true;
+            	
+            default:
+            	return super.onOptionsItemSelected(item);
 
-		case R.id.actionEdit:
-			Intent intent = new Intent(View_Item.this, Edit_item.class);
-			intent.putExtra("item", itemName);
-			startActivity(intent);
-			return true;
+	    }
+	
+    }
 
-		default:
-			return super.onOptionsItemSelected(item);
-		}
-
-	}
 
 	private class MyAsyncTaskHelper extends AsyncTask<Void, Void, List<ParseObject>> {
 
