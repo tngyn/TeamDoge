@@ -6,6 +6,9 @@ import com.parse.Parse;
 import com.parse.ParseUser;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -73,6 +76,8 @@ public class PageSlidingTabStripFragment extends Fragment {
 		
 		pager.setAdapter(adapter);
 		tabs.setViewPager(pager);
+		
+
 	}
 
 	public class MyPagerAdapter extends FragmentPagerAdapter {

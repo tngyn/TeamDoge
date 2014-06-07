@@ -467,6 +467,8 @@ public class MyShiftFragment extends ListFragment {
 	    switch (item.getItemId()) {
 
 	        case R.id.menu_refresh:
+	        	setRefreshActionButtonState(true);
+	        	createLists();
 	        	asyncCaller();
 	        	return true;
 	           

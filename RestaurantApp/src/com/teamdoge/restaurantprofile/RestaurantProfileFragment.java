@@ -131,8 +131,11 @@ public class RestaurantProfileFragment extends Fragment {
 //				"    Schedule    ",
 //				"Open Shifts" };
 
-		private String[] TITLES = { "Set Shifts", "Compile Schedules",
-				"Employees" };
+//		private String[] TITLES = { "Set Shifts", "Compile Schedules",
+//				"Employees" };
+		
+		private String[] TITLES = { "Compile Schedules",
+		"Employees" };
 		
 		@Override
 		public CharSequence getPageTitle(int position) {
@@ -148,14 +151,14 @@ public class RestaurantProfileFragment extends Fragment {
 		@Override
 		public Fragment getItem(int position) {
 			switch(position) {
-			
+//			
+//			case 0:
+//				ShiftsManagerFragment m = new ShiftsManagerFragment();
+//				return m;
 			case 0:
-				ShiftsManagerFragment m = new ShiftsManagerFragment();
-				return m;
-			case 1:
 				ManagerFragment frag0 = new ManagerFragment();
 				return frag0;
-			case 2:
+			case 1:
 				EmployeeListFragment frag = EmployeeListFragment.newInstance();
 				return frag;
 			default:
