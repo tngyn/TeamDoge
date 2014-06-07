@@ -29,8 +29,6 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.teamdoge.restaurantapp.ManagerFragment.OnFragmentInteractionListener;
-import com.teamdoge.schedules.ListItem;
-import com.teamdoge.schedules.TwoTextArrayAdapter;
 
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass. Activities that
@@ -43,7 +41,6 @@ import com.teamdoge.schedules.TwoTextArrayAdapter;
 public class InventoryList extends Fragment implements Runnable {
 
 	private List<ParseObject> foodNames;
-	private List<ParseObject> category;
 
 
 	private Menu optionsMenu;
