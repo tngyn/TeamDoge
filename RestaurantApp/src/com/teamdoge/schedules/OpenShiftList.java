@@ -81,7 +81,7 @@ public class OpenShiftList implements ListItem {
         TextView role = (TextView) view.findViewById(R.id.position);
         TextView stat = (TextView) view.findViewById(R.id.status);
         
-        if( shift.length() < 6 ) {
+        if( shift.length() < 12 ) {
         	convertShift();
         }
        
@@ -96,7 +96,7 @@ public class OpenShiftList implements ListItem {
     
     private void convertShift(){
     	// tokenizes the string into two to get the times
-    	String[] tokens = shift.split("[-|\\.]");
+    	String[] tokens = shift.split("[-|\\:]");
     	
     	// converts parsed tokens into integers
     	int startHour = Integer.parseInt(tokens[0]);
