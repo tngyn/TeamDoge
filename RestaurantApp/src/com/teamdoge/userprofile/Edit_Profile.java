@@ -5,7 +5,6 @@ import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 import android.app.Activity;
-import android.app.ActionBar;
 import android.app.Fragment;
 import android.content.Intent;
 import android.database.Cursor;
@@ -14,55 +13,22 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
-import android.os.Build;
 import android.provider.MediaStore;
 
-import com.parse.LogInCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseFile;
-import com.parse.ParseImageView;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-import com.parse.SaveCallback;
-import com.parse.SignUpCallback;
 import com.teamdoge.restaurantapp.R;
-import com.teamdoge.restaurantapp.R.id;
-import com.teamdoge.restaurantapp.R.layout;
-import com.teamdoge.restaurantapp.R.menu;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
-import android.content.Context;
-import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Point;
-import android.graphics.Rect;
-import android.net.Uri;
-import android.os.Bundle;
-import android.provider.MediaStore;
-import android.support.v4.app.FragmentActivity;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.animation.DecelerateInterpolator;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 public class Edit_Profile extends Activity {
 
@@ -76,15 +42,7 @@ public class Edit_Profile extends Activity {
 	private Bitmap newProfilePic;
 	private byte[] getPhotoData;
 	private ParseObject shifts;
-	
-	// Hold a reference to the current animator,
-    // so that it can be canceled mid-way.
-    private Animator mCurrentAnimator;
 
-    // The system "short" animation time duration, in milliseconds. This
-    // duration is ideal for subtle animations or animations that occur
-    // very frequently.
-    private int mShortAnimationDuration;
     private static int RESULT_LOAD_IMAGE = 1;
 
 	
@@ -185,9 +143,6 @@ public class Edit_Profile extends Activity {
 						onBackPressed();
 					}
 				});
-	     // Retrieve and cache the system's default "short" animation time.
-        mShortAnimationDuration = getResources().getInteger(
-                android.R.integer.config_shortAnimTime);
         
 		submitBtn.setOnClickListener(
 				new View.OnClickListener() {

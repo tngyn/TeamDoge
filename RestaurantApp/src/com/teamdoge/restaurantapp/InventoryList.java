@@ -29,8 +29,6 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.teamdoge.restaurantapp.ManagerFragment.OnFragmentInteractionListener;
-import com.teamdoge.schedules.ListItem;
-import com.teamdoge.schedules.TwoTextArrayAdapter;
 
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass. Activities that
@@ -41,16 +39,8 @@ import com.teamdoge.schedules.TwoTextArrayAdapter;
  * 
  */
 public class InventoryList extends Fragment implements Runnable {
-	// TODO: Rename parameter arguments, choose names that match
-	// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-	private static final String ARG_PARAM1 = "param1";
-	private static final String ARG_PARAM2 = "param2";
 
-	// TODO: Rename and change types of parameters
-	private String mParam1;
-	private String mParam2;
 	private List<ParseObject> foodNames;
-	private List<ParseObject> category;
 
 
 	private Menu optionsMenu;
@@ -88,10 +78,6 @@ public class InventoryList extends Fragment implements Runnable {
 				"0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8",
 				"k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF");
 		setHasOptionsMenu(true);
-		if (getArguments() != null) {
-			mParam1 = getArguments().getString(ARG_PARAM1);
-			mParam2 = getArguments().getString(ARG_PARAM2);
-		}
 	}
 
 	@Override
@@ -106,10 +92,8 @@ public class InventoryList extends Fragment implements Runnable {
 		View v = inflater.inflate(R.layout.activity_inventory_list, container,
 				false);
 		expListView = (ExpandableListView) v.findViewById(R.id.categoryList);
-
-
+		
 		run();
-//		asyncCaller();
 
 		ExpandableListAdapter expListAdapter = new ExpandableListAdapter(
 				getActivity(), groupList, listInventory);

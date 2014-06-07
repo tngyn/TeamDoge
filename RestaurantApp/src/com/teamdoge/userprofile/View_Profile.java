@@ -6,7 +6,6 @@ import com.parse.Parse;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,40 +13,26 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.os.Build;
-
 import com.parse.GetDataCallback;
-import com.parse.LogInCallback;
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseImageView;
-import com.parse.ParseObject;
 import com.parse.ParseUser;
-import com.parse.SignUpCallback;
 import com.teamdoge.restaurantapp.R;
-import com.teamdoge.trackingmenu.AddMenuItemActivity;
 
 
 
 public class View_Profile extends Fragment {
 
-	
 	// establish Text views
 	private TextView userNameText;
 	private TextView userEmailText;
 	private TextView userAcctText;
 	private TextView userPNumberText;
 	private TextView userUserNameText;
-	private Button editButton;
 	private Button shiftsButton;
 	private ParseImageView profile_pic;
-
-	
-
-	
 	
 	// new fragement creation
 	public static View_Profile newInstance() {
@@ -63,8 +48,9 @@ public class View_Profile extends Fragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
+		
 		// link to parse
-Parse.initialize(getActivity(), "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8", 
+		Parse.initialize(getActivity(), "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8", 
 		"k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF");
 	}
 	
