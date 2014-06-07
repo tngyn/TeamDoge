@@ -89,7 +89,7 @@ public class EmployeeListFragment extends ListFragment {
 		ParseQuery<ParseObject> shiftQuery = ParseQuery.getQuery("Shifts");
 		shiftQuery.whereEqualTo("Id", restaurantID);
 		shiftQuery.orderByAscending("Name");
-		shiftQuery.whereNotEqualTo("Username", restaurantID);
+		shiftQuery.whereNotEqualTo("Acc_Type", "Owner");
 		try {
 			shiftList = shiftQuery.find();
 			for( int employeeCount = 0; employeeCount < shiftList.size(); ++employeeCount ) {
