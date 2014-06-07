@@ -81,11 +81,11 @@ public class EmployeeListFragment extends ListFragment {
 		employeePositions = new ArrayList<String>();
 		
 		// Queries for the all the employees
-		ParseQuery<ParseUser> employeeQuery = ParseUser.getQuery();
-		employeeQuery.whereEqualTo( "Owner_Acc", restaurantID );
+		ParseQuery<ParseObject> employeeQuery = ParseQuery.getQuery("Shifts");
+		employeeQuery.whereEqualTo( "Id", restaurantID );
 		employeeQuery.orderByAscending("Name");
 		try {
-			List<ParseUser> employeeList = employeeQuery.find();
+			List<ParseObject> employeeList = employeeQuery.find();
 			numOfEmployees = employeeQuery.count();
 			
 			for( int employeeCount = 0; employeeCount < numOfEmployees; ++employeeCount ) {
