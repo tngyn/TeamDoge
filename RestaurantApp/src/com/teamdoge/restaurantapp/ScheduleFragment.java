@@ -12,7 +12,6 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.ParseException;
 import com.teamdoge.schedules.*;
-import com.teamdoge.trackingmenu.AddMenuItemActivity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;

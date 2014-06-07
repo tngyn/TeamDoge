@@ -6,7 +6,6 @@ import com.teamdoge.restaurantapp.MyShiftFragment;
 import com.teamdoge.restaurantapp.R;
 import com.teamdoge.restaurantapp.ShiftsManagerFragment;
 import com.teamdoge.restaurantapp.SuperAwesomeCardFragment;
-import com.teamdoge.trackingmenu.AddMenuItemActivity;
 import com.teamdoge.userprofile.Edit_Profile;
 import com.astuetz.PagerSlidingTabStrip;
 
@@ -165,31 +164,6 @@ public class RestaurantProfileFragment extends Fragment {
 				return SuperAwesomeCardFragment.newInstance(position);
 			}
 		}
-
-	}
-
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-	   inflater.inflate(R.menu.menu, menu);
-	}
-
-	
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		//switch (item.getItemId()) {
-
-        if (item.getItemId()== R.id.item_add){
-        	Intent intent = new Intent(getActivity(), AddMenuItemActivity.class);
-        	startActivity(intent);
-        	return true;
-        }
-           
-        	else
-            return super.onOptionsItemSelected(item);
-	
     }
 
 	   

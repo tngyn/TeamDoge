@@ -23,7 +23,6 @@ import android.view.ViewGroup;
 
 import com.parse.Parse;
 import com.parse.ParseUser;
-import com.teamdoge.trackingmenu.AddMenuItemActivity;
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass. Activities that
  * contain this fragment must implement the
