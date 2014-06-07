@@ -38,7 +38,6 @@ public class Manager_View_Profile extends Fragment {
 
 	///** Called when the user clicks the set changeTypeButton button */
 	public void make_manager(View view) {
-    	
     
 		// This will need to be changed to the user the manager clicked on ***//
 		Parse.initialize(getActivity(), "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8", "k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF");
@@ -80,6 +79,10 @@ public class Manager_View_Profile extends Fragment {
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
 		// link to parse
+		
+//		setContentView(R.layout.activity_view__item);
+//        Intent intent = getIntent();
+//        userName = intent.getStringExtra("userName");
 
 		Parse.initialize(getActivity(), "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8", "k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF");
 	}

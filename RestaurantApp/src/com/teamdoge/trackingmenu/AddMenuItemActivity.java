@@ -9,16 +9,22 @@ import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.text.InputType;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -42,8 +48,18 @@ public class AddMenuItemActivity extends FragmentActivity
 		private EditText meal_name_box;
 		private EditText descrip_box;
 		private Spinner category_dropdown;
-		private Button addIngredient;
 		private List ingredientListItemList;
+		
+		private LinearLayout ll;
+		private TextView mealNameText;
+		private EditText mealNameBox;
+		private TextView categoryDropdownText;
+		private Spinner mealCategories;
+		private Button addIngredient;
+		private TextView mealDescripLabel;
+		private EditText mealDescripBox;
+		private Button menuItemSubmitButton;
+		private Button menuItemCancel;
 		
 		private List<String> categorylist;
 	    
@@ -53,24 +69,95 @@ public class AddMenuItemActivity extends FragmentActivity
 	        
 	        getActionBar().setDisplayHomeAsUpEnabled(true);
 			
-			//setContentView(R.layout.activity_add_menu_item);
+//			setContentView(R.layout.activity_add_menu_item);
 			
 			ScrollView sv = new ScrollView(this);
-			        LinearLayout ll = new LinearLayout(this);
-			        ll.setOrientation(LinearLayout.VERTICAL);
-			        sv.addView(ll);
-			        
-			        TextView tv = new TextView(this);
-			                tv.setText("Dynamic layouts ftw!");
-			                ll.addView(tv);
-			                
-			                EditText et = new EditText(this);
-			                        et.setText("weeeeeeeeeee~!");
-			                        ll.addView(et);
-			                        this.setContentView(sv);
+			ll = new LinearLayout(this);
+			ll.setOrientation(LinearLayout.VERTICAL);
+			sv.addView(ll);
+			
+			//Text View for Meal Name
+			mealNameText = new TextView(this);
+			mealNameText.setText(R.string.mealNameLabel);
+			ll.addView(mealNameText);
+			
+			//Edit Text for Meal Name
+			mealNameBox = new EditText(this);
+			mealNameBox.setHint(R.string.meal_name_hint);
+			ll.addView(mealNameBox);
+			
+			//Text View for Category Dropdown
+			categoryDropdownText = new TextView(this);
+			categoryDropdownText.setText(R.string.categoryLabel);
+			ll.addView(categoryDropdownText);
+			
+			//Dropdown for the categories
+			mealCategories = new Spinner(this);
+			populateCategories("");
+	        ll.addView(mealCategories);
+	        
+	        //Button to add ingredients
+	        addIngredient = new Button(this);
+	        addIngredient.setText(R.string.addIngredient);
+	        addIngredient.setLayoutParams(new LinearLayout.LayoutParams(300, 100));
+	        LinearLayout.LayoutParams layoutP=(LinearLayout.LayoutParams)addIngredient.getLayoutParams();
+	        layoutP.gravity=Gravity.CENTER_HORIZONTAL;
+	        addIngredient.setLayoutParams(layoutP);
+	        addIngredient.setGravity(Gravity.CENTER);
+	        ll.addView(addIngredient);
+	        
+	        //Text View for Description box
+	        mealDescripLabel = new TextView(this);
+	        mealDescripLabel.setText(R.string.descriptionBoxLabel);
+	        ll.addView(mealDescripLabel);
+			
+	        //Text Box for Descriptions EditText
+	        mealDescripBox = new EditText(this);
+	        mealDescripBox.setHint(R.string.description_hint);
+	        mealDescripBox.setMaxLines(4);
+	        mealDescripBox.setSingleLine(false);
+	        mealDescripBox.setImeOptions(EditorInfo.IME_FLAG_NO_ENTER_ACTION);
+	        mealDescripBox.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+	        ll.addView(mealDescripBox);
+	        
+	        //Button for submitting the menu item to the db
+	        menuItemSubmitButton = new Button(this);
+	        menuItemSubmitButton.setText(R.string.button_submit);
+	        menuItemSubmitButton.setId(1);
+	        menuItemSubmitButton.setOnClickListener(new OnClickListener() {
 
-
-
+	            @Override
+	            public void onClick(View v) {
+	                // do whatever stuff you wanna do here
+	            	submit(v);
+	            }
+	        });
+	        ll.addView(menuItemSubmitButton);
+	        
+	        Log.d("DO WE HEY ASDF", "yes we do0");
+	        //Button for cancelling the menu item 
+	        menuItemCancel = new Button(this);
+	        Log.d("DO WE HEY ASDF", "yes we do00");
+	        menuItemCancel.setText(R.string.button_cancel);
+	        Log.d("DO WE HEY ASDF", "yes we do000");
+//	        RelativeLayout.LayoutParams cancelParams = (RelativeLayout.LayoutParams) menuItemCancel.getLayoutParams();
+	        Log.d("DO WE HEY ASDF", ""+menuItemSubmitButton.getId());
+//	        cancelParams.addRule(RelativeLayout.BELOW, menuItemSubmitButton.getId());
+	        Log.d("DO WE HEY ASDF", "yes we do00000");
+//	        menuItemCancel.setLayoutParams(cancelParams);
+	        Log.d("DO WE HEY ASDF", "yes we do000000");
+	        menuItemCancel.setOnClickListener(new OnClickListener() {
+	        	
+	        	@Override
+	        	public void onClick(View v) {
+	        		cancel(v);
+	        	}
+	        });
+	        ll.addView(menuItemCancel);
+	        
+			
+			//Set the content view here.
+			this.setContentView(sv);
 
 			
 //			if (savedInstanceState == null) {
@@ -85,26 +172,33 @@ public class AddMenuItemActivity extends FragmentActivity
 	        
 	        //init = "";
 	        //initialize the food name box
-	        meal_name_box = (EditText) findViewById(R.id.meal_name_box);
-	        //initialize the quantity box
-	        //initialize the description box
-	        descrip_box = (EditText) findViewById(R.id.mealDescription_box);
-	        //call the method that initializes all the textboxes. We set everything to empty.
-	        clearBoxes();
-	        
-	        addIngredient = (Button) findViewById(R.id.menuAddIngredient);
-
-	        //get out dropdown objects here
-	        category_dropdown = (Spinner) findViewById(R.id.meal_categories_dropdown);
-	        //populate our dropdown menus with options and set their item select listeners
-	        populateCategories("");
-	        //category_dropdown.
-	        
-	        ingredientListItemList = new ArrayList();
-	        ingredientListItemList.add(new IngredientListItem("Example 1"));
-	        ingredientListItemList.add(new IngredientListItem("Example 2"));
-	        ingredientListItemList.add(new IngredientListItem("Example 3"));
-	        IngredientListAdapter mAdapter = new IngredientListAdapter(AddMenuItemActivity.this, ingredientListItemList);
+//	        meal_name_box = (EditText) findViewById(R.id.meal_name_box);
+//	        Log.d("DO WE HEY ASDF", "yes we do");
+//	        //initialize the quantity box
+//	        //initialize the description box
+//	        Log.d("DO WE HEY ASDF", "yes we do0");
+//	        descrip_box = (EditText) findViewById(R.id.mealDescription_box);
+//	        Log.d("DO WE HEY ASDF", "yes we do00");
+//	        //call the method that initializes all the textboxes. We set everything to empty.
+//	        //clearBoxes();
+//	        Log.d("DO WE HEY ASDF", "yes we do0000");
+//	        
+//	        addIngredient = (Button) findViewById(R.id.menuAddIngredient);
+//	        Log.d("DO WE HEY ASDF", "yes we do1");
+//
+//	        //get out dropdown objects here
+//	        category_dropdown = (Spinner) findViewById(R.id.meal_categories_dropdown);
+//	        Log.d("DO WE HEY ASDF", "yes we do2");
+//	        //populate our dropdown menus with options and set their item select listeners
+//	       // populateCategories("");
+//	        //category_dropdown.
+//	        Log.d("DO WE HEY ASDF", "yes we do");
+//	        ingredientListItemList = new ArrayList();
+//	        ingredientListItemList.add(new IngredientListItem("Example 1"));
+//	        ingredientListItemList.add(new IngredientListItem("Example 2"));
+//	        ingredientListItemList.add(new IngredientListItem("Example 3"));
+//	        IngredientListAdapter mAdapter = new IngredientListAdapter(AddMenuItemActivity.this, ingredientListItemList);
+//	        Log.d("DO WE HEY ASDF", "yes we do");
 	      
 	    }
 	    
@@ -114,91 +208,219 @@ public class AddMenuItemActivity extends FragmentActivity
 	                , Toast.LENGTH_SHORT).show();
 	    }
 	    
-	    public void submit(View view){
-	    	boolean everythingWorks = true;
-	    	final String foodName = meal_name_box.getText().toString();
-	    	if(foodName == ""){
-	    		everythingWorks = false;
-	    	}
-	    	
-	    	
-	    	final String description = descrip_box.getText().toString();
-	    	if(description == "") {
-	    		everythingWorks = false;
-	    	}
-	    	
-	    	final String categories = category_dropdown.getSelectedItem().toString();
-	    	
-	    	//if everythingWorks == true, then all the fields are filled out properly.
-	    	if(everythingWorks){
-	    		
-	    		//set a query to check the food items
-	    		ParseQuery<ParseObject> query = ParseQuery.getQuery("Menu");
-	    		
-	    		//try to find a food with the same name as the one we entered.
-	    		query.whereEqualTo("name", "menuItemName");
-	    		
-	    		query.findInBackground(new FindCallback<ParseObject>() {
-	    		    public void done(List<ParseObject> menuItemNames, ParseException e) {
-	    		        if (e == null) {
-	    		    		//The item already exists in the database if isEmpty is false
-							if (menuItemNames.isEmpty() == false) {
-								Context context = getApplicationContext();
-								CharSequence text = "Item Already Exists";
-								int duration = Toast.LENGTH_SHORT;
-								Toast toast = Toast.makeText(context, text, duration);
-								toast.show();
-							}
-							//item doesn't exist yet, add it.
-							else {
-								//clear all the boxes
-		    		        	clearBoxes();
-		    		    		
-		    		        	//send a toast to show that it's been submitted to the DB
-		    		    		Context context = getApplicationContext();
-		    		    		CharSequence text = "Item Added";
-		    		    		int duration = Toast.LENGTH_SHORT;
-		    		    		Toast toast = Toast.makeText(context, text, duration);
-		    		    		toast.show();
-		    		    		
-		    		    		//get current user, they're id is tagged to each food that's created
-		    		    		String userId = "";
-		    		    		ParseUser currentUser = ParseUser.getCurrentUser();
-		    		    		if(currentUser != null) {
-		    		    			userId = currentUser.getObjectId();
-		    		    		}
-		    		    		
-		    		    		//send the information to the DB.
-		    		    		ParseObject food = new ParseObject("Menu");
-		    		    		food.put("menuItemName", foodName);
-		    		    		food.put("description", description);
-		    		    		food.put("category", categories);
-		    		    		food.put("userId", userId);
-		    		    		food.saveInBackground();
-		    		    		onBackPressed();
-							}
-	    		        	
-	    		        } else {    		            	
-	    		        	//fatal error, this should never happen
-	    		        	Context context = getApplicationContext();
-	    		    		CharSequence text = "Error";
-	    		    		int duration = Toast.LENGTH_SHORT;
-	    		    		Toast toast = Toast.makeText(context, text, duration);
-	    		    		toast.show();
-	    		        }
-	    		    }
-	    		});
-	    	}
-	    	//if any fields are missing, we send a toast about missing fields.
-	    	else {
-	    		Context context = getApplicationContext();
-	    		CharSequence text = "Missing Fields";
-	    		int duration = Toast.LENGTH_SHORT;
-	    		Toast toast = Toast.makeText(context, text, duration);
-	    		toast.show();
-	    		
-	    	}
-	    }
+	public void submit(View view) {
+		boolean everythingWorks = true;
+		final String foodName = mealNameBox.getText().toString();
+		if (foodName == "") {
+			everythingWorks = false;
+		}
+
+		final String description = mealDescripBox.getText().toString();
+		if (description == "") {
+			everythingWorks = false;
+		}
+
+		final String categories = mealCategories.getSelectedItem()
+				.toString();
+		if (categories.equalsIgnoreCase("Select a Category"))
+			everythingWorks = false;
+
+		// if everythingWorks == true, then all the fields are filled out
+		// properly.
+		if (everythingWorks) {
+			String userId = "";
+			ParseUser currentUser = ParseUser.getCurrentUser();
+
+			if (currentUser != null) {
+				userId = currentUser.getString("Owner_Acc");
+			}
+
+			// set a query to check the food items
+			ParseQuery<ParseObject> query = ParseQuery.getQuery("Menu");
+
+			// try to find a food with the same name as the one we entered.
+			query.whereEqualTo("Acc_ID", userId);
+
+			List<ParseObject> foodNames = null;
+			try {
+				foodNames = query.find();
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (foodNames.isEmpty() == false) {
+				boolean exists = false;
+				for (ParseObject food : foodNames) {
+					if (food.getString("name").equalsIgnoreCase(foodName))
+						exists = true;
+				}
+				// if exists = true then don't create it
+				if (exists) {
+					Context context = getApplicationContext();
+					CharSequence text = "Item Already Exists";
+					int duration = Toast.LENGTH_SHORT;
+					Toast toast = Toast.makeText(context, text, duration);
+					toast.show();
+				} else {
+					// clear all the boxes
+					clearBoxes();
+
+					// send a toast to show that it's been submitted to the DB
+					Context context = getApplicationContext();
+					CharSequence text = "Item Added";
+					int duration = Toast.LENGTH_SHORT;
+					Toast toast = Toast.makeText(context, text, duration);
+					toast.show();
+
+					// send the information to the DB.
+					ParseObject food = new ParseObject("Menu");
+					// name of the food
+					food.put("Name", foodName);
+					// // quantity of the food to track original value
+					// food.put("quantity", quan);
+					//
+					// food.put("shrinkTrackQuantity", quan);
+					//
+					food.put("description", description);
+					// // units of food e.g. oz. lbs. kg.
+					// food.put("units", units);
+					// categories of the food
+					food.put("category", categories);
+
+					// userId associated with each food.
+
+					food.put("Acc_ID", userId);
+					food.saveInBackground();
+					onBackPressed();
+				}
+			} else {
+				// clear all the boxes
+				clearBoxes();
+
+				// send a toast to show that it's been submitted to the DB
+				Context context = getApplicationContext();
+				CharSequence text = "Item Added";
+				int duration = Toast.LENGTH_SHORT;
+				Toast toast = Toast.makeText(context, text, duration);
+				toast.show();
+
+				// send the information to the DB.
+				ParseObject food = new ParseObject("Meal");
+				// name of the food
+				food.put("Name", foodName);
+				// // quantity of the food to track original value
+				// food.put("quantity", quan);
+				//
+				// food.put("shrinkTrackQuantity", quan);
+				//
+				food.put("description", description);
+				// // units of food e.g. oz. lbs. kg.
+				// food.put("units", units);
+				// categories of the food
+				food.put("category", categories);
+
+				// userId associated with each food.
+
+				food.put("Acc_ID", userId);
+				food.saveInBackground();
+				onBackPressed();
+			}
+		}
+		// if any fields are missing, we send a toast about missing fields.
+		else {
+			Context context = getApplicationContext();
+			CharSequence text = "Missing Fields";
+			int duration = Toast.LENGTH_SHORT;
+			Toast toast = Toast.makeText(context, text, duration);
+			toast.show();
+		}
+	}
+	    
+//	    public void submit(View view){
+//	    	boolean everythingWorks = true;
+//	    	final String foodName = meal_name_box.getText().toString();
+//	    	if(foodName == ""){
+//	    		everythingWorks = false;
+//	    	}
+//	    	
+//	    	
+//	    	final String description = descrip_box.getText().toString();
+//	    	if(description == "") {
+//	    		everythingWorks = false;
+//	    	}
+//	    	
+//	    	final String categories = category_dropdown.getSelectedItem().toString();
+//	    	
+//	    	//if everythingWorks == true, then all the fields are filled out properly.
+//	    	if(everythingWorks){
+//	    		
+//	    		//set a query to check the food items
+//	    		ParseQuery<ParseObject> query = ParseQuery.getQuery("Menu");
+//	    		
+//	    		//try to find a food with the same name as the one we entered.
+//	    		query.whereEqualTo("name", "menuItemName");
+//	    		
+//	    		query.findInBackground(new FindCallback<ParseObject>() {
+//	    		    public void done(List<ParseObject> menuItemNames, ParseException e) {
+//	    		        if (e == null) {
+//	    		    		//The item already exists in the database if isEmpty is false
+//							if (menuItemNames.isEmpty() == false) {
+//								Context context = getApplicationContext();
+//								CharSequence text = "Item Already Exists";
+//								int duration = Toast.LENGTH_SHORT;
+//								Toast toast = Toast.makeText(context, text, duration);
+//								toast.show();
+//							}
+//							//item doesn't exist yet, add it.
+//							else {
+//								//clear all the boxes
+//		    		        	clearBoxes();
+//		    		    		
+//		    		        	//send a toast to show that it's been submitted to the DB
+//		    		    		Context context = getApplicationContext();
+//		    		    		CharSequence text = "Item Added";
+//		    		    		int duration = Toast.LENGTH_SHORT;
+//		    		    		Toast toast = Toast.makeText(context, text, duration);
+//		    		    		toast.show();
+//		    		    		
+//		    		    		//get current user, they're id is tagged to each food that's created
+//		    		    		String userId = "";
+//		    		    		ParseUser currentUser = ParseUser.getCurrentUser();
+//		    		    		if(currentUser != null) {
+//		    		    			userId = currentUser.getObjectId();
+//		    		    		}
+//		    		    		
+//		    		    		//send the information to the DB.
+//		    		    		ParseObject food = new ParseObject("Menu");
+//		    		    		food.put("menuItemName", foodName);
+//		    		    		food.put("description", description);
+//		    		    		food.put("category", categories);
+//		    		    		food.put("userId", userId);
+//		    		    		food.saveInBackground();
+//		    		    		onBackPressed();
+//							}
+//	    		        	
+//	    		        } else {    		            	
+//	    		        	//fatal error, this should never happen
+//	    		        	Context context = getApplicationContext();
+//	    		    		CharSequence text = "Error";
+//	    		    		int duration = Toast.LENGTH_SHORT;
+//	    		    		Toast toast = Toast.makeText(context, text, duration);
+//	    		    		toast.show();7
+//	    		        }
+//	    		    }
+//	    		});
+//	    	}
+//	    	//if any fields are missing, we send a toast about missing fields.
+//	    	else {
+//	    		Context context = getApplicationContext();
+//	    		CharSequence text = "Missing Fields";
+//	    		int duration = Toast.LENGTH_SHORT;
+//	    		Toast toast = Toast.makeText(context, text, duration);
+//	    		toast.show();
+//	    		
+//	    	}
+//	    }
 	    
 	    public void addIngredientPressed(View view){
 	    	DialogFragment newFragment = new MealIngredientsFragment();
@@ -221,26 +443,67 @@ public class AddMenuItemActivity extends FragmentActivity
 	    	descrip_box.setText(init);    	
 	    }
 	    
-	    public void populateCategories(String newCategory) {
-	    	//populate the categories dropdown here.
-	    	
+	    public List<ParseObject> background(){
 	    	//get the current userID
 	    	String userId = "";
 			ParseUser currentUser = ParseUser.getCurrentUser();
 			if(currentUser != null) {
-				userId = currentUser.getObjectId();
+				userId = currentUser.getString("Owner_Acc");
 			}
+			
 			
 			//Find all the foods that are tied to this id
 			ParseQuery<ParseObject> query = ParseQuery.getQuery("Menu");
-			query.whereEqualTo("userId", userId);
-			List<ParseObject> meals = null;
+			query.whereEqualTo("Acc_ID", userId);
+			List<ParseObject> foods = null;
 			try {
-				meals = query.find();
+				foods = query.find();
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			return foods;
+	    }
+	    
+	    public List<String> setAdapterList(String category){
+	    	//create the list that will be used to populate the adapters
+	    	List<String> added = new ArrayList<String>();
+	    	
+//	    	String userId = "";
+//	    	ParseUser currentUser = ParseUser.getCurrentUser();
+//	    	if(currentUser != null)
+//	    		userId = currentUser.getString("Owner_Acc");
+//	    	
+//	    	ParseQuery<ParseObject> query = ParseQuery.getQuery("Food");
+//	    	query.whereEqualTo("userId", userId);
+//	    	List<ParseObject> foods = null;
+//	    	try{
+//	    		foods = query.find();
+//	    	} catch (ParseException e){
+//	    		e.printStackTrace();
+//	    	}
+	    	
+	    	List<ParseObject> categories = background();
+			
+			// go through the foods and add their units to the units data adapter
+			for (ParseObject categorie : categories) {
+				String cat = categorie.getString(category);
+				// this if initially adds in a string to added the first time
+				if (added.isEmpty()) {
+					added.add(cat);
+				}
+				// added isn't empty, so we will see if it's in there, if it isn't
+				// we add to adapter
+				else if (added.contains(cat) == false) {
+					added.add(cat);
+				}
+			}
+			
+			return added;
+	    }
+	    
+	    public void populateCategories(String newCategory) {
+	    	//populate the categories dropdown here.
 			
 			//list of added categories we'll be checking against for duplicates.
 			List<String> added = new ArrayList<String>();
@@ -275,20 +538,10 @@ public class AddMenuItemActivity extends FragmentActivity
 				categorydataAdapter.add(newCategory);
 			}
 			
-			//go through the foods and add their categories to the category data adapter
-	    	for(ParseObject meal : meals) {
-	    		String category = meal.getString("category");
-	    		//this if initially adds in a string to added the first time
-	    		if(added.isEmpty()) {
-	    			added.add(category);
-	    			categorydataAdapter.add(category);
-	    		}
-	    		//added isn't empty, so we will see if it's in there, if it isn't we add to adapter
-	    		else if(added.contains(category) == false) {
-	    			added.add(category);
-	    			categorydataAdapter.add(category);
-	    		}
-	    	}
+	    	added = setAdapterList("category");
+	    	
+	    	for(String category : added)
+				categorydataAdapter.add(category);
 			
 			//add in the new and select units manually (select category won't show up when dropped down)
 	    	categorydataAdapter.add("New");
@@ -299,9 +552,11 @@ public class AddMenuItemActivity extends FragmentActivity
 				position = categorydataAdapter.getCount();
 			}
 	    	
-	    	category_dropdown.setAdapter(categorydataAdapter);
-	    	category_dropdown.setSelection(position);
-	    	category_dropdown.setOnItemSelectedListener(this);
+	    	mealCategories.setAdapter(categorydataAdapter);
+	    	mealCategories.setSelection(position);
+	    	mealCategories.setOnItemSelectedListener(this);
+	    	
+	    	
 	    }
 	    
 	    public void showNewCategoryDialog() {

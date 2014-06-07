@@ -1,11 +1,14 @@
 package com.teamdoge.schedules;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.teamdoge.restaurantapp.R;
+import com.teamdoge.restaurantapp.View_Item;
 import com.teamdoge.schedules.TwoTextArrayAdapter.RowType;
 
 public class EmployeeList implements ListItem {
