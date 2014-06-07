@@ -113,7 +113,6 @@ public class OpenShiftFragment extends ListFragment {
 		// Gets all IDs
 		restaurantID = user.getString("Owner_Acc");
 		username = user.getString("username");
-		accountType = user.getString("Acc_Type");
 	}
 	
 	
@@ -472,6 +471,19 @@ public class OpenShiftFragment extends ListFragment {
 		weekSchedule = new ArrayList<ArrayList<String>>();
 		userSchedule = new ArrayList<ArrayList<String>>();
 		allSchedule = new ArrayList<ArrayList<ArrayList<String>>>();
+		
+		// Queries for user's account type
+		ParseQuery<ParseObject> accountQuery = ParseQuery.getQuery("Shifts");
+		accountQuery.whereEqualTo("Username", username);
+		try{
+			List<ParseObject> accountList = accountQuery.find();
+			ParseObject account = accountList.get(0);
+			accountType = account.getString("Acc_Type");
+		}
+		catch(ParseException e) {
+			e.printStackTrace();
+		}
+		
 		
 		// Queries for the restaurant's shift schedules
 		ParseQuery<ParseObject> scheduleQuery = ParseQuery.getQuery("Schedule");
