@@ -2,8 +2,6 @@ package com.teamdoge.userprofile;
 
 import com.parse.Parse;
 
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -13,15 +11,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.os.Build;
-import com.parse.LogInCallback;
-import com.parse.Parse;
-import com.parse.ParseException;
-import com.parse.ParseObject;
 import com.parse.ParseUser;
-import com.parse.SignUpCallback;
 import com.teamdoge.restaurantapp.R;
 
 public class Manager_View_Profile extends Fragment {
@@ -97,7 +88,7 @@ public class Manager_View_Profile extends Fragment {
 		//changeTypeButton.setText("Make Employee");}
 		
 		
-	////	// change employee type///////////////
+		// change employee type///////////////
 		changeTypeButton.setOnClickListener(
 				new View.OnClickListener() {
 					
@@ -107,40 +98,12 @@ public class Manager_View_Profile extends Fragment {
 		// This will need to be changed to the user the manager clicked on ***//
 		Parse.initialize(getActivity(), "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8", "k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF");
 		ParseUser user = ParseUser.getCurrentUser();
-		// ****************************************************//
-						
-		// get initial account value
-		//String accountType = user.getString("Acc_Type");
-				    	
-		// check to see what type before changing
-		//if (accountType == "Employee"){
-			user.put("Acc_Type", "Manager");
-				//    }
-		//else if (accountType == "Manager"){
-		//	user.put("Acc_Type", "Employee");
-				//    }
-				    	
-				    	  	
-		// refresh all the values for view
-		//accountType = user.getString("Acc_Type");// get the new string value
-				    	
-		// update button label
-		//if (accountType == "Employee"){
-		//changeTypeButton.setText("Make Manager");
-		//		}
-		//else if (accountType == "Manager"){
-		//changeTypeButton.setText("Make Employee");
-		//		}
-		// update account type label
-		//lookuserAcctText.setText(accountType);
-		// End refresh views
-			}
-		});// end of click
 		
-	}// end of on create
-	
-	
-	
+		user.put("Acc_Type", "Manager");
+		
+		}});
+		
+	}
 	
 	// menu and menu item section
 	@Override
@@ -157,5 +120,4 @@ public class Manager_View_Profile extends Fragment {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-
 }

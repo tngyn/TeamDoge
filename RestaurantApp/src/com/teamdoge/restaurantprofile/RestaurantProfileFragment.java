@@ -2,26 +2,18 @@ package com.teamdoge.restaurantprofile;
 
 import com.teamdoge.restaurantapp.ManagerFragment;
 import com.teamdoge.restaurantapp.ManagerFragment.OnFragmentInteractionListener;
-import com.teamdoge.restaurantapp.MyShiftFragment;
 import com.teamdoge.restaurantapp.R;
-import com.teamdoge.restaurantapp.ShiftsManagerFragment;
 import com.teamdoge.restaurantapp.SuperAwesomeCardFragment;
-import com.teamdoge.userprofile.Edit_Profile;
 import com.astuetz.PagerSlidingTabStrip;
 
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
 import android.app.Activity;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 

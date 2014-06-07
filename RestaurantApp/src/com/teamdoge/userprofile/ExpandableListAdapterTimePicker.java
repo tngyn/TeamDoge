@@ -1,11 +1,8 @@
 package com.teamdoge.userprofile;
 
-import java.util.HashMap;
 import java.util.List;
 
 import com.teamdoge.restaurantapp.R;
-import com.teamdoge.restaurantapp.R.id;
-import com.teamdoge.restaurantapp.R.layout;
 
 import android.content.Context;
 import android.graphics.Typeface;

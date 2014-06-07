@@ -5,7 +5,6 @@ import java.util.List;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -14,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Toast;
 import android.widget.AdapterView.OnItemLongClickListener;
 
 import com.parse.Parse;
@@ -22,29 +20,22 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-import com.teamdoge.restaurantapp.Edit_item;
 import com.teamdoge.schedules.EmployeeList;
 import com.teamdoge.schedules.ListItem;
 import com.teamdoge.schedules.TwoTextArrayAdapter;
-import com.teamdoge.userprofile.View_Profile;
 
 public class EmployeeListFragment extends ListFragment {
-	
-	// number of employees
-	private int numOfEmployees;
 	
 	// Parse-related
 	private final String parse_key1 = "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8";
 	private final String parse_key2 = "k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF";
     private ParseUser user;
     private String restaurantID;
-    private static List<ParseUser> employeeList;
     // List to hold all the employees
     private List<ListItem> items;
     //private static List<ArrayList<String>> allEmployees;
     private static List<String> employeeNames;
     private static List<String> employeePositions;
-    private ParseUser employee;
     private static List<ParseObject> shiftList;
     private ParseObject shift;
     //private static List<Integer> employeeImages;

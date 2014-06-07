@@ -35,17 +35,6 @@ public class ManagerFragment extends Fragment {
 	private Button b;
 	private String day;
 
-	/**
-	 * Use this factory method to create a new instance of this fragment using
-	 * the provided parameters.
-	 * 
-	 * @param param1
-	 *            Parameter 1.
-	 * @param param2
-	 *            Parameter 2.
-	 * @return A new instance of fragment ManagerFragment.
-	 */
-	// TODO: Rename and change types and number of parameters
 	public static ManagerFragment newInstance() {
 		ManagerFragment fragment = new ManagerFragment();
 		Bundle args = new Bundle();
