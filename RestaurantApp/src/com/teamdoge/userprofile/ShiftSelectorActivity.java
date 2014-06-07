@@ -35,8 +35,8 @@ public class ShiftSelectorActivity extends Activity {
     protected List<List<String>> userList;
     protected ParseQuery<ParseObject> query;
     protected ParseQuery<ParseObject> shiftsQuery;
-    private final String AM = ":00 AM";
-    private final String PM = ":00 PM";
+    private final String AM = " AM";
+    private final String PM = " PM";
     private final String DASH = " - ";
 	private SettingsListAdapter adapter;
 	private ExpandableListView shiftsList;
