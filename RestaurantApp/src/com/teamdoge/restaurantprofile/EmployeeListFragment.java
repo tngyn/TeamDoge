@@ -3,6 +3,8 @@ package com.teamdoge.restaurantprofile;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -36,12 +38,15 @@ public class EmployeeListFragment extends ListFragment {
 	private final String parse_key2 = "k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF";
     private ParseUser user;
     private String restaurantID;
-    
+    private static List<ParseUser> employeeList;
     // List to hold all the employees
     private List<ListItem> items;
     //private static List<ArrayList<String>> allEmployees;
     private static List<String> employeeNames;
     private static List<String> employeePositions;
+    private ParseUser employee;
+    private static List<ParseObject> shiftList;
+    private ParseObject shift;
     //private static List<Integer> employeeImages;
     //private static List<Integer> employeeHours;
     //private static List<Integer> employeeTotalHours;
@@ -81,21 +86,19 @@ public class EmployeeListFragment extends ListFragment {
 		employeePositions = new ArrayList<String>();
 		
 		// Queries for the all the employees
-		ParseQuery<ParseObject> employeeQuery = ParseQuery.getQuery("Shifts");
-		employeeQuery.whereEqualTo( "Id", restaurantID );
-		employeeQuery.orderByAscending("Name");
+		ParseQuery<ParseObject> shiftQuery = ParseQuery.getQuery("Shifts");
+		shiftQuery.whereEqualTo("Id", restaurantID);
+		shiftQuery.orderByAscending("Name");
+		shiftQuery.whereNotEqualTo("Username", restaurantID);
 		try {
-			List<ParseObject> employeeList = employeeQuery.find();
-			numOfEmployees = employeeQuery.count();
-			
-			for( int employeeCount = 0; employeeCount < numOfEmployees; ++employeeCount ) {
-				ParseObject employee = employeeList.get(employeeCount);
-				employeeNames.add( employee.getString("Name") );
-				employeePositions.add( employee.getString("Acc_Type") );
+			shiftList = shiftQuery.find();
+			for( int employeeCount = 0; employeeCount < shiftList.size(); ++employeeCount ) {
+				shift = shiftList.get(employeeCount);
+				employeeNames.add( shift.getString("Name") );
+				employeePositions.add( shift.getString("Acc_Type") );
 			}
-	
-		}
-		catch (ParseException e) {
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -109,11 +112,37 @@ public class EmployeeListFragment extends ListFragment {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
 				int position, final long id) {
-			/*	Intent mIntent = new Intent(getActivity(), View_Profile.class);
-				startActivity(mIntent);*/
-				
-		/* NEEDS A NEW ACTIVITY OR FRAGMENT TO CALL THAT GETS THE PROFILE OF ANOTHER
-				 * PERSON */
+				AlertDialog.Builder box = 
+						new AlertDialog.Builder(getActivity());
+				box.setTitle("Set Manager");
+				if (employeePositions.get((int) id).equals("Manager")) {
+					box.setMessage( "Change Manager to Employee?" );
+				}
+				else {
+					box.setMessage("Change Employee to Manager?");
+				}
+				box.setNegativeButton( "No", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
+						dialog.dismiss();
+					}
+				});
+				box.setPositiveButton( "Yes", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
+						if (employeePositions.get((int)id).equals("Manager")) {
+							shift = shiftList.get((int)id);
+							shift.put("Acc_Type", "Employee");
+							shift.saveInBackground();
+						}
+						else {
+							shift = shiftList.get((int)id);
+							shift.put("Acc_Type", "Manager");
+							shift.saveInBackground();
+						}
+					}
+				});
+				AlertDialog alert = box.create();
+				alert.show();
+	
 				
 			
 				return false;
@@ -128,7 +157,7 @@ public class EmployeeListFragment extends ListFragment {
 		
 		MyAsyncTaskHelper task = new MyAsyncTaskHelper();
 		task.execute();
-		
+		Log.d("ASDASD","WHAT IS GOING ON!?!?!?!");
 		return super.onCreateView(inflater, container, savedInstanceState);	
 	}
 	
@@ -143,7 +172,7 @@ public class EmployeeListFragment extends ListFragment {
 		
 		items = new ArrayList<ListItem>();
 		
-		for( int employeeCounter = 0; employeeCounter < numOfEmployees; ++employeeCounter ) {
+		for( int employeeCounter = 0; employeeCounter <shiftList.size(); ++employeeCounter ) {
 			items.add( new EmployeeList( 0, employeeNames.get(employeeCounter),
 					employeePositions.get(employeeCounter), 100, 100) );
 		}
