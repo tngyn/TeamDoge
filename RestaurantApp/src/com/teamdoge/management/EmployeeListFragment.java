@@ -104,7 +104,7 @@ public class EmployeeListFragment extends ListFragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 			
-		if (user.equals("Owner")) { 
+		if (user.getString("Acc_Type").equals("Owner")) { 
 		
 		OnItemLongClickListener listener = new OnItemLongClickListener() {
 			
