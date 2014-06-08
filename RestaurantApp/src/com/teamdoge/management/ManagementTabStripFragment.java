@@ -139,7 +139,6 @@ public class ManagementTabStripFragment extends Fragment {
 		@Override
 		public Fragment getItem(int position) {
 			switch(position) {
-
 			case 0:
 				ShiftsManagerFragment frag0 = new ShiftsManagerFragment();
 				return frag0;
