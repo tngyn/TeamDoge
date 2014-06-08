@@ -35,8 +35,8 @@ public class ShiftSelectorActivity extends Activity {
     protected List<List<String>> userList;
     protected ParseQuery<ParseObject> query;
     protected ParseQuery<ParseObject> shiftsQuery;
-    private final String AM = ":00 AM";
-    private final String PM = ":00 PM";
+    private final String AM = " AM";
+    private final String PM = " PM";
     private final String DASH = " - ";
 	private SettingsListAdapter adapter;
 	private ExpandableListView shiftsList;
@@ -198,44 +198,47 @@ public class ShiftSelectorActivity extends Activity {
 	private void convertShifts(List<String> times) {
 		for( int shiftCounter = 0; shiftCounter < times.size(); ++shiftCounter ){
 			// tokenizes the string into two to get times
-			String[] tokens = times.get(shiftCounter).split("[-]");
-			// convert parsed tokens into integers
-	    	int start = Integer.parseInt(tokens[0]);
-	    	int end = Integer.parseInt(tokens[1]);
+			String[] tokens = times.get(shiftCounter).split("[-|\\:]");
 	    	
-	    	// checks if start time is 12 AM
-	    	if( start == 0 ) {
-	    		tokens[0] = "12:00 AM";
+	    	// converts parsed tokens into integers
+	    	int startHour = Integer.parseInt(tokens[0]);
+	    	int endHour = Integer.parseInt(tokens[2]);
+	    	
+	    	// checks if start hour is 12 AM
+	    	if( startHour == 0 ) {
+	    		tokens[0] = "12:" + tokens[1] + AM;
 	    	}
-	    	else if( start == 12 ) {
-	    		tokens[0] = "12:00 PM";
+	    	// checks if start time is 12 PM
+	    	else if( startHour == 12 ) {
+	    		tokens[0] = "12:" + tokens[1] + PM;
 	    	}
 	    	// otherwise converts start time
-	    	else if( start < 12 ) {
-	    		tokens[0] = "" + start + AM;
+	    	else if( startHour < 12 ) {
+	    		tokens[0] = "" + startHour + ":" + tokens[1] + AM;
 	    	}
 	    	else {
-	    		tokens[0] = "" + (start - 12) + PM;
+	    		tokens[0] = "" + (startHour - 12) + ":" + tokens[1] + PM;
 	    	}
 	    	
-	    	// checks if end time is 12 AM
-	    	if( end == 0 ) {
-	    		tokens[1] = "12:00 AM";
-	    	}
 	    	
-	    	else if( end == 12 ) {
-	    		tokens[1] = "12:00 PM";
+	    	// checks if end hour is 12 AM
+	    	if( endHour == 0 ) {
+	    		tokens[2] = "12:" + tokens[3] + AM;
+	    	}
+	    	// checks if end time is 12 PM
+	    	else if( endHour == 12 ) {
+	    		tokens[2] = "12:" + tokens[3] + PM;
 	    	}
 	    	//otherwise converts end time
-	    	else if( end < 12 ) {
-	    		tokens[1] = "" + end + AM;
+	    	else if( endHour < 12 ) {
+	    		tokens[2] = "" + endHour + ":" + tokens[3] + AM;
 	    	}
 	    	else {
-	    		tokens[1] = "" + (end - 12) + PM;
+	    		tokens[2] = "" + (endHour - 12) + ":" + tokens[3] + PM;
 	    	}
 	    	
 	    	// restructures the shift strings
-	    	times.set(shiftCounter, tokens[0] + DASH + tokens[1]);
+	    	times.set(shiftCounter, tokens[0] + DASH + tokens[2]);
 		}
 	}
 	public String[] copy (ArrayList<?> source, String[] destination) {

@@ -96,7 +96,7 @@ public class SignUpActivity extends Activity {
 						if (String.valueOf(spinner.getSelectedItem()).equals("Owner")) {
 							ownerAcc = username;
 							ParseObject schedule = new ParseObject("Schedule");
-							String[] times = {"12-15","15-18", "18-21","21-0"};
+							String[] times = {"12:00-15:00","15:00-18:00", "18:00-21:00","21:00-0:00"};
 							schedule.put("Sunday", Arrays.asList(times));
 							schedule.put("Monday", Arrays.asList(times));
 							schedule.put("Tuesday", Arrays.asList(times));
@@ -190,7 +190,7 @@ public class SignUpActivity extends Activity {
 						  user.setEmail(email);
 						  user.setPassword(password);
 						  user.put("Acc_Type", String.valueOf(spinner.getSelectedItem()));
-						  String[] times = {"0", "1", "0", "0" };
+						  String[] times = {"0", "0", "0", "0" };
 						  ParseObject shifts = new ParseObject("Shifts");
 						  shifts.put("Monday", Arrays.asList(times));
 						  shifts.put("Tuesday", Arrays.asList(times));
