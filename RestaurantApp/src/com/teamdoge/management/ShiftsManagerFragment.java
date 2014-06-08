@@ -370,7 +370,6 @@ public class ShiftsManagerFragment extends ListFragment {
 		TimePicker startTime = (TimePicker)layout.findViewById(R.id.startTimePicker);
 		TimePicker endTime = (TimePicker)layout.findViewById(R.id.endTimePicker);
 		ShiftList shiftList;
-		Log.d("INDEX", "" + index);
 		shiftList =  (ShiftList) shiftItems.get(index);
 		if (!addNew) {
 			shift = shiftList.altShift;
@@ -381,7 +380,6 @@ public class ShiftsManagerFragment extends ListFragment {
 			endTime.setCurrentMinute(Integer.parseInt(tokens[3]));
 		}
 		weekDay = shiftList.weekDay;
-		Log.d( "WEEKDAY", "" + shiftList.weekDay);
 		builder.setView(layout)
 		    .setPositiveButton(R.string.Confirm, new DialogInterface.OnClickListener() {
 		    	@Override
