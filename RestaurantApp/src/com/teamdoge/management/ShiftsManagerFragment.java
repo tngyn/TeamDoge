@@ -152,7 +152,7 @@ public class ShiftsManagerFragment extends ListFragment {
 			  shiftItems.add(new ShiftList(shiftName, convertedShiftTimeList.get(i).get(j), i, shiftTimeList.get(i).get(j)));
 			  counter++;
 		  }
-		  shiftItems.add(new ShiftList("Add Shift", day[i]));
+		  shiftItems.add(new ShiftList("Add Shift", i));
 		  counter++;
 		}
 	}
@@ -266,6 +266,7 @@ public class ShiftsManagerFragment extends ListFragment {
 	
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		boolean keepGoing = true;
+		addNew = false;
 		for (int i = 0; i < headerID.length; i++) {
 			if (headerID[i] == id) {
 				keepGoing = false;
@@ -273,6 +274,8 @@ public class ShiftsManagerFragment extends ListFragment {
 			if (headerID[i] -1 == id) {
 				addNew = true;
 			}
+			if (id == shiftItems.size() - 1)
+				addNew = true;
 		}
 		if (keepGoing)
 		  showNewTimesDialog((int)id);
@@ -367,6 +370,7 @@ public class ShiftsManagerFragment extends ListFragment {
 		TimePicker startTime = (TimePicker)layout.findViewById(R.id.startTimePicker);
 		TimePicker endTime = (TimePicker)layout.findViewById(R.id.endTimePicker);
 		ShiftList shiftList;
+		Log.d("INDEX", "" + index);
 		shiftList =  (ShiftList) shiftItems.get(index);
 		if (!addNew) {
 			shift = shiftList.altShift;
@@ -377,6 +381,7 @@ public class ShiftsManagerFragment extends ListFragment {
 			endTime.setCurrentMinute(Integer.parseInt(tokens[3]));
 		}
 		weekDay = shiftList.weekDay;
+		Log.d( "WEEKDAY", "" + shiftList.weekDay);
 		builder.setView(layout)
 		    .setPositiveButton(R.string.Confirm, new DialogInterface.OnClickListener() {
 		    	@Override
@@ -395,12 +400,14 @@ public class ShiftsManagerFragment extends ListFragment {
 		    			shiftObject.put(day[weekDay], shiftTimeList.get(weekDay));
 		    			shiftObject.saveInBackground();
 		    			updateShifts(shiftTimeList.get(weekDay).size(), weekDay);
+		    			addNew = false;
 		    		}
 		    		else if (startTimeHour == endTimeHour && startTimeMins < endTimeMins && addNew) {
 		    			shiftTimeList.set(weekDay, addShift(totalStartTime + "-" + totalEndTime, weekDay));
 		    			shiftObject.put(day[weekDay], shiftTimeList.get(weekDay));
 		    			shiftObject.saveInBackground();
 		    			updateShifts(shiftTimeList.get(weekDay).size(), weekDay);
+		    			addNew = false;
 		    		}
 		    		else if (startTimeHour < endTimeHour) {
 		    			shiftTimeList.set(weekDay, editShift(totalStartTime + "-" + totalEndTime, weekDay));

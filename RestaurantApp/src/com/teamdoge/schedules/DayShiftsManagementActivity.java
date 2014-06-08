@@ -271,8 +271,6 @@ public class DayShiftsManagementActivity extends Activity {
     					public void onClick(View view) {
     					  for (int i = 0; i < shiftList.size(); i++) {
     						  shiftObject = shiftList.get(i);
-    						  Log.d("TESTING", shiftObject.getString("Name"));
-    					      Toast.makeText(getApplicationContext(),"Scheduled Compiled", Toast.LENGTH_LONG).show();
     					      final String DAY = Day;
     						  shiftObject.put(DAY, Arrays.asList(shiftsArray[i]));
     						  shiftObject.saveInBackground();

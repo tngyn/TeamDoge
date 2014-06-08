@@ -129,13 +129,11 @@ public class EmployeeListFragment extends ListFragment {
 								shift = shiftList.get((int)id);
 								shift.put("Acc_Type", "Employee");
 								shift.saveInBackground();
-								asyncCaller();
 							}
 							else {
 								shift = shiftList.get((int)id);
 								shift.put("Acc_Type", "Manager");
 								shift.saveInBackground();
-								asyncCaller();
 							}
 							asyncCaller();
 						}
