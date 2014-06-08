@@ -6,16 +6,11 @@ import java.util.Map;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.ExpandableListView;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
@@ -50,14 +45,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
          
         TextView item = (TextView) convertView.findViewById(R.id.categoryList);
         item.setText(Citem);
-        
-        /**************************ADDED***************************/
-//        ImageView icon = (ImageView) convertView.findViewById(R.id.rowicon);
-//        if (icon != null) 
-//        {
-//           icon.setImageResource(R.drawable.ic_action_discard);
-//        }
-        /********************************************************/
+
         return convertView;
     }
  

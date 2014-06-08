@@ -2,27 +2,19 @@ package com.teamdoge.restaurantprofile;
 
 import com.teamdoge.restaurantapp.ManagerFragment;
 import com.teamdoge.restaurantapp.ManagerFragment.OnFragmentInteractionListener;
-import com.teamdoge.restaurantapp.MyShiftFragment;
 import com.teamdoge.restaurantapp.R;
 import com.teamdoge.restaurantapp.ShiftsManagerFragment;
 import com.teamdoge.restaurantapp.SuperAwesomeCardFragment;
-import com.teamdoge.trackingmenu.AddMenuItemActivity;
-import com.teamdoge.userprofile.Edit_Profile;
 import com.astuetz.PagerSlidingTabStrip;
 
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
 import android.app.Activity;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -151,48 +143,20 @@ public class RestaurantProfileFragment extends Fragment {
 		@Override
 		public Fragment getItem(int position) {
 			switch(position) {
-//			
-//			case 0:
-//				ShiftsManagerFragment m = new ShiftsManagerFragment();
-//				return m;
+			
 			case 0:
+				ShiftsManagerFragment m = new ShiftsManagerFragment();
+				return m;
+			case 1:
 				ManagerFragment frag0 = new ManagerFragment();
 				return frag0;
-			case 1:
+			case 2:
 				EmployeeListFragment frag = EmployeeListFragment.newInstance();
 				return frag;
-			case 2:
-				Fragment frag2 = new ShiftsManagerFragment();
-				return frag2;
 			default:
 				return SuperAwesomeCardFragment.newInstance(position);
 			}
 		}
-
-	}
-
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-	   inflater.inflate(R.menu.menu, menu);
-	}
-
-	
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		//switch (item.getItemId()) {
-
-        if (item.getItemId()== R.id.item_add){
-        	Intent intent = new Intent(getActivity(), AddMenuItemActivity.class);
-        	startActivity(intent);
-        	return true;
-        }
-           
-        	else
-            return super.onOptionsItemSelected(item);
-	
     }
 
 	   

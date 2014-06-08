@@ -6,7 +6,6 @@ import java.util.List;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.Fragment;
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -22,15 +21,12 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.parse.FindCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-import com.teamdoge.userprofile.Edit_Profile;
 
 public class View_Item extends FragmentActivity implements OnItemSelectedListener, InvAddPageDropdownFrag.OnFragmentInteractionListener{
 	//used to clear all the text boxes (initialize them for typing)

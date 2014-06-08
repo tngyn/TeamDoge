@@ -1,9 +1,5 @@
 package com.teamdoge.restaurantapp;
 
-
-import java.util.List;
-
-import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
 
@@ -12,17 +8,10 @@ import com.parse.ParseUser;
 import com.teamdoge.login.LoginActivity;
 import com.teamdoge.restaurantapp.ManagerFragment.OnFragmentInteractionListener;
 import com.teamdoge.restaurantprofile.RestaurantProfileFragment;
-import com.teamdoge.schedules.ListItem;
-import com.teamdoge.schedules.TwoTextArrayAdapter;
-import com.teamdoge.trackingmenu.TrackingMenuFragment;
-import com.teamdoge.userprofile.Manager_View_Profile;
 import com.teamdoge.userprofile.View_Profile;
 
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -32,32 +21,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-
-
-
 public class MainActivity extends FragmentActivity implements OnFragmentInteractionListener {
-
-
-    /**
-     * Used to store the last screen title.
-     * For use in {@link #restoreActionBar()}.                                   
-     */
-    private CharSequence mTitle;
-
     
 	DrawerLayout mDrawerLayout;
 	ListView mDrawerList;
 	ActionBarDrawerToggle mDrawerToggle;
 
-	private CharSequence mDrawerTitle;
 	private String[] mDrawerSections;
 
 	static ParseUser user;
@@ -69,21 +44,15 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 	private Boolean isFrag1Visible;
 	private Boolean isFrag2Visible;
 	private Boolean isFrag3Visible;
-	private Boolean isFrag4Visible;
 	private PageSlidingTabStripFragment frag0 ;
 	private InventoryList frag1;
-//	private TrackingMenuFragment frag2;
-	private View_Profile frag3;
-	private RestaurantProfileFragment frag4;
+	private View_Profile frag2;
+	private RestaurantProfileFragment frag3;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-//		bar = (ProgressBar) findViewById(R.id.progressBarMainActivity);
-//		new MyTask().execute();
-
-		
 		
 		Parse.initialize(this, "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8", "k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF");
 
@@ -104,9 +73,7 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 			      WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
 
-
-//		mTitle = mDrawerTitle = "testing something right now";
-		if (accountType.equals("Owner")) {
+		if (accountType.equals("Owner") || accountType.equals("Manager")) {
 
 			mDrawerSections = getResources().getStringArray(R.array.drawer_sections_array_for_owner);
 
@@ -226,6 +193,7 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
 		switch (position) {
+		
 		// Schedule
 		case 0:
 			
@@ -234,23 +202,15 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 			}
 			else {
 				ft.hide(frag1);
-//				ft.hide(frag2);
-				ft.hide(frag3);
+				ft.hide(frag2);
 				ft.show(frag0);
-				ft.hide(frag4);
+				ft.hide(frag3);
 				isFrag0Visible = true;
 				isFrag1Visible = false;
 				isFrag2Visible = false;
 				isFrag3Visible = false;
-				isFrag4Visible = false;
 			}
 			ft.commit();
-			
-//			getSupportFragmentManager()
-//			.beginTransaction()
-//			.replace(R.id.content,
-//					PageSlidingTabStripFragment.newInstance(),
-//					PageSlidingTabStripFragment.TAG).commit();
 			
 			getActionBar().setTitle("Schedule");
 			break;
@@ -263,101 +223,56 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 			}
 			else {
 				ft.hide(frag0);
-//				ft.hide(frag2);
-				ft.hide(frag3);
+				ft.hide(frag2);
 				ft.show(frag1);
-				ft.hide(frag4);
+				ft.hide(frag3);
 				isFrag0Visible = false;
 				isFrag1Visible = true;
 				isFrag2Visible = false;
 				isFrag3Visible = false;
-				isFrag4Visible = false;
 			}
 			ft.commit();
-			
-//			getSupportFragmentManager().beginTransaction()
-//			.replace(R.id.content,
-//				InventoryList.newInstance()).commit();
 			
 			getActionBar().setTitle("Inventory");
 			break;
 
-//		// Tracking Menu
-//		case 2:
-//			
-//			if (isFrag2Visible) {
-//				ft.show(frag2);
-//			}
-//			else {
-//				ft.hide(frag0);
-//				ft.hide(frag1);
-//				ft.hide(frag3);
-//				ft.show(frag2);
-//				ft.hide(frag4);
-//				isFrag0Visible = false;
-//				isFrag1Visible = false;
-//				isFrag2Visible = true;
-//				isFrag3Visible = false;
-//				isFrag4Visible = false;
-//			}
-//			ft.commit();
-//			
-////			getSupportFragmentManager().beginTransaction()
-////				.replace(R.id.content,
-////					TrackingMenuFragment.newInstance()).commit();
-//			
-//			getActionBar().setTitle("Tracking Menu");
-//			break;
-
 		// Profile
 		case 2:
 
+			if (isFrag2Visible) {
+				ft.show(frag2);
+			}
+			else {
+				ft.hide(frag0);
+				ft.hide(frag1);
+				ft.show(frag2);
+				ft.hide(frag3);
+				isFrag0Visible = false;
+				isFrag1Visible = false;
+				isFrag2Visible = true;
+				isFrag3Visible = false;
+			}
+			ft.commit();
+			
+			getActionBar().setTitle("Profile");
+			break;
+		
+		// Management
+		case 3:
 			if (isFrag3Visible) {
 				ft.show(frag3);
 			}
 			else {
 				ft.hide(frag0);
 				ft.hide(frag1);
-//				ft.hide(frag2);
+				ft.hide(frag2);
 				ft.show(frag3);
-				ft.hide(frag4);
 				isFrag0Visible = false;
 				isFrag1Visible = false;
 				isFrag2Visible = false;
 				isFrag3Visible = true;
-				isFrag4Visible = false;
 			}
 			ft.commit();
-			
-//			getSupportFragmentManager().beginTransaction()
-//				.replace(R.id.content,
-//						View_Profile.newInstance()).commit();
-			
-			getActionBar().setTitle("Profile");
-			break;
-		
-		// Restaurant Profile
-		case 3:
-			if (isFrag4Visible) {
-				ft.show(frag4);
-			}
-			else {
-				ft.hide(frag0);
-				ft.hide(frag1);
-//				ft.hide(frag2);
-				ft.hide(frag3);
-				ft.show(frag4);
-				isFrag0Visible = false;
-				isFrag1Visible = false;
-				isFrag2Visible = false;
-				isFrag3Visible = false;
-				isFrag4Visible = true;
-			}
-			ft.commit();
-			
-//			getSupportFragmentManager().beginTransaction()
-//				.replace(R.id.content,
-//						View_Profile.newInstance()).commit();
 			
 			getActionBar().setTitle("Management");
 			break;
@@ -401,21 +316,13 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 			}
 			else {
 				ft.hide(frag1);
-//				ft.hide(frag2);
-				ft.hide(frag3);
+				ft.hide(frag2);
 				ft.show(frag0);
 				isFrag0Visible = true;
 				isFrag1Visible = false;
 				isFrag2Visible = false;
-				isFrag3Visible = false;
 			}
 			ft.commit();
-			
-//			getSupportFragmentManager()
-//			.beginTransaction()
-//			.replace(R.id.content,
-//					PageSlidingTabStripFragment.newInstance(),
-//					PageSlidingTabStripFragment.TAG).commit();
 			
 			getActionBar().setTitle("Schedule");
 			break;
@@ -428,76 +335,38 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 			}
 			else {
 				ft.hide(frag0);
-//				ft.hide(frag2);
-				ft.hide(frag3);
+				ft.hide(frag2);
 				ft.show(frag1);
 				isFrag0Visible = false;
 				isFrag1Visible = true;
 				isFrag2Visible = false;
-				isFrag3Visible = false;
 			}
 			ft.commit();
-			
-//			getSupportFragmentManager().beginTransaction()
-//			.replace(R.id.content,
-//				InventoryList.newInstance()).commit();
 			
 			getActionBar().setTitle("Inventory");
 			break;
 
-		// Tracking Menu
-//		case 2:
-//			
-//			if (isFrag2Visible) {
-//				ft.show(frag2);
-//			}
-//			else {
-//				ft.hide(frag0);
-//				ft.hide(frag1);
-//				ft.hide(frag3);
-//				ft.show(frag2);
-//				isFrag0Visible = false;
-//				isFrag1Visible = false;
-//				isFrag2Visible = true;
-//				isFrag3Visible = false;
-//			}
-//			ft.commit();
-//			
-////			getSupportFragmentManager().beginTransaction()
-////				.replace(R.id.content,
-////					TrackingMenuFragment.newInstance()).commit();
-//			
-//			getActionBar().setTitle("Tracking Menu");
-//			break;
-
 		// Profile
 		case 2:
 
-			if (isFrag3Visible) {
-				ft.show(frag3);
+			if (isFrag2Visible) {
+				ft.show(frag2);
 			}
 			else {
 				ft.hide(frag0);
 				ft.hide(frag1);
-//				ft.hide(frag2);
-				ft.show(frag3);
+				ft.show(frag2);
 				isFrag0Visible = false;
 				isFrag1Visible = false;
-				isFrag2Visible = false;
-				isFrag3Visible = true;
+				isFrag2Visible = true;
 			}
 			ft.commit();
-			
-//			getSupportFragmentManager().beginTransaction()
-//				.replace(R.id.content,
-//						View_Profile.newInstance()).commit();
 			
 			getActionBar().setTitle("Profile");
 			break;
 		
 		// Logout
 		case 3:
-
 			Intent intent = new Intent(MainActivity.this, LoginActivity.class);
 	    	startActivity(intent);
 	    	user.put("Remember_Me", false);
@@ -506,49 +375,37 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 	    	user = ParseUser.getCurrentUser();
 	    	finish();
 	    	break;
-	    	
 		}
-
 	}
-
 
 	@Override
-	public void onFragmentInteraction() {
-
-
-
-	}
+	public void onFragmentInteraction() {}
 
 	private void initFragments() {
 		
 		frag0 = PageSlidingTabStripFragment.newInstance();
 		frag1 = InventoryList.newInstance();
-//		frag2 = TrackingMenuFragment.newInstance();
-		frag3 = View_Profile.newInstance();
+		frag2 = View_Profile.newInstance();
 		
 		isFrag0Visible = true;
 		isFrag1Visible = false;
 		isFrag2Visible = false;
-		isFrag3Visible = false;
 		
 		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 		ft.add(R.id.content, frag0);
 		ft.add(R.id.content, frag1);
-//		ft.add(R.id.content, frag2);
-		ft.add(R.id.content, frag3);
+		ft.add(R.id.content, frag2);
 		
-		if (accountType.equals("Owner")) {
-			frag4 = RestaurantProfileFragment.newInstance();
-			isFrag4Visible = false;
-			ft.add(R.id.content, frag4);
-			ft.hide(frag4);
+		if (accountType.equals("Owner") || accountType.equals("Manager")) {
+			frag3 = RestaurantProfileFragment.newInstance();
+			isFrag3Visible = false;
+			ft.add(R.id.content, frag3);
+			ft.hide(frag3);
 		}
 		
 		ft.hide(frag1);
-//		ft.hide(frag2);
-		ft.hide(frag3);
+		ft.hide(frag2);
 
-		
 		ft.commit();
 		
 	}

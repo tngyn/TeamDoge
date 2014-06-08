@@ -59,7 +59,7 @@
             android:label="@string/inv_item_page" >
         </activity>
         <activity
-            android:name="com.teamdoge.login.ForgotPassword"
+            android:name="com.teamdoge.login.ForgotPasswordActivity"
             android:label="Forgot Password" >
         </activity>
         <activity

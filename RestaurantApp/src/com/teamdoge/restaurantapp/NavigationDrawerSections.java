@@ -1,14 +1,10 @@
 package com.teamdoge.restaurantapp;
 
-import java.util.Locale;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 
 public class NavigationDrawerSections extends Fragment {
@@ -25,12 +21,6 @@ public class NavigationDrawerSections extends Fragment {
 				false);
 		int i = getArguments().getInt(ARG_SECTION_NUMBER);
 		String sections = getResources().getStringArray(R.array.drawer_sections_array)[i];
-
-//		int imageId = getResources().getIdentifier(
-//				sections.toLowerCase(Locale.getDefault()), "drawable",
-//				getActivity().getPackageName());
-//		((ImageView) rootView.findViewById(R.id.image))
-//				.setImageResource(imageId);
 		
 		// Set title bar
 	    ((MainActivity) getActivity())

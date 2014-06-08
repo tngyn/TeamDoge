@@ -10,14 +10,10 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 import com.teamdoge.restaurantapp.R;
-import com.teamdoge.restaurantapp.R.id;
-import com.teamdoge.restaurantapp.R.layout;
-import com.teamdoge.restaurantapp.R.string;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
-import android.app.ActionBar;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,7 +22,6 @@ import android.support.v4.app.NavUtils;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +30,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 import android.os.Build;
 
@@ -102,7 +96,7 @@ public class SignUpActivity extends Activity {
 						if (String.valueOf(spinner.getSelectedItem()).equals("Owner")) {
 							ownerAcc = username;
 							ParseObject schedule = new ParseObject("Schedule");
-							String[] times = {"12-15","15-18", "18-21","21-0"};
+							String[] times = {"12:00-15:00","15:00-18:00", "18:00-21:00","21:00-0:00"};
 							schedule.put("Sunday", Arrays.asList(times));
 							schedule.put("Monday", Arrays.asList(times));
 							schedule.put("Tuesday", Arrays.asList(times));
@@ -196,7 +190,7 @@ public class SignUpActivity extends Activity {
 						  user.setEmail(email);
 						  user.setPassword(password);
 						  user.put("Acc_Type", String.valueOf(spinner.getSelectedItem()));
-						  String[] times = {"0", "1", "0", "0" };
+						  String[] times = {"0", "0", "0", "0" };
 						  ParseObject shifts = new ParseObject("Shifts");
 						  shifts.put("Monday", Arrays.asList(times));
 						  shifts.put("Tuesday", Arrays.asList(times));

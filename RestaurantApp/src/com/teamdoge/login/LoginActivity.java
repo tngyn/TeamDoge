@@ -1,18 +1,13 @@
 package com.teamdoge.login;
 
-import java.util.Arrays;
-
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.LogInCallback;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.teamdoge.restaurantapp.MainActivity;
 import com.teamdoge.restaurantapp.R;
-import com.teamdoge.restaurantapp.R.id;
-import com.teamdoge.restaurantapp.R.layout;
-import com.teamdoge.restaurantapp.R.string;
-import com.teamdoge.userprofile.View_Profile;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -26,7 +21,6 @@ import android.os.StrictMode;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.Menu;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
@@ -34,7 +28,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * Activity which displays a login screen to the user, offering registration as
@@ -54,7 +47,6 @@ public class LoginActivity extends Activity {
 	// Values for email and password at the time of the login attempt.
 	private String mUsername;
 	private String mPassword;
-	private String test;
 
 	// UI references.
 	private EditText mUsernameView;
@@ -83,6 +75,15 @@ public class LoginActivity extends Activity {
 				Log.d("ASD", "true");
 		}
 		if (user != null && remember) {
+			ParseQuery<ParseObject> shiftQuery = ParseQuery.getQuery("Shifts");
+			shiftQuery.whereEqualTo("Username", user.getUsername());
+			try {
+				user.put("Acc_Type", shiftQuery.find().get(0).getString("Acc_Type"));
+			} catch (ParseException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			user.saveInBackground();
 			Intent intent = new Intent(LoginActivity.this, MainActivity.class);
 			startActivity(intent);
 			finish();
@@ -247,7 +248,14 @@ public class LoginActivity extends Activity {
 				    if (user != null) {
 				      //Toast.makeText(getApplicationContext(),"Success", Toast.LENGTH_SHORT).show();
 				    	user.put("Remember_Me", remember);
-
+						ParseQuery<ParseObject> shiftQuery = ParseQuery.getQuery("Shifts");
+						shiftQuery.whereEqualTo("Username", user.getUsername());
+						try {
+							user.put("Acc_Type", shiftQuery.find().get(0).getString("Acc_Type"));
+						} catch (ParseException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 				    	user.saveInBackground(); 
 						Intent intent = new Intent(LoginActivity.this, MainActivity.class);
 

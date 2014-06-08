@@ -2,38 +2,23 @@ package com.teamdoge.restaurantapp;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import com.parse.FindCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-import com.teamdoge.login.LoginActivity;
-import com.teamdoge.login.SignUpActivity;
-import com.teamdoge.schedules.ListItem;
-import com.teamdoge.schedules.TwoTextArrayAdapter;
-import com.teamdoge.userprofile.ShiftSelectorActivity.MyAsyncTaskHelper;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.CheckedTextView;
-import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 import android.widget.Toast;
