@@ -15,7 +15,6 @@ import com.teamdoge.restaurantapp.R.id;
 import com.teamdoge.restaurantapp.R.layout;
 import com.teamdoge.restaurantapp.R.menu;
 import com.teamdoge.schedules.*;
-import com.teamdoge.shifts.ShiftList;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -275,6 +274,7 @@ public class ShiftsManagerFragment extends ListFragment {
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
 		LayoutInflater inflater = getActivity().getLayoutInflater();	
+		Log.d("ASD","ACCESSING D: D: D: D: WHY VIVEK WHY D: D: D:");
 
 		final View layout = inflater.inflate(R.layout.fragment_shift_manager_dialog, null);
 

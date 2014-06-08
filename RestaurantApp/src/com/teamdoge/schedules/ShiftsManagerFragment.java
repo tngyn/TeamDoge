@@ -9,12 +9,12 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.ParseException;
+import com.teamdoge.management.ShiftList;
 import com.teamdoge.restaurantapp.R;
 import com.teamdoge.restaurantapp.R.id;
 import com.teamdoge.restaurantapp.R.layout;
 import com.teamdoge.restaurantapp.R.menu;
 import com.teamdoge.schedules.*;
-import com.teamdoge.shifts.ShiftList;
 
 import android.os.AsyncTask;
 import android.os.Bundle;

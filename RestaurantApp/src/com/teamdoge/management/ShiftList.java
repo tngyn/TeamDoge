@@ -1,4 +1,4 @@
-package com.teamdoge.shifts;
+package com.teamdoge.management;
 
 import android.view.LayoutInflater;
 import android.view.View;
