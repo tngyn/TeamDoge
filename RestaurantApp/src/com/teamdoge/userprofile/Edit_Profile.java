@@ -112,7 +112,7 @@ public class Edit_Profile extends Activity {
 		// pull values from data base
 		String tempName = user.getString("Name");
 		String tempEmail = user.getEmail();
-		String tempPhone = user.getString("PhoneNumber");
+		String tempPhone = user.getString("Phone_Number");
 		
 		ParseQuery<ParseObject>query = new ParseQuery<ParseObject>("Shifts");
 		query.whereEqualTo("Username", user.getUsername());
