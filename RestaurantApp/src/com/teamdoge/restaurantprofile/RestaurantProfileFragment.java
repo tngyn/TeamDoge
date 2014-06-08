@@ -135,7 +135,7 @@ public class RestaurantProfileFragment extends Fragment {
 //				"Employees" };
 		
 		private String[] TITLES = { "Compile Schedules",
-		"Employees" };
+		"Employees", "Set Shift" };
 		
 		@Override
 		public CharSequence getPageTitle(int position) {
@@ -161,6 +161,9 @@ public class RestaurantProfileFragment extends Fragment {
 			case 1:
 				EmployeeListFragment frag = EmployeeListFragment.newInstance();
 				return frag;
+			case 2:
+				Fragment frag2 = new ShiftsManagerFragment();
+				return frag2;
 			default:
 				return SuperAwesomeCardFragment.newInstance(position);
 			}

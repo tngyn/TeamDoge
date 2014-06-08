@@ -1,0 +1,41 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context="com.teamdoge.restaurantapp.ShiftManagerDialogFragment$PlaceholderFragment" >
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/startTime" 
+        android:paddingTop="5dp"
+        android:paddingLeft="21dp"
+        android:textSize="20sp"
+        android:gravity="left"/>
+    
+    <TimePicker
+        android:id="@+id/startTimePicker"
+        android:layout_width="fill_parent"
+        android:layout_height="150dp" 
+        android:paddingTop="5dp"
+        android:gravity="center_horizontal"/>
+    
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/endTime" 
+        android:paddingTop="5dp"
+        android:paddingLeft="21dp"
+        android:textSize="20sp"
+        android:gravity="left"/>
+    
+    <TimePicker
+        android:id="@+id/endTimePicker"
+        android:layout_width="fill_parent"
+        android:layout_height="150dp" 
+        android:paddingTop="5dp"
+        android:gravity="center_horizontal"/>
+
+
+</LinearLayout>

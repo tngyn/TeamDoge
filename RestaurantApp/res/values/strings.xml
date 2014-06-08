@@ -36,7 +36,7 @@
     <string-array name="drawer_sections_array_for_owner">
         <item>Schedule</item>
         <item>Inventory</item>
-      <!--   <item>Tracking Menu</item> -->
+        <!-- <item>Tracking Menu</item> -->
         <item>Profile</item>
         <item>Management</item>
         <item>Log Out</item>
@@ -83,5 +83,11 @@
     <string name="title_activity_profile__picture__select">Profile_Picture_Select</string>
     <string name="title_activity_profile__picture">Profile_Picture</string>
     <string name="title_activity_profile__gallery">Profile_Gallery</string>
+    <string name="title_activity_shift_manager_dialog_fragment">ShiftManagerDialogFragment</string>
+    
+    <string name="startTime">Start Time: </string>
+    <string name="endTime">End Time: </string>
+    <string name="Confirm">Confirm</string>
+    <string name="Delete">Delete</string>
 
 </resources>

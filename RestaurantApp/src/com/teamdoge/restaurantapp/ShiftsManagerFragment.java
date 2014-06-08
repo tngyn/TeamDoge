@@ -2,18 +2,18 @@ package com.teamdoge.restaurantapp;
 
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
-import com.parse.Parse;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
-import com.parse.ParseUser;
-import com.parse.ParseException;
-import com.teamdoge.schedules.*;
-import com.teamdoge.shifts.ShiftList;
-
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.app.FragmentManager;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,8 +22,21 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.TimePicker;
 
-public class ShiftsManagerFragment extends ListFragment {
+import com.parse.Parse;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
+import com.teamdoge.restaurantapp.ShiftManagerDialogFragment.OnFragmentInteractionListener;
+import com.teamdoge.schedules.ListHeader;
+import com.teamdoge.schedules.ListItem;
+import com.teamdoge.schedules.TwoTextArrayAdapter;
+import com.teamdoge.shifts.ShiftList;
+
+public class ShiftsManagerFragment extends ListFragment{
 	
 //	private OnFragmentInteractionListener mListener;
 	
@@ -230,7 +243,6 @@ public class ShiftsManagerFragment extends ListFragment {
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-
 	    switch (item.getItemId()) {
 
 	        case R.id.menu_refresh:
@@ -255,6 +267,62 @@ public class ShiftsManagerFragment extends ListFragment {
 	            }
 	        }
 	    }
+	}
+	
+	public void onListItemClick(ListView l, View v, int position, long id) {
+		showNewTimesDialog();
+	}
+	
+	public void showNewTimesDialog() {
+		
+		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+		
+		LayoutInflater inflater = getActivity().getLayoutInflater();	
+		
+		final View layout = inflater.inflate(R.layout.fragment_shift_manager_dialog, null);
+		
+		builder.setView(layout)
+		    .setPositiveButton(R.string.Confirm, new DialogInterface.OnClickListener() {
+		    	@Override
+		    	public void onClick(DialogInterface dialog, int id) {
+		    		TimePicker startTime = (TimePicker)layout.findViewById(R.id.startTimePicker);
+		    		TimePicker endTime = (TimePicker)layout.findViewById(R.id.endTimePicker);
+		    		final Calendar c = Calendar.getInstance();
+		    		int hour = c.get(Calendar.HOUR_OF_DAY);
+		    		//startTime.toString()
+		    		
+		    		int startTimeHour = startTime.getCurrentHour();
+		    		int startTimeMins = startTime.getCurrentMinute();
+		    		String totalStartTime = startTimeHour + ":" + startTimeMins;
+		    		
+		    		int endTimeHour = endTime.getCurrentHour();
+		    		int endTimeMins = endTime.getCurrentMinute();
+		    		String totalEndTime = endTimeHour + ":" + endTimeMins;
+		    		
+		    		
+		    		Log.wtf("HEY THERE Jimmy McJimmathon", "Time is: " + totalStartTime);
+		    		Log.wtf("HEY THERE Mr. CLEAN", "Time is: " + totalEndTime);
+		    		onDialogPositiveClick("");
+		    	}
+		    })
+		    .setNegativeButton(R.string.Delete, new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					//Delete this shift.
+				}
+			})
+			.setNeutralButton(R.string.Cancel, new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					//we do nothing since we don't actually need functionality here.
+				}
+			});
+		
+		builder.show();
+	}
+
+	public void onDialogPositiveClick(String stringy) {
+		Log.wtf("alsdkfjlksdjfj", "sadjflsdjlkfjsdkl00");
 	}
 	
 }
