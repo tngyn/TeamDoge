@@ -139,10 +139,7 @@ public class ManagementTabStripFragment extends Fragment {
 		@Override
 		public Fragment getItem(int position) {
 			switch(position) {
-//			
-//			case 0:
-//				ShiftsManagerFragment m = new ShiftsManagerFragment();
-//				return m;
+
 			case 0:
 				ShiftsManagerFragment frag0 = new ShiftsManagerFragment();
 				return frag0;
@@ -150,7 +147,7 @@ public class ManagementTabStripFragment extends Fragment {
 				EmployeeListFragment frag = EmployeeListFragment.newInstance();
 				return frag;
 			case 2:
-				ManagerFragment frag2 = new ManagerFragment();
+				ManagerFragment frag2 = ManagerFragment.newInstance();
 				return frag2;
 			default:
 				return SuperAwesomeCardFragment.newInstance(position);
