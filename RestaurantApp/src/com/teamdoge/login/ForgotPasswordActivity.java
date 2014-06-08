@@ -30,6 +30,9 @@ private EditText eEmail;
 	protected void onCreate(Bundle savedInstanceState) {
 		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 		StrictMode.setThreadPolicy(policy); 
+		
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		
 		Parse.initialize(this, "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8", "k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF");
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_forgot_password);

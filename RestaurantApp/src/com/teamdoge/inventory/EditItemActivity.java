@@ -1,4 +1,4 @@
-package com.teamdoge.restaurantapp;
+package com.teamdoge.inventory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,8 +30,14 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.teamdoge.restaurantapp.InvAddPageDropdownFrag;
+import com.teamdoge.restaurantapp.R;
+import com.teamdoge.restaurantapp.InvAddPageDropdownFrag.OnFragmentInteractionListener;
+import com.teamdoge.restaurantapp.R.id;
+import com.teamdoge.restaurantapp.R.layout;
+import com.teamdoge.restaurantapp.R.menu;
 
-public class Edit_item extends FragmentActivity implements OnItemSelectedListener, InvAddPageDropdownFrag.OnFragmentInteractionListener{
+public class EditItemActivity extends FragmentActivity implements OnItemSelectedListener, InvAddPageDropdownFrag.OnFragmentInteractionListener{
 	//used to clear all the text boxes (initialize them for typing)
 	//private String init; (I don't think we need this here)
 

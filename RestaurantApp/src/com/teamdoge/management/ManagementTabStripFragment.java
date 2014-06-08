@@ -1,7 +1,6 @@
-package com.teamdoge.restaurantprofile;
+package com.teamdoge.management;
 
-import com.teamdoge.restaurantapp.ManagerFragment;
-import com.teamdoge.restaurantapp.ManagerFragment.OnFragmentInteractionListener;
+import com.teamdoge.management.ManagerFragment.OnFragmentInteractionListener;
 import com.teamdoge.restaurantapp.R;
 import com.teamdoge.restaurantapp.SuperAwesomeCardFragment;
 import com.astuetz.PagerSlidingTabStrip;
@@ -20,13 +19,13 @@ import android.view.ViewGroup;
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass. Activities that
  * contain this fragment must implement the
- * {@link RestaurantProfileFragment.OnFragmentInteractionListener} interface to
+ * {@link ManagementTabStripFragment.OnFragmentInteractionListener} interface to
  * handle interaction events. Use the
- * {@link RestaurantProfileFragment#newInstance} factory method to create an
+ * {@link ManagementTabStripFragment#newInstance} factory method to create an
  * instance of this fragment.
  * 
  */
-public class RestaurantProfileFragment extends Fragment {
+public class ManagementTabStripFragment extends Fragment {
 
 
 	private OnFragmentInteractionListener mListener;
@@ -34,17 +33,17 @@ public class RestaurantProfileFragment extends Fragment {
 	/**
 	 * Use this factory method to create a new instance of this fragment using
 	 * the provided parameters.
-	 * @return A new instance of fragment RestaurantProfileFragment.
+	 * @return A new instance of fragment ManagementTabStripFragment.
 	 */
 	// TODO: Rename and change types and number of parameters
-	public static RestaurantProfileFragment newInstance() {
-		RestaurantProfileFragment fragment = new RestaurantProfileFragment();
+	public static ManagementTabStripFragment newInstance() {
+		ManagementTabStripFragment fragment = new ManagementTabStripFragment();
 		Bundle args = new Bundle();
 		fragment.setArguments(args);
 		return fragment;
 	}
 
-	public RestaurantProfileFragment() {
+	public ManagementTabStripFragment() {
 		// Required empty public constructor
 	}
 

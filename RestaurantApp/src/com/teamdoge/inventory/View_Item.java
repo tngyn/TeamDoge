@@ -1,4 +1,4 @@
-package com.teamdoge.restaurantapp;
+package com.teamdoge.inventory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +27,12 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.teamdoge.restaurantapp.InvAddPageDropdownFrag;
+import com.teamdoge.restaurantapp.R;
+import com.teamdoge.restaurantapp.InvAddPageDropdownFrag.OnFragmentInteractionListener;
+import com.teamdoge.restaurantapp.R.id;
+import com.teamdoge.restaurantapp.R.layout;
+import com.teamdoge.restaurantapp.R.menu;
 
 public class View_Item extends FragmentActivity implements OnItemSelectedListener, InvAddPageDropdownFrag.OnFragmentInteractionListener{
 	//used to clear all the text boxes (initialize them for typing)
@@ -555,7 +561,7 @@ public class View_Item extends FragmentActivity implements OnItemSelectedListene
 	public boolean onOptionsItemSelected(MenuItem item) {
 
 //        if (item.getItemId()== R.id.actionEdit){
-//        	Intent intent = new Intent(View_Item.this, Edit_item.class);
+//        	Intent intent = new Intent(View_Item.this, EditItemActivity.class);
 //        	intent.putExtra("item", itemName);
 //			startActivity(intent);
 //        	return true;
@@ -571,7 +577,7 @@ public class View_Item extends FragmentActivity implements OnItemSelectedListene
         		this.finish();
         		return true;
         	case R.id.actionEdit:
-            	Intent intent = new Intent(View_Item.this, Edit_item.class);
+            	Intent intent = new Intent(View_Item.this, EditItemActivity.class);
             	intent.putExtra("item", itemName);
     			startActivity(intent);
             	return true;

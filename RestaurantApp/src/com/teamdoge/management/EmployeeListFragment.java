@@ -1,4 +1,4 @@
-package com.teamdoge.restaurantprofile;
+package com.teamdoge.management;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,50 +103,56 @@ public class EmployeeListFragment extends ListFragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+			
+		if (user.equals("Owner")) { 
 		
 		OnItemLongClickListener listener = new OnItemLongClickListener() {
-			@Override
-			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
-				int position, final long id) {
-				AlertDialog.Builder box = 
-						new AlertDialog.Builder(getActivity());
-				box.setTitle("Set Manager");
-				if (employeePositions.get((int) id).equals("Manager")) {
-					box.setMessage( "Change Manager to Employee?" );
-				}
-				else {
-					box.setMessage("Change Employee to Manager?");
-				}
-				box.setNegativeButton( "No", new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int whichButton) {
-						dialog.dismiss();
-					}
-				});
-				box.setPositiveButton( "Yes", new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int whichButton) {
-						if (employeePositions.get((int)id).equals("Manager")) {
-							shift = shiftList.get((int)id);
-							shift.put("Acc_Type", "Employee");
-							shift.saveInBackground();
-							asyncCaller();
-						}
-						else {
-							shift = shiftList.get((int)id);
-							shift.put("Acc_Type", "Manager");
-							shift.saveInBackground();
-							asyncCaller();
-						}
-					}
-				});
-				AlertDialog alert = box.create();
-				alert.show();
-	
-				
 			
-				return false;
-			}
+				@Override
+				public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+					int position, final long id) {
+					AlertDialog.Builder box = 
+							new AlertDialog.Builder(getActivity());
+					box.setTitle("Set Manager");
+					if (employeePositions.get((int) id).equals("Manager")) {
+						box.setMessage( "Change Manager to Employee?" );
+					}
+					else {
+						box.setMessage("Change Employee to Manager?");
+					}
+					box.setNegativeButton( "No", new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int whichButton) {
+							dialog.dismiss();
+						}
+					});
+					box.setPositiveButton( "Yes", new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int whichButton) {
+							if (employeePositions.get((int)id).equals("Manager")) {
+								shift = shiftList.get((int)id);
+								shift.put("Acc_Type", "Employee");
+								shift.saveInBackground();
+								asyncCaller();
+							}
+							else {
+								shift = shiftList.get((int)id);
+								shift.put("Acc_Type", "Manager");
+								shift.saveInBackground();
+								asyncCaller();
+							}
+							asyncCaller();
+						}
+					});
+					AlertDialog alert = box.create();
+					alert.show();
+		
+					
+				
+					return false;
+				}
 		};
+		
 			getListView().setOnItemLongClickListener(listener);
+		}
 	}
 	
 	@Override
