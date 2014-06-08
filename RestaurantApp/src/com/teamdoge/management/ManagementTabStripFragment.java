@@ -3,6 +3,7 @@ package com.teamdoge.management;
 import com.teamdoge.management.ManagerFragment.OnFragmentInteractionListener;
 import com.teamdoge.restaurantapp.R;
 import com.teamdoge.restaurantapp.SuperAwesomeCardFragment;
+import com.teamdoge.schedules.ShiftsManagerFragment;
 import com.astuetz.PagerSlidingTabStrip;
 
 import android.support.v4.app.FragmentPagerAdapter;
@@ -121,11 +122,11 @@ public class ManagementTabStripFragment extends Fragment {
 //				"    Schedule    ",
 //				"Open Shifts" };
 
-//		private String[] TITLES = { "Set Shifts", "Compile Schedules",
-//				"Employees" };
+		private String[] TITLES = { "Set Shifts", "Compile Schedules",
+				"Employees" };
 		
-		private String[] TITLES = { "Compile Schedules",
-		"Employees" };
+//		private String[] TITLES = { "Compile Schedules",
+//		"Employees" };
 		
 		@Override
 		public CharSequence getPageTitle(int position) {
@@ -141,14 +142,14 @@ public class ManagementTabStripFragment extends Fragment {
 		@Override
 		public Fragment getItem(int position) {
 			switch(position) {
-//			
-//			case 0:
-//				ShiftsManagerFragment m = new ShiftsManagerFragment();
-//				return m;
+			
 			case 0:
+				ShiftsManagerFragment m = new ShiftsManagerFragment();
+				return m;
+			case 1:
 				ManagerFragment frag0 = new ManagerFragment();
 				return frag0;
-			case 1:
+			case 2:
 				EmployeeListFragment frag = EmployeeListFragment.newInstance();
 				return frag;
 			default:

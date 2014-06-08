@@ -54,6 +54,7 @@ public class ShiftsManagerFragment extends ListFragment {
 	List<ParseObject> shiftList;
 	ParseObject shift;
 	private List<List<String>> shiftTimeList;
+	private List<List<String>> convertedShiftTimeList;
 
     private int[] headerID = new int[] { 0, 0, 0, 0, 0, 0, 0 }; 
     
@@ -129,10 +130,11 @@ public class ShiftsManagerFragment extends ListFragment {
 
 		 // Log.d("FAFA", day[0]);
 		shiftTimeList = new ArrayList<List<String>>();
+		convertedShiftTimeList = new ArrayList<List<String>>();
 		for (int i = 0; i < day.length; i++) {
 		  shiftTimeList.add((List)shift.getList(day[i]));
 		  //Log.d("ASD", "" + i);
-		  shiftTimeList.set(i, convertShifts(shiftTimeList.get(i)));
+		  convertedShiftTimeList.add(convertShifts(shiftTimeList.get(i)));
 		}
 		shiftItems = new ArrayList<ListItem>();
 		int counter = 0;
@@ -143,7 +145,7 @@ public class ShiftsManagerFragment extends ListFragment {
 		  counter++;
 		  for (int j = 0; j < shiftTimeList.get(i).size(); j++) {
 			  shiftName = "Shift #" + (1 + j);
-			  shiftItems.add(new ShiftList(shiftName, shiftTimeList.get(i).get(j), i, j));
+			  shiftItems.add(new ShiftList(shiftName, convertedShiftTimeList.get(i).get(j), i, j));
 			  counter++;
 		  }
 		  shiftItems.add(new ShiftList("Add Shift", i));
