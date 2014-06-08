@@ -11,24 +11,28 @@ import com.teamdoge.schedules.TwoTextArrayAdapter.RowType;
 public class ShiftList implements ListItem {
 	
 		// Name of the shift
-	    private final String name;
+	    public final String name;
 	    // Hours worked in total
-	    private final String shift;
-	    private int i;
-	    private int j;
+	    public final String shift;
+	    public final String altShift;
+	    public final int weekDay;
+	    private final int i;
 
 	    // Constructor to create a schedule list item
-	    public ShiftList(String n, String p, int i, int j) {
+	    public ShiftList(String n, String s, int weekDay, String altShifts) {
 	        this.name = n;
-	        this.shift = p;
-	        this.i = i;
-	        this.j = j;
+	        this.shift = s;
+	        this.weekDay = weekDay;
+	        this.altShift = altShifts;
+	        this.i = 0;
 	    }
 	    
-	    public ShiftList(String n, int i) {
+	    public ShiftList(String n, String w) {
 	        this.name = n;
 	        this.shift = "";
-	        this.i = i;
+	        this.weekDay = 0;
+	        this.i = -1;
+	        this.altShift = "";
 	    }
 	    // implementation needed for the TwoTextArrayAdapter
 	    @Override

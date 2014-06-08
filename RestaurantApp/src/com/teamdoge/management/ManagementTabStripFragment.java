@@ -3,7 +3,6 @@ package com.teamdoge.management;
 import com.teamdoge.management.ManagerFragment.OnFragmentInteractionListener;
 import com.teamdoge.restaurantapp.R;
 import com.teamdoge.restaurantapp.SuperAwesomeCardFragment;
-import com.teamdoge.schedules.ShiftsManagerFragment;
 import com.astuetz.PagerSlidingTabStrip;
 
 import android.support.v4.app.FragmentPagerAdapter;
