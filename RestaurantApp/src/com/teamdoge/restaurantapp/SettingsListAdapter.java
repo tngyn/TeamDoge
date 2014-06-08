@@ -69,6 +69,10 @@ public class SettingsListAdapter extends BaseExpandableListAdapter {
     public boolean hasStableIds() {
         return true;
     }
+    
+	// *******************************************************************************************************************//
+	// 													  View 															  //
+	// *******************************************************************************************************************//
  
     @Override
     //in this method you must set the text to see the parent/group on the list
@@ -112,6 +116,10 @@ public class SettingsListAdapter extends BaseExpandableListAdapter {
         //return the entire view
         return view;
     }
+    
+	// *******************************************************************************************************************//
+	//                                                  End View                                                          //
+	// *******************************************************************************************************************//
  
     @Override
     public boolean isChildSelectable(int i, int i1) {

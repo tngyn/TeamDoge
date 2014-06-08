@@ -45,6 +45,10 @@ public class InvAddPageDropdownFrag extends DialogFragment {
 		return fragment;
 	}
 	
+	// *******************************************************************************************************************//
+	// 													  View 															  //
+	// *******************************************************************************************************************//
+	
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 		
@@ -65,6 +69,10 @@ public class InvAddPageDropdownFrag extends DialogFragment {
 			});
 		return builder.create();
 	}
+	
+	// *******************************************************************************************************************//
+	//                                                  End View                                                          //
+	// *******************************************************************************************************************//
 
 	public InvAddPageDropdownFrag() {
 		// Required empty public constructor

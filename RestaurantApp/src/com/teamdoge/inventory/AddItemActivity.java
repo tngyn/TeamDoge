@@ -102,14 +102,6 @@ public class AddItemActivity extends FragmentActivity implements
 
 		return foods;
 	}
-	
-	// *******************************************************************************************************************//
-	// 													End Model 														  //
-	// *******************************************************************************************************************//
-
-	// *******************************************************************************************************************//
-	// 													  View 															  //
-	// *******************************************************************************************************************//
 
 	public void populateCategories(String newCategory) {
 		// populate the categories dropdown here.
@@ -236,85 +228,7 @@ public class AddItemActivity extends FragmentActivity implements
 		units_dropdown.setSelection(position);
 		units_dropdown.setOnItemSelectedListener(this);
 	}
-
-	public void showNewCategoryDialog() {
-		DialogFragment newFragment = new InvAddPageDropdownFrag();
-		newFragment.show(this.getFragmentManager(), "categories");
-	}
-
-	public void showNewUnitsDialog() {
-		DialogFragment newFragment = new InvAddPageDropdownFrag();
-		newFragment.show(this.getFragmentManager(), "units");
-	}
-
-	// *******************************************************************************************************************//
-	//                                                  End View                                                          //
-	// *******************************************************************************************************************//
 	
-	// *******************************************************************************************************************//
-	// 													Controller 														  //
-	// *******************************************************************************************************************//
-
-	@Override
-	public void onItemSelected(AdapterView<?> parent, View view, int position,
-			long id) {
-		if (parent.equals(category_dropdown)) {
-			if (parent.getItemAtPosition(position).toString() == "New") {
-				showNewCategoryDialog();
-			}
-		} else {
-			if (parent.getItemAtPosition(position).toString() == "New") {
-				showNewUnitsDialog();
-			}
-		}
-
-	}
-
-	// We won't do anything if nothing is selected.
-	@Override
-	public void onNothingSelected(AdapterView<?> arg0) {
-		// This method does nothing, but we need it because we implement
-		// OnItemSelectedListener
-		// has to be implemented or we get compile errors
-	}
-
-	@Override
-	public void onDialogPositiveClick(DialogFragment dialog) {
-
-		// get the name of the new item to add from the fragment
-		Dialog dialogView = dialog.getDialog();
-		EditText newItemToAdd = (EditText) dialogView
-				.findViewById(R.id.new_item_box);
-		String newItemAdding = newItemToAdd.getText().toString();
-
-		Fragment prev = getFragmentManager().findFragmentByTag("categories");
-		if (prev != null) {
-			// the fragment is called by categories dropdown
-			populateCategories(newItemAdding);
-		} else {
-			// the fragment is called by units dropdown
-			populateUnits(newItemAdding);
-		}
-	}
-
-	@Override
-	public void onDialogNegativeClick(DialogFragment dialog) {
-		// check which dropdown called this
-		Fragment prev = getFragmentManager().findFragmentByTag("categories");
-		if (prev != null) {
-			// category dropdown called it
-			category_dropdown.setSelection(category_dropdown.getAdapter()
-					.getCount());
-		} else {
-			// units dropdown called it
-			units_dropdown.setSelection(units_dropdown.getAdapter().getCount());
-		}
-	}
-
-	// *******************************************************************************************************************//
-	// 													End Controller 													  //
-	// *******************************************************************************************************************//
-
 	public void submit(View view) {
 		boolean everythingWorks = true;
 		final String foodName = item_name_box.getText().toString();
@@ -454,13 +368,8 @@ public class AddItemActivity extends FragmentActivity implements
 			Toast toast = Toast.makeText(context, text, duration);
 			toast.show();
 		}
-
 	}
-
-	public void cancel(View view) {
-		onBackPressed();
-	}
-
+	
 	public void clearBoxes() {
 		// set all the text to the empty string
 		String init = "";
@@ -491,7 +400,94 @@ public class AddItemActivity extends FragmentActivity implements
 
 		return added;
 	}
+	
+	// *******************************************************************************************************************//
+	// 													End Model 														  //
+	// *******************************************************************************************************************//
+	
+	// *******************************************************************************************************************//
+	// 													  View 															  //
+	// *******************************************************************************************************************//
 
+	public void showNewCategoryDialog() {
+		DialogFragment newFragment = new InvAddPageDropdownFrag();
+		newFragment.show(this.getFragmentManager(), "categories");
+	}
+
+	public void showNewUnitsDialog() {
+		DialogFragment newFragment = new InvAddPageDropdownFrag();
+		newFragment.show(this.getFragmentManager(), "units");
+	}
+
+	// *******************************************************************************************************************//
+	//                                                  End View                                                          //
+	// *******************************************************************************************************************//
+	
+	// *******************************************************************************************************************//
+	// 													Controller 														  //
+	// *******************************************************************************************************************//
+
+	@Override
+	public void onItemSelected(AdapterView<?> parent, View view, int position,
+			long id) {
+		if (parent.equals(category_dropdown)) {
+			if (parent.getItemAtPosition(position).toString() == "New") {
+				showNewCategoryDialog();
+			}
+		} else {
+			if (parent.getItemAtPosition(position).toString() == "New") {
+				showNewUnitsDialog();
+			}
+		}
+
+	}
+
+	// We won't do anything if nothing is selected.
+	@Override
+	public void onNothingSelected(AdapterView<?> arg0) {
+		// This method does nothing, but we need it because we implement
+		// OnItemSelectedListener
+		// has to be implemented or we get compile errors
+	}
+
+	@Override
+	public void onDialogPositiveClick(DialogFragment dialog) {
+
+		// get the name of the new item to add from the fragment
+		Dialog dialogView = dialog.getDialog();
+		EditText newItemToAdd = (EditText) dialogView
+				.findViewById(R.id.new_item_box);
+		String newItemAdding = newItemToAdd.getText().toString();
+
+		Fragment prev = getFragmentManager().findFragmentByTag("categories");
+		if (prev != null) {
+			// the fragment is called by categories dropdown
+			populateCategories(newItemAdding);
+		} else {
+			// the fragment is called by units dropdown
+			populateUnits(newItemAdding);
+		}
+	}
+
+	@Override
+	public void onDialogNegativeClick(DialogFragment dialog) {
+		// check which dropdown called this
+		Fragment prev = getFragmentManager().findFragmentByTag("categories");
+		if (prev != null) {
+			// category dropdown called it
+			category_dropdown.setSelection(category_dropdown.getAdapter()
+					.getCount());
+		} else {
+			// units dropdown called it
+			units_dropdown.setSelection(units_dropdown.getAdapter().getCount());
+		}
+	}
+	
+
+	public void cancel(View view) {
+		onBackPressed();
+	}
+	
 	public boolean onOptionsItemSelected(MenuItem item) {
 
 		switch (item.getItemId()) {
@@ -505,6 +501,10 @@ public class AddItemActivity extends FragmentActivity implements
 			return super.onOptionsItemSelected(item);
 		}
 	}
+
+	// *******************************************************************************************************************//
+	// 													End Controller 													  //
+	// *******************************************************************************************************************//
 
 	private class MyAsyncTaskHelper extends
 			AsyncTask<Void, Void, List<ParseObject>> {

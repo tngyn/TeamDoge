@@ -11,7 +11,6 @@ import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -28,9 +27,6 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.ParseException;
 import com.teamdoge.restaurantapp.R;
-import com.teamdoge.restaurantapp.R.id;
-import com.teamdoge.restaurantapp.R.layout;
-import com.teamdoge.restaurantapp.R.menu;
 
 
 /*
@@ -256,7 +252,6 @@ public class MyShiftFragment extends ListFragment {
 							try {
 								shiftObject.save();
 							} catch (ParseException e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 							asyncCaller();
@@ -279,7 +274,6 @@ public class MyShiftFragment extends ListFragment {
 								try {
 									shiftObject.save();
 								} catch (ParseException e) {
-									// TODO Auto-generated catch block
 									e.printStackTrace();
 								}
 							}
@@ -305,6 +299,53 @@ public class MyShiftFragment extends ListFragment {
 		
 	}
 	
+	// *******************************************************************************************************************//
+	// 													Controller 														  //
+	// *******************************************************************************************************************//
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+	    switch (item.getItemId()) {
+
+	        case R.id.menu_refresh:
+	        	setRefreshActionButtonState(true);
+	        	createLists();
+	        	asyncCaller();
+	        	return true;
+	           
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
+
+	}
+	
+	public void setRefreshActionButtonState(final boolean refreshing) {
+	    if (optionsMenu != null) {
+	        final MenuItem refreshItem = optionsMenu
+	            .findItem(R.id.menu_refresh);
+	        if (refreshItem != null) {
+	            if (refreshing) {
+	                refreshItem.setActionView(R.layout.actionbar_indeterminate_progress);
+	            } else {
+	                refreshItem.setActionView(null);
+	            }
+	        }
+	    }
+	}
+
+	@Override
+	public void onResume() {		
+	    super.onResume();
+	}
+	
+	// *******************************************************************************************************************//
+	// 													End Controller 													  //
+	// *******************************************************************************************************************//
+	
+	// *******************************************************************************************************************//
+	// 													  View 															  //
+	// *******************************************************************************************************************//
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -317,10 +358,18 @@ public class MyShiftFragment extends ListFragment {
 	
 	
 	@Override
-	public void onResume() {		
-	    super.onResume();
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		this.optionsMenu = menu;
+		inflater.inflate(R.menu.refresh, menu);
 	}
 	
+	// *******************************************************************************************************************//
+	//                                                  End View                                                          //
+	// *******************************************************************************************************************//
+	
+	// *******************************************************************************************************************//
+	// 													Model 														      //
+	// *******************************************************************************************************************//
 	
 	// PREPARES MY SHIFT LISTS
 	private void prepareMyShiftList() {	
@@ -432,11 +481,8 @@ public class MyShiftFragment extends ListFragment {
 
 		@Override
 		protected List<ListItem> doInBackground(Void... params) {
-			// TODO Auto-generated method stub
 			prepareMyShiftList();
-			
 			return items;
-			
 		}
 		
 		@Override
@@ -449,46 +495,11 @@ public class MyShiftFragment extends ListFragment {
 	}
 	
 	public void asyncCaller() {
-		Log.wtf("CMONNN", "INSIDE ASYNCCALLERRR");
 		setRefreshActionButtonState(true);
 		new MyAsyncTaskHelper().execute();
 	}
 	
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		this.optionsMenu = menu;
-		inflater.inflate(R.menu.refresh, menu);
-	}
-	
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-
-	    switch (item.getItemId()) {
-
-	        case R.id.menu_refresh:
-	        	setRefreshActionButtonState(true);
-	        	createLists();
-	        	asyncCaller();
-	        	return true;
-	           
-	        default:
-	            return super.onOptionsItemSelected(item);
-	    }
-
-	}
-	
-	public void setRefreshActionButtonState(final boolean refreshing) {
-	    if (optionsMenu != null) {
-	        final MenuItem refreshItem = optionsMenu
-	            .findItem(R.id.menu_refresh);
-	        if (refreshItem != null) {
-	            if (refreshing) {
-	                refreshItem.setActionView(R.layout.actionbar_indeterminate_progress);
-	            } else {
-	                refreshItem.setActionView(null);
-	            }
-	        }
-	    }
-	}
-
+	// *******************************************************************************************************************//
+	// 													End Model 														  //
+	// *******************************************************************************************************************//
 }

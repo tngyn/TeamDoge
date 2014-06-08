@@ -15,16 +15,28 @@ public class TwoTextArrayAdapter extends ArrayAdapter<ListItem> {
         LIST_ITEM, HEADER_ITEM
     }
 
+	// *******************************************************************************************************************//
+	// 													Model 														      //
+	// *******************************************************************************************************************//
+    
     public TwoTextArrayAdapter(Context context, List<ListItem> items) {
         super(context, 0, items);
         mInflater = LayoutInflater.from(context);
     }
+    
+	// *******************************************************************************************************************//
+	// 													End Model 														  //
+	// *******************************************************************************************************************//
 
     @Override
     public int getViewTypeCount() {
         return RowType.values().length;
 
     }
+    
+	// *******************************************************************************************************************//
+	// 													  View 															  //
+	// *******************************************************************************************************************//
 
     @Override
     public int getItemViewType(int position) {
@@ -35,4 +47,8 @@ public class TwoTextArrayAdapter extends ArrayAdapter<ListItem> {
     public View getView(int position, View convertView, ViewGroup parent) {
         return getItem(position).getView(mInflater, convertView);
     }
+    
+	// *******************************************************************************************************************//
+	//                                                  End View                                                          //
+	// *******************************************************************************************************************//
 }

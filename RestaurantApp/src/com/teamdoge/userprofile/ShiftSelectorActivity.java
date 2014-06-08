@@ -16,14 +16,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckedTextView;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 import android.widget.ExpandableListView.OnChildClickListener;
-import android.widget.Toast;
  
 public class ShiftSelectorActivity extends Activity {
  
@@ -52,11 +50,19 @@ public class ShiftSelectorActivity extends Activity {
 	private View button;
 	private ParseObject shiftObject;
 	private String name;
+	
+	private String applicationId = "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8";
+	private String clientKey = "k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF";
 
+	
+	// *******************************************************************************************************************//
+	// 													  View 															  //
+	// *******************************************************************************************************************//
+	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-		Parse.initialize(this, "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8", "k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF");
+		Parse.initialize(this, applicationId, clientKey);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_day_shifts_management_activity);
 		listDataHeader = new ArrayList<String>();
@@ -118,13 +124,44 @@ public class ShiftSelectorActivity extends Activity {
 				shifts, shiftsList);
         shiftsList.setAdapter(adapter);
 
-		Log.d("ASD","ASD");
-
 		button = findViewById(R.id.refresh);
 		button.setVisibility(View.VISIBLE);
 		MyAsyncTaskHelper task = new MyAsyncTaskHelper();
 		task.execute();
     }
+    
+	// *******************************************************************************************************************//
+	//                                                  End View                                                          //
+	// *******************************************************************************************************************//
+    
+	// *******************************************************************************************************************//
+	// 													Controller 														  //
+	// *******************************************************************************************************************//
+    
+    /*
+     * Preparing the list data
+     */
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+	    switch (item.getItemId()) {
+	        case android.R.id.home:	
+	        	onBackPressed();
+	            this.finish();
+
+	            return true;
+
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
+	}
+	
+	// *******************************************************************************************************************//
+	// 													End Controller 													  //
+	// *******************************************************************************************************************//
+	
+	// *******************************************************************************************************************//
+	// 													Model 														      //
+	// *******************************************************************************************************************//
 
 	protected void aSyncThread() {
 
@@ -178,22 +215,7 @@ public class ShiftSelectorActivity extends Activity {
 		userList.get(i).set(j, value);
 		return true;
 	}
-    /*
-     * Preparing the list data
-     */
-	public boolean onOptionsItemSelected(MenuItem item) {
 
-	    switch (item.getItemId()) {
-	        case android.R.id.home:	
-	        	onBackPressed();
-	            this.finish();
-
-	            return true;
-
-	        default:
-	            return super.onOptionsItemSelected(item);
-	    }
-	}
 	private void convertShifts(List<String> times) {
 		for( int shiftCounter = 0; shiftCounter < times.size(); ++shiftCounter ){
 			// tokenizes the string into two to get times
@@ -258,11 +280,14 @@ public class ShiftSelectorActivity extends Activity {
 
         @Override
         protected void onPostExecute(String result) {
-            // TODO Auto-generated method stub
             /**
              * update ui thread and remove dialog
              */
             super.onPostExecute(result);
         }
     }
+	
+	// *******************************************************************************************************************//
+	// 													End Model 														  //
+	// *******************************************************************************************************************//
 }

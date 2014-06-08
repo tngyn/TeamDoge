@@ -6,8 +6,6 @@ import com.parse.Parse;
 import com.parse.ParseUser;
 import com.teamdoge.restaurantapp.R;
 import com.teamdoge.restaurantapp.SuperAwesomeCardFragment;
-import com.teamdoge.restaurantapp.R.id;
-import com.teamdoge.restaurantapp.R.layout;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -30,6 +28,9 @@ public class ScheduleTabStripFragment extends Fragment {
 	
 	ParseUser user;
 	
+	private String applicationId = "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8";
+	private String clientKey = "k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF";
+	
 	public static final String TAG = ScheduleTabStripFragment.class
 			.getSimpleName();
 
@@ -42,12 +43,16 @@ public class ScheduleTabStripFragment extends Fragment {
 		super.onCreate(savedInstanceState);
 		setRetainInstance(true);
 		
-		Parse.initialize(getActivity(), "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8", "k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF");
+		Parse.initialize(getActivity(), applicationId, clientKey);
 		
 		user = ParseUser.getCurrentUser();
 		
 	}
 
+	// *******************************************************************************************************************//
+	// 													  View 															  //
+	// *******************************************************************************************************************//
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -67,11 +72,18 @@ public class ScheduleTabStripFragment extends Fragment {
 		
 		pager.setAdapter(adapter);
 		tabs.setViewPager(pager);
-		
-
 	}
+	
+	// *******************************************************************************************************************//
+	//                                                  End View                                                          //
+	// *******************************************************************************************************************//
+
 
 	public class MyPagerAdapter extends FragmentPagerAdapter {
+		
+		// *******************************************************************************************************************//
+		// 													Model 														      //
+		// *******************************************************************************************************************//
 
 		public MyPagerAdapter(android.support.v4.app.FragmentManager fm) {
 			super(fm);
@@ -108,6 +120,10 @@ public class ScheduleTabStripFragment extends Fragment {
 					return SuperAwesomeCardFragment.newInstance(position);
 				}
 		}
+		
+		// *******************************************************************************************************************//
+		// 													End Model 														  //
+		// *******************************************************************************************************************//
 	}
 	
 }

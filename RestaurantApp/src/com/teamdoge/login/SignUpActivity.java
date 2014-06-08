@@ -302,6 +302,24 @@ public class SignUpActivity extends Activity {
 		}
 	}
 	
+	
+	/**
+	 * A placeholder fragment containing a simple view.
+	 */
+	public static class PlaceholderFragment extends Fragment {
+
+		public PlaceholderFragment() {
+		}
+
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container,
+				Bundle savedInstanceState) {
+			View rootView = inflater.inflate(R.layout.fragment_sign_up,
+					container, false);
+			return rootView;
+		}
+	}
+	
 	// *******************************************************************************************************************//
 	//                                                  End View                                                          //
 	// *******************************************************************************************************************//
@@ -333,21 +351,4 @@ public class SignUpActivity extends Activity {
 	// *******************************************************************************************************************//
 	// 													End Controller 													  //
 	// *******************************************************************************************************************//
-	
-	/**
-	 * A placeholder fragment containing a simple view.
-	 */
-	public static class PlaceholderFragment extends Fragment {
-
-		public PlaceholderFragment() {
-		}
-
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_sign_up,
-					container, false);
-			return rootView;
-		}
-	}
 }

@@ -32,22 +32,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     public long getChildId(int groupPosition, int childPosition) {
         return childPosition;
     }
-     
-     
-    public View getChildView(final int groupPosition, final int childPosition,
-            boolean isLastChild, View convertView, ViewGroup parent) {
-        final String Citem = (String) getChild(groupPosition, childPosition);
-        LayoutInflater inflater = context.getLayoutInflater();
-         
-        if (convertView == null) {
-            convertView = inflater.inflate(R.layout.fragment_inventory_item, null);
-        }
-         
-        TextView item = (TextView) convertView.findViewById(R.id.categoryList);
-        item.setText(Citem);
-
-        return convertView;
-    }
  
     public int getChildrenCount(int groupPosition) {
         return categoryList.get(items.get(groupPosition)).size();
@@ -65,6 +49,9 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         return groupPosition;
     }
  
+	// *******************************************************************************************************************//
+	// 													  View 															  //
+	// *******************************************************************************************************************//
     public View getGroupView(int groupPosition, boolean isExpanded,
             View convertView, ViewGroup parent) {
         String Name = (String) getGroup(groupPosition);
@@ -79,6 +66,27 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         item.setText(Name);
         return convertView;
     }
+    
+    
+    
+   public View getChildView(final int groupPosition, final int childPosition,
+           boolean isLastChild, View convertView, ViewGroup parent) {
+       final String Citem = (String) getChild(groupPosition, childPosition);
+       LayoutInflater inflater = context.getLayoutInflater();
+        
+       if (convertView == null) {
+           convertView = inflater.inflate(R.layout.fragment_inventory_item, null);
+       }
+        
+       TextView item = (TextView) convertView.findViewById(R.id.categoryList);
+       item.setText(Citem);
+
+       return convertView;
+   }
+    
+	// *******************************************************************************************************************//
+	//                                                  End View                                                          //
+	// *******************************************************************************************************************//
  
     public boolean hasStableIds() {
         return true;

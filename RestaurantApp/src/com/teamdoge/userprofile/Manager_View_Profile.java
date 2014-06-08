@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
 import com.parse.ParseUser;
 import com.teamdoge.restaurantapp.R;
 
@@ -25,7 +26,8 @@ public class Manager_View_Profile extends Fragment {
 	private TextView lookuserUserNameText;
 	private Button changeTypeButton;
 	
-	
+	private String applicationId = "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8";
+	private String clientKey = "k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF";	
 	
 	// new fragment created when called
 	public static Manager_View_Profile newInstance() {
@@ -34,23 +36,18 @@ public class Manager_View_Profile extends Fragment {
 	fragment.setArguments(args);
 	return fragment;
 	}
-
-	
 		
 	// link to parse
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
-		Parse.initialize(getActivity(), "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8", "k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF");
-	}
-
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.activity_manager__view__profile, container, false);
+		Parse.initialize(getActivity(), applicationId, clientKey);
 	}
 	
-	
+	// *******************************************************************************************************************//
+	// 													Model 														      //
+	// *******************************************************************************************************************//
 	
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		// setup initial Text views
@@ -82,11 +79,7 @@ public class Manager_View_Profile extends Fragment {
 		
 		// change button text based on type
 		if (lookaccountType == "Employee"){
-		changeTypeButton.setText("Make Manager");}
-		
-		//else if (accountType == "Manager"){
-		//changeTypeButton.setText("Make Employee");}
-		
+		changeTypeButton.setText("Make Manager");}		
 		
 		// change employee type///////////////
 		changeTypeButton.setOnClickListener(
@@ -96,13 +89,24 @@ public class Manager_View_Profile extends Fragment {
 		public void onClick(View v) {
 
 		// This will need to be changed to the user the manager clicked on ***//
-		Parse.initialize(getActivity(), "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8", "k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF");
+		Parse.initialize(getActivity(), applicationId, clientKey);
 		ParseUser user = ParseUser.getCurrentUser();
-		
 		user.put("Acc_Type", "Manager");
 		
 		}});
-		
+	}
+	
+	// *******************************************************************************************************************//
+	// 													End Model 														  //
+	// *******************************************************************************************************************//
+	
+	// *******************************************************************************************************************//
+	// 													  View 															  //
+	// *******************************************************************************************************************//
+	
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		return inflater.inflate(R.layout.activity_manager__view__profile, container, false);
 	}
 	
 	// menu and menu item section
@@ -110,6 +114,14 @@ public class Manager_View_Profile extends Fragment {
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 	   inflater.inflate(R.menu.manager__view__profile, menu);
 	}
+	
+	// *******************************************************************************************************************//
+	//                                                  End View                                                          //
+	// *******************************************************************************************************************//
+	
+	// *******************************************************************************************************************//
+	// 													Controller 														  //
+	// *******************************************************************************************************************//
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -120,4 +132,8 @@ public class Manager_View_Profile extends Fragment {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+	
+	// *******************************************************************************************************************//
+	// 													End Controller 													  //
+	// *******************************************************************************************************************//
 }

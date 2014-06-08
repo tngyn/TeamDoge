@@ -12,20 +12,16 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.teamdoge.restaurantapp.R;
 import com.teamdoge.restaurantapp.SettingsListAdapter;
-import com.teamdoge.restaurantapp.R.id;
-import com.teamdoge.restaurantapp.R.layout;
 
 import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckedTextView;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ExpandableListView.OnChildClickListener;
 
 public class DayShiftsManagementActivity extends Activity {
@@ -53,6 +49,8 @@ public class DayShiftsManagementActivity extends Activity {
     private final String DASH = " - ";
     protected static String[][] names;
     protected static String Day;
+	private String applicationId = "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8";
+	private String clientKey = "k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +58,7 @@ public class DayShiftsManagementActivity extends Activity {
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
 		setContentView(R.layout.activity_day_shifts_management_activity);
-		Parse.initialize(this, "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8", "k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF");
+		Parse.initialize(this, applicationId, clientKey);
 		super.onCreate(savedInstanceState);
 	    Day = this.getIntent().getStringExtra("Day");
 		MyAsyncTaskHelper task = new MyAsyncTaskHelper();
@@ -69,6 +67,10 @@ public class DayShiftsManagementActivity extends Activity {
 		getActionBar().setTitle("Assign Shifts");
         
 	}
+	
+	// *******************************************************************************************************************//
+	// 													  View 															  //
+	// *******************************************************************************************************************//
 
 	protected void createView() {
 		
@@ -78,6 +80,41 @@ public class DayShiftsManagementActivity extends Activity {
 		button = findViewById(R.id.refresh);
 		button.setVisibility(View.VISIBLE);
 	}
+	
+	// *******************************************************************************************************************//
+	//                                                  End View                                                          //
+	// *******************************************************************************************************************//
+	
+	// *******************************************************************************************************************//
+	// 													Controller 														  //
+	// *******************************************************************************************************************//
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+	    switch (item.getItemId()) {
+	        case android.R.id.home:	
+	        	onBackPressed();
+	            this.finish();
+	            return true;
+
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
+	}
+	public String[] copy (ArrayList<?> source, String[] destination) {
+		for (int i = 0; i < source.size(); i++) {
+		  destination[i] = (String) source.get(i);
+		}
+		return destination;
+	}
+	// *******************************************************************************************************************//
+	// 													End Controller 													  //
+	// *******************************************************************************************************************//
+	
+	// *******************************************************************************************************************//
+	// 													Model 														      //
+	// *******************************************************************************************************************//
 
 	protected void getData() {
 		ParseUser curruser = ParseUser.getCurrentUser();
@@ -85,7 +122,6 @@ public class DayShiftsManagementActivity extends Activity {
 		ParseQuery<ParseObject> query = ParseQuery.getQuery("Schedule");
 		query.whereEqualTo("Id", owner);
 
-		Log.d("Check", "So far so good");
 		try {
 			scheduleList = query.find();
 		} catch (ParseException e1) {
@@ -94,7 +130,6 @@ public class DayShiftsManagementActivity extends Activity {
 		ParseQuery<ParseObject> shiftquery = ParseQuery.getQuery("Shifts");
 		shiftquery.whereEqualTo("Id", owner);
 
-		Log.d("Check", "schedule is fine");
 		try {
 			shiftList = shiftquery.find();
 		} catch (ParseException e1) {
@@ -144,39 +179,14 @@ public class DayShiftsManagementActivity extends Activity {
         }
     }
 	
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-
-	    switch (item.getItemId()) {
-	        case android.R.id.home:	
-	        	onBackPressed();
-	            this.finish();
-
-	            return true;
-
-	        default:
-	            return super.onOptionsItemSelected(item);
-	    }
-
-	}
-	public String[] copy (ArrayList<?> source, String[] destination) {
-		for (int i = 0; i < source.size(); i++) {
-		  destination[i] = (String) source.get(i);
-		}
-		return destination;
-	}
-	
 	private void convertShifts() {
 		for( int shiftCounter = 0; shiftCounter < schedules.length; ++shiftCounter ){
 			// tokenizes the string into two to get times
-			Log.d("ASDASDASDASD", schedules[shiftCounter]);
 			String[] tokens = schedules[shiftCounter].split("[-|\\:]");
 	    	
 	    	// converts parsed tokens into integers
 	    	int startHour = Integer.parseInt(tokens[0]);
 	    	int endHour = Integer.parseInt(tokens[2]);
-	    	Log.d("ASDASDASDASD","" + startHour);
-	    	Log.d("ASDASDASDASD","" + endHour);
 	    	// checks if start hour is 12 AM
 	    	if( startHour == 0 ) {
 	    		tokens[0] = "12:" + tokens[1] + AM;
@@ -190,7 +200,6 @@ public class DayShiftsManagementActivity extends Activity {
 	    		tokens[0] = "" + startHour + ":" + tokens[1] + AM;
 	    	}
 	    	else {
-	    		Log.d("ASD", "" + tokens[1]);
 	    		tokens[0] = "" + (startHour - 12) + ":" + tokens[1] + PM;
 	    	}
 	    	
@@ -211,10 +220,13 @@ public class DayShiftsManagementActivity extends Activity {
 	    	}
 	    	// restructures the shift strings
 	    	
-	    	Log.d("ASD", "Token 0 = " + tokens[0] + " " + tokens[2]);
 	       schedules[shiftCounter] = ( tokens[0] + DASH + tokens[2]);
 		}
 	}
+	
+	// *******************************************************************************************************************//
+	// 													End Model 														  //
+	// *******************************************************************************************************************//
 
 	public class MyAsyncTaskHelper extends AsyncTask<Void, Void, Boolean>{
 
@@ -282,10 +294,4 @@ public class DayShiftsManagementActivity extends Activity {
         }
     }
 }
-//	@Override
-//	public boolean onCreateOptionsMenu(Menu menu) {
-//		// Inflate the menu; this adds items to the action bar if it is present.
-//		getMenuInflater().inflate(R.menu.main, menu);
-//		return true;
-//	}
 

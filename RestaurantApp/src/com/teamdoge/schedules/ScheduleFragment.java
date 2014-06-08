@@ -12,12 +12,6 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.ParseException;
 import com.teamdoge.restaurantapp.R;
-import com.teamdoge.restaurantapp.R.drawable;
-import com.teamdoge.restaurantapp.R.id;
-import com.teamdoge.restaurantapp.R.layout;
-import com.teamdoge.restaurantapp.R.menu;
-import com.teamdoge.schedules.*;
-
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -58,23 +52,7 @@ public class ScheduleFragment extends ListFragment {
 	
 	private ArrayList<String> NAME;
 	private ArrayList<String> POSITION;
-	private List<List<String>> TIME;
-
-	
-	
-    // Array of integers points to images stored in /res/drawable/
-    // Needs access to individual photos
-    int[] img = new int[]{
-    	R.drawable.earth,
-    	R.drawable.jupiter,
-    	R.drawable.mars,
-    	R.drawable.mercury,
-    	R.drawable.neptune,
-    	R.drawable.saturn,
-    	R.drawable.uranus,
-    	R.drawable.venus,
-    };
-  
+	private List<List<String>> TIME; 
 	
 	public static ScheduleFragment newInstance() {
 		ScheduleFragment fragment = new ScheduleFragment();
@@ -101,23 +79,68 @@ public class ScheduleFragment extends ListFragment {
 				restaurantID = user.getString("Owner_Acc");
 	}
 	
+	// *******************************************************************************************************************//
+	// 													Controller 														  //
+	// *******************************************************************************************************************//
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+	    switch (item.getItemId()) {
+
+	        case R.id.menu_refresh:
+	        	asyncCaller();
+	        	return true;
+	           
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
+
+	}
+	
+	public void setRefreshActionButtonState(final boolean refreshing) {
+	    if (optionsMenu != null) {
+	        final MenuItem refreshItem = optionsMenu
+	            .findItem(R.id.menu_refresh);
+	        if (refreshItem != null) {
+	            if (refreshing) {
+	                refreshItem.setActionView(R.layout.actionbar_indeterminate_progress);
+	            } else {
+	                refreshItem.setActionView(null);
+	            }
+	        }
+	    }
+	}
+	
+	// *******************************************************************************************************************//
+	// 													End Controller 													  //
+	// *******************************************************************************************************************//
+	
+	// *******************************************************************************************************************//
+	// 													  View 															  //
+	// *******************************************************************************************************************//
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		
-//		createScheduleList();
-		
-
-//		TwoTextArrayAdapter adapter = new TwoTextArrayAdapter(getActivity().getBaseContext(), items);
-//        setListAdapter(adapter);
-		
-//		MyAsyncTaskHelper task = new MyAsyncTaskHelper();
-//		task.execute();
-       
 		new MyAsyncTaskHelper().execute();
 		
 		return super.onCreateView(inflater, container, savedInstanceState);		
 	}
+	
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		this.optionsMenu = menu;
+		inflater.inflate(R.menu.refresh, menu);
+	}
+	
+	// *******************************************************************************************************************//
+	//                                                  End View                                                          //
+	// *******************************************************************************************************************//
+	
+	// *******************************************************************************************************************//
+	// 													Model 														      //
+	// *******************************************************************************************************************//
 	
 	@SuppressWarnings("unchecked")
 	private void createScheduleList() {
@@ -251,7 +274,6 @@ public class ScheduleFragment extends ListFragment {
 
 		@Override
 		protected List<ListItem> doInBackground(Void... params) {
-			// TODO Auto-generated method stub
 			createScheduleList();
 			
 			return items;
@@ -264,42 +286,9 @@ public class ScheduleFragment extends ListFragment {
 	        setListAdapter(adapter);
 	        setRefreshActionButtonState(false);
 		}
-		
-	}
+	}	
 	
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		this.optionsMenu = menu;
-		inflater.inflate(R.menu.refresh, menu);
-	}
-	
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-
-	    switch (item.getItemId()) {
-
-	        case R.id.menu_refresh:
-	        	asyncCaller();
-	        	return true;
-	           
-	        default:
-	            return super.onOptionsItemSelected(item);
-	    }
-
-	}
-	
-	public void setRefreshActionButtonState(final boolean refreshing) {
-	    if (optionsMenu != null) {
-	        final MenuItem refreshItem = optionsMenu
-	            .findItem(R.id.menu_refresh);
-	        if (refreshItem != null) {
-	            if (refreshing) {
-	                refreshItem.setActionView(R.layout.actionbar_indeterminate_progress);
-	            } else {
-	                refreshItem.setActionView(null);
-	            }
-	        }
-	    }
-	}
-	
+	// *******************************************************************************************************************//
+	// 													End Model 														  //
+	// *******************************************************************************************************************//
 }

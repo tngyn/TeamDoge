@@ -29,6 +29,10 @@ public class ScheduleList implements ListItem {
     public int getViewType() {
         return RowType.LIST_ITEM.ordinal();
     }
+    
+	// *******************************************************************************************************************//
+	// 													  View 															  //
+	// *******************************************************************************************************************//
 
     // Correlates the passed in strings and images to the fields in the layout to
     // return each individual shift block
@@ -52,5 +56,9 @@ public class ScheduleList implements ListItem {
 
         return view;
     }
+    
+	// *******************************************************************************************************************//
+	//                                                  End View                                                          //
+	// *******************************************************************************************************************//
 
 }

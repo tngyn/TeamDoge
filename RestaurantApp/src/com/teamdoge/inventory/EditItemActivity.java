@@ -82,6 +82,31 @@ public class EditItemActivity extends FragmentActivity implements
 		getActionBar().setTitle("Edit Item");
 
 	}
+	
+	// *******************************************************************************************************************//
+	// 													Model 														      //
+	// *******************************************************************************************************************//
+	
+	public List<ParseObject> background() {
+		// get the current userID
+		String userId = "";
+		ParseUser currentUser = ParseUser.getCurrentUser();
+		if (currentUser != null) {
+			userId = currentUser.getString("Owner_Acc");
+		}
+
+		// Find all the foods that are tied to this id
+		ParseQuery<ParseObject> query = ParseQuery.getQuery("Food");
+		query.whereEqualTo("userId", userId);
+		List<ParseObject> foods = null;
+		try {
+			foods = query.find();
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
+		return foods;
+	}
 
 	public void fillInfo(String item) {
 
@@ -209,49 +234,12 @@ public class EditItemActivity extends FragmentActivity implements
 
 	}
 
-	public void cancel(View view) {
-		onBackPressed();
-
-	}
-
 	public void clearBoxes() {
 		// set all the text to the empty string
 		String init = "";
 		quantity_box.setText(init);
 		descrip_box.setText(init);
 	}
-
-	// *******************************************************************************************************************//
-	// 													Controller 														  //
-	// *******************************************************************************************************************//
-	public List<ParseObject> background() {
-		// get the current userID
-		String userId = "";
-		ParseUser currentUser = ParseUser.getCurrentUser();
-		if (currentUser != null) {
-			userId = currentUser.getString("Owner_Acc");
-		}
-
-		// Find all the foods that are tied to this id
-		ParseQuery<ParseObject> query = ParseQuery.getQuery("Food");
-		query.whereEqualTo("userId", userId);
-		List<ParseObject> foods = null;
-		try {
-			foods = query.find();
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-
-		return foods;
-	}
-	
-	// *******************************************************************************************************************//
-	// 													End Controller 													  //
-	// *******************************************************************************************************************//
-	
-	// *******************************************************************************************************************//
-	// 													  View 															  //
-	// *******************************************************************************************************************//
 
 	public List<String> setAdapterList(String type) {
 		// create the list that will be used to populate the adapters
@@ -399,6 +387,14 @@ public class EditItemActivity extends FragmentActivity implements
 		units_dropdown.setSelection(position);
 		units_dropdown.setOnItemSelectedListener(this);
 	}
+	
+	// *******************************************************************************************************************//
+	// 													End Model 														  //
+	// *******************************************************************************************************************//
+	
+	// *******************************************************************************************************************//
+	// 													  View 															  //
+	// *******************************************************************************************************************//
 
 	public void showNewCategoryDialog() {
 		DialogFragment newFragment = new InvAddPageDropdownFrag();
@@ -417,7 +413,7 @@ public class EditItemActivity extends FragmentActivity implements
 
 	
 	// *******************************************************************************************************************//
-	// 													Model 														      //
+	// 													Controller 														  //
 	// *******************************************************************************************************************//
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int position,
@@ -432,6 +428,10 @@ public class EditItemActivity extends FragmentActivity implements
 			}
 		}
 
+	}
+	
+	public void cancel(View view) {
+		onBackPressed();
 	}
 
 	// We won't do anything if nothing is selected.
@@ -516,7 +516,7 @@ public class EditItemActivity extends FragmentActivity implements
 	}
 	
 	// *******************************************************************************************************************//
-	// 													End Model 														  //
+	// 													End Controller 													  //
 	// *******************************************************************************************************************//
 
 	private class MyAsyncTaskHelper extends

@@ -32,6 +32,10 @@ public class OpenShiftList implements ListItem {
     private final String AM = " AM";
     private final String PM = " PM";
     private final String DASH = " - ";
+    
+	// *******************************************************************************************************************//
+	// 													Model 														      //
+	// *******************************************************************************************************************//
 
     // Constructor to create a schedule list item
     public OpenShiftList(int img, String time, String n, String p, String stat, int w, int s, int num) {
@@ -61,37 +65,6 @@ public class OpenShiftList implements ListItem {
     @Override
     public int getViewType() {
         return RowType.LIST_ITEM.ordinal();
-    }
-
-    // Correlates the passed in strings and images to the fields in the layout to
-    // return each individual shift block
-    @Override
-    public View getView(LayoutInflater inflater, View convertView) {
-        View view;
-        if (convertView == null) {
-            view = (View) inflater.inflate(R.layout.fragment_open_shift_list_item, null);
-            // Do some initialization
-        } else {
-            view = convertView;
-        }
-
-        ImageView profileImg = (ImageView) view.findViewById(R.id.user_image);
-        TextView hours = (TextView) view.findViewById(R.id.shift_hours);
-        TextView username = (TextView) view.findViewById(R.id.user_name);
-        TextView role = (TextView) view.findViewById(R.id.position);
-        TextView stat = (TextView) view.findViewById(R.id.status);
-        
-        if( shift.length() < 12 ) {
-        	convertShift();
-        }
-       
-        profileImg.setImageResource(image);
-        hours.setText(displayShift);
-        username.setText(name);
-        role.setText(position);
-        stat.setText(status);
-
-        return view;
     }
     
     private void convertShift(){
@@ -139,5 +112,48 @@ public class OpenShiftList implements ListItem {
     	// restructures the shift string
     	displayShift = tokens[0] + DASH + tokens[2]; 	
     }
+    
+	// *******************************************************************************************************************//
+	// 													End Model 														  //
+	// *******************************************************************************************************************//
+    
+	// *******************************************************************************************************************//
+	// 													  View 															  //
+	// *******************************************************************************************************************//
+
+    // Correlates the passed in strings and images to the fields in the layout to
+    // return each individual shift block
+    @Override
+    public View getView(LayoutInflater inflater, View convertView) {
+        View view;
+        if (convertView == null) {
+            view = (View) inflater.inflate(R.layout.fragment_open_shift_list_item, null);
+            // Do some initialization
+        } else {
+            view = convertView;
+        }
+
+        ImageView profileImg = (ImageView) view.findViewById(R.id.user_image);
+        TextView hours = (TextView) view.findViewById(R.id.shift_hours);
+        TextView username = (TextView) view.findViewById(R.id.user_name);
+        TextView role = (TextView) view.findViewById(R.id.position);
+        TextView stat = (TextView) view.findViewById(R.id.status);
+        
+        if( shift.length() < 12 ) {
+        	convertShift();
+        }
+       
+        profileImg.setImageResource(image);
+        hours.setText(displayShift);
+        username.setText(name);
+        role.setText(position);
+        stat.setText(status);
+
+        return view;
+    }
+    
+	// *******************************************************************************************************************//
+	//                                                  End View                                                          //
+	// *******************************************************************************************************************//
 
 }

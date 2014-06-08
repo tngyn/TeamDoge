@@ -1,15 +1,10 @@
 package com.teamdoge.userprofile;
 
-import java.util.List;
-
 import com.parse.Parse;
 
-
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,14 +13,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
 import com.parse.GetDataCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseImageView;
 import com.parse.ParseUser;
 import com.teamdoge.restaurantapp.R;
-import com.teamdoge.schedules.ListItem;
-import com.teamdoge.schedules.TwoTextArrayAdapter;
 
 
 
@@ -39,6 +33,9 @@ public class View_Profile extends Fragment {
 	private TextView userUserNameText;
 	private Button shiftsButton;
 	private ParseImageView profile_pic;
+	
+	private String applicationId = "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8";
+	private String clientKey = "k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF";
 	
 	private Menu optionsMenu;
 	
@@ -58,9 +55,12 @@ public class View_Profile extends Fragment {
 		setHasOptionsMenu(true);
 		
 		// link to parse
-		Parse.initialize(getActivity(), "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8", 
-		"k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF");
+		Parse.initialize(getActivity(), applicationId, clientKey);
 	}
+	
+	// *******************************************************************************************************************//
+	// 													  View 															  //
+	// *******************************************************************************************************************//
 	
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -76,13 +76,8 @@ public class View_Profile extends Fragment {
 		userPNumberText = (TextView) view.findViewById(R.id.userPNumberText);
 		shiftsButton = (Button) view.findViewById(R.id.button1);
 		
-		
-		
 		parseFetch(view);
 		setTextViews();
-
-		
-		
 
 		// shift selector	
 		shiftsButton.setOnClickListener(
@@ -92,11 +87,21 @@ public class View_Profile extends Fragment {
 			Intent intent = new Intent(getActivity(), ShiftSelectorActivity.class);
 			startActivity(intent);
 				}
-			});
-		
+			});	
 	}
-
-
+	
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+	   inflater.inflate(R.menu.view__profile, menu);
+	}
+	
+	// *******************************************************************************************************************//
+	//                                                  End View                                                          //
+	// *******************************************************************************************************************//
+	
+	// *******************************************************************************************************************//
+	// 													Model 														      //
+	// *******************************************************************************************************************//
 
 	private void parseFetch(View view) {
 		// Load the profile picture from parse
@@ -116,8 +121,6 @@ public class View_Profile extends Fragment {
 		
 	}
 
-
-
 	private void setTextViews() {
 		// pull values from data base
 		ParseUser user = ParseUser.getCurrentUser();
@@ -135,11 +138,14 @@ public class View_Profile extends Fragment {
 		userPNumberText.setText(tempPhone);
 	}
 	
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-	   inflater.inflate(R.menu.view__profile, menu);
-	}
+	// *******************************************************************************************************************//
+	// 													End Model 														  //
+	// *******************************************************************************************************************//
 
+	// *******************************************************************************************************************//
+	// 													Controller 														  //
+	// *******************************************************************************************************************//
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -175,5 +181,9 @@ public class View_Profile extends Fragment {
 	        }
 	    }
 	}
+	
+	// *******************************************************************************************************************//
+	// 													End Controller 													  //
+	// *******************************************************************************************************************//
 }
 

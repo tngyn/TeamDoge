@@ -19,7 +19,6 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,7 +27,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 public class MainActivity extends FragmentActivity implements OnFragmentInteractionListener {
     
@@ -52,13 +50,16 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 	private InventoryListFragment frag1;
 	private View_Profile frag2;
 	private ManagementTabStripFragment frag3;
+	
+	private String applicationId = "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8";
+	private String clientKey = "k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		Parse.initialize(this, "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8", "k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF");
+		Parse.initialize(this, applicationId, clientKey);
 
 		user = ParseUser.getCurrentUser();
 	    accountType = user.getString("Acc_Type");
@@ -139,6 +140,10 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 	public boolean onCreateOptionsMenu(Menu menu) {
 		return super.onCreateOptionsMenu(menu);
 	}
+	
+	// *******************************************************************************************************************//
+	// 													Controller 														  //
+	// *******************************************************************************************************************//
 
 	@Override
 	public boolean onOptionsItemSelected(
@@ -172,15 +177,6 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 			else
 				selectItem(position);
 		}
-	}
-
-
-	@Override
-	protected void onPostCreate(Bundle savedInstanceState) {
-		super.onPostCreate(savedInstanceState);
-		// Sync the toggle state after onRestoreInstanceState has occurred.
-
-		mDrawerToggle.syncState();
 	}
 
 	public void selectItemForOwner(int position) {
@@ -286,15 +282,6 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 	    	break;
 	    	
 		}
-		
-	}
-
-
-	@Override
-	public void onConfigurationChanged(Configuration newConfig) {
-		super.onConfigurationChanged(newConfig);
-		// Pass any configuration change to the drawer toggles
-		mDrawerToggle.onConfigurationChanged(newConfig);
 	}
 
 	private void selectItem(int position) {
@@ -373,6 +360,37 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 	    	break;
 		}
 	}
+	
+	// *******************************************************************************************************************//
+	// 													End Controller 													  //
+	// *******************************************************************************************************************//
+	
+	// *******************************************************************************************************************//
+	// 													  View 															  //
+	// *******************************************************************************************************************//
+
+	@Override
+	protected void onPostCreate(Bundle savedInstanceState) {
+		super.onPostCreate(savedInstanceState);
+		// Sync the toggle state after onRestoreInstanceState has occurred.
+
+		mDrawerToggle.syncState();
+	}
+	
+	// *******************************************************************************************************************//
+	//                                                  End View                                                          //
+	// *******************************************************************************************************************//
+	
+	// *******************************************************************************************************************//
+	// 													Model 														      //
+	// *******************************************************************************************************************//
+
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+		// Pass any configuration change to the drawer toggles
+		mDrawerToggle.onConfigurationChanged(newConfig);
+	}
 
 	@Override
 	public void onFragmentInteraction() {}
@@ -403,7 +421,8 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 		ft.hide(frag2);
 
 		ft.commit();
-		
 	}
-	
+	// *******************************************************************************************************************//
+	// 													End Model 														  //
+	// *******************************************************************************************************************//	
 }

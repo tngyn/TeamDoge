@@ -15,8 +15,6 @@ public class SuperAwesomeCardFragment extends Fragment {
 	private static final String ARG_POSITION = "position";
 
 	private int position;
-	
-
 
 	public static SuperAwesomeCardFragment newInstance(int position) {
 		SuperAwesomeCardFragment f = new SuperAwesomeCardFragment();
@@ -25,6 +23,10 @@ public class SuperAwesomeCardFragment extends Fragment {
 		f.setArguments(b);
 		return f;
 	}
+	
+	// *******************************************************************************************************************//
+	// 													Model 														      //
+	// *******************************************************************************************************************//
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,14 @@ public class SuperAwesomeCardFragment extends Fragment {
 	    
 		position = getArguments().getInt(ARG_POSITION);
 	}
+	
+	// *******************************************************************************************************************//
+	// 													End Model 														  //
+	// *******************************************************************************************************************//
+	
+	// *******************************************************************************************************************//
+	// 													  View 															  //
+	// *******************************************************************************************************************//
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -42,16 +52,8 @@ public class SuperAwesomeCardFragment extends Fragment {
 		FrameLayout fl = new FrameLayout(getActivity());
 		fl.setLayoutParams(params);
 
-//		final int margin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, getResources()
-//				.getDisplayMetrics());
-
 		TextView v = new TextView(getActivity());
-//		params.setMargins(margin, margin, margin, margin);
-//		v.setLayoutParams(params);
-//		v.setLayoutParams(params);
 		v.setGravity(Gravity.CENTER);
-//		v.setBackgroundResource(R.drawable.background_card);
-//		v.setText("CARD " + (position + 1));
 
 		if (position == 0) {
 		  v.setText("WORK!!!!! :("); 
@@ -69,5 +71,9 @@ public class SuperAwesomeCardFragment extends Fragment {
 		fl.addView(v);
 		return fl;
 	}
+	
+	// *******************************************************************************************************************//
+	//                                                  End View                                                          //
+	// *******************************************************************************************************************//
 
 }

@@ -141,78 +141,7 @@ public class InventoryListFragment extends Fragment implements Runnable {
 			}
 		}
 	}
-	// *******************************************************************************************************************//
-	// 													End Model 														  //
-	// *******************************************************************************************************************//
-
 	
-	// *******************************************************************************************************************//
-	// 													Controller 														  //
-	// *******************************************************************************************************************//
-	/**
-	 * This interface must be implemented by activities that contain this
-	 * fragment to allow an interaction in this fragment to be communicated to
-	 * the activity and potentially other fragments contained in that activity.
-	 * <p>
-	 * See the Android Training lesson <a href=
-	 * "http://developer.android.com/training/basics/fragments/communicating.html"
-	 * >Communicating with Other Fragments</a> for more information.
-	 */
-
-	/*************** ExpandableView for Inventory ***********************/
-	private OnChildClickListener ExpandList_ItemClicked = new OnChildClickListener() {
-
-		public boolean onChildClick(ExpandableListView parent, View v,
-				int groupPosition, int childPosition, long id) {
-			Intent mIntent = new Intent(getActivity(), View_Item.class);
-			mIntent.putExtra("item", getValue(groupPosition, childPosition));
-			startActivity(mIntent);
-
-			return false;
-		}
-
-	};
-	
-	// *******************************************************************************************************************//
-	// 													End Controller 													  //
-	// *******************************************************************************************************************//
-	
-	// *******************************************************************************************************************//
-	// 													  View 															  //
-	// *******************************************************************************************************************//
-	private void createCollection() {
-		// preparing items in category(child)
-		// set a query to check the food items
-		ParseQuery<ParseObject> query = ParseQuery.getQuery("Food");
-		listInventory = new LinkedHashMap<String, List<String>>();
-		for (int i = 0; i < groupList.size(); i++) {
-			int index = 0;
-			// try to find a food with the same name as the one we entered.
-			query.whereEqualTo("category", groupList.get(i));
-			try {
-				foodNames = query.find();
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-
-			String[] category1 = new String[foodNames.size()];
-			String[] categoryWunits = new String[foodNames.size()];
-			if (foodNames.isEmpty() == false) {
-				for (ParseObject foodObj : foodNames) {
-					category1[index] = foodObj.getString("name");
-					categoryWunits[index] = foodObj.getString("name");
-					index++;
-				}
-
-				loadChild(categoryWunits);
-
-				listInventory.put(groupList.get(i).toString(), childList);
-			}
-		}
-	}
-	// *******************************************************************************************************************//
-	//                                                  End View                                                          //
-	// *******************************************************************************************************************//
 
 	private String getValue(int groupPos, int childPos) {
 		int c = 0;
@@ -273,34 +202,6 @@ public class InventoryListFragment extends Fragment implements Runnable {
 
 	/*****************************************************************/
 
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		this.optionsMenu = menu;
-		inflater.inflate(R.menu.inventorylist_menu, menu);
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-
-		switch (item.getItemId()) {
-
-		case R.id.menu_refresh:
-			asyncCaller();
-			return true;
-
-		case R.id.item_add:
-			Intent intent = new Intent(getActivity(), AddItemActivity.class);
-			startActivity(intent);
-			return true;
-
-		default:
-			return super.onOptionsItemSelected(item);
-		}
-
-	}
-
-
-
 	public void asyncCaller() {
 		setRefreshActionButtonState(true);
 		new MyAsyncTaskHelper().execute();
@@ -337,6 +238,105 @@ public class InventoryListFragment extends Fragment implements Runnable {
 		createGroupList();
 
 		createCollection();
+	}	
+	
+	// *******************************************************************************************************************//
+	// 													End Model 														  //
+	// *******************************************************************************************************************//
+
+	
+	// *******************************************************************************************************************//
+	// 													Controller 														  //
+	// *******************************************************************************************************************//
+	/**
+	 * This interface must be implemented by activities that contain this
+	 * fragment to allow an interaction in this fragment to be communicated to
+	 * the activity and potentially other fragments contained in that activity.
+	 * <p>
+	 * See the Android Training lesson <a href=
+	 * "http://developer.android.com/training/basics/fragments/communicating.html"
+	 * >Communicating with Other Fragments</a> for more information.
+	 */
+
+	/*************** ExpandableView for Inventory ***********************/
+	private OnChildClickListener ExpandList_ItemClicked = new OnChildClickListener() {
+
+		public boolean onChildClick(ExpandableListView parent, View v,
+				int groupPosition, int childPosition, long id) {
+			Intent mIntent = new Intent(getActivity(), View_Item.class);
+			mIntent.putExtra("item", getValue(groupPosition, childPosition));
+			startActivity(mIntent);
+
+			return false;
+		}
+
+	};
+	
+
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		this.optionsMenu = menu;
+		inflater.inflate(R.menu.inventorylist_menu, menu);
 	}
 
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+		switch (item.getItemId()) {
+
+		case R.id.menu_refresh:
+			asyncCaller();
+			return true;
+
+		case R.id.item_add:
+			Intent intent = new Intent(getActivity(), AddItemActivity.class);
+			startActivity(intent);
+			return true;
+
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+
+	}
+	
+	// *******************************************************************************************************************//
+	// 													End Controller 													  //
+	// *******************************************************************************************************************//
+	
+	// *******************************************************************************************************************//
+	// 													  View 															  //
+	// *******************************************************************************************************************//
+	private void createCollection() {
+		// preparing items in category(child)
+		// set a query to check the food items
+		ParseQuery<ParseObject> query = ParseQuery.getQuery("Food");
+		listInventory = new LinkedHashMap<String, List<String>>();
+		for (int i = 0; i < groupList.size(); i++) {
+			int index = 0;
+			// try to find a food with the same name as the one we entered.
+			query.whereEqualTo("category", groupList.get(i));
+			try {
+				foodNames = query.find();
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+
+			String[] category1 = new String[foodNames.size()];
+			String[] categoryWunits = new String[foodNames.size()];
+			if (foodNames.isEmpty() == false) {
+				for (ParseObject foodObj : foodNames) {
+					category1[index] = foodObj.getString("name");
+					categoryWunits[index] = foodObj.getString("name");
+					index++;
+				}
+
+				loadChild(categoryWunits);
+
+				listInventory.put(groupList.get(i).toString(), childList);
+			}
+		}
+	}
+	// *******************************************************************************************************************//
+	//                                                  End View                                                          //
+	// *******************************************************************************************************************//
 }

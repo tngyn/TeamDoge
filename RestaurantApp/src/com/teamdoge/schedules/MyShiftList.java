@@ -25,6 +25,46 @@ public class MyShiftList implements ListItem {
     private final String AM = " AM";
     private final String PM = " PM";
     private final String DASH = " - ";
+    
+	// *******************************************************************************************************************//
+	// 													  View 															  //
+	// *******************************************************************************************************************//
+    
+    // Correlates the passed in strings and images to the fields in the layout to
+    // return each individual shift block
+    @Override
+    public View getView(LayoutInflater inflater, View convertView) {
+        View view;
+        if (convertView == null) {
+            //view = (View) inflater.inflate(R.layout.schedule_list_items, null);
+            view = (View) inflater.inflate(R.layout.fragment_my_shift_list_item, null);
+            // Do some initialization
+        } else {
+            view = convertView;
+        }
+
+        TextView time = (TextView) view.findViewById(R.id.shift_hours);
+        TextView role = (TextView) view.findViewById(R.id.position);
+        TextView stat = (TextView) view.findViewById(R.id.status);
+       
+    	if( new String("No Shift").equals(shift) == false ) {
+          convertShift();
+    	}
+        
+        time.setText(displayShift);
+        role.setText(position);
+        stat.setText(status);
+
+        return view;
+    }
+    
+	// *******************************************************************************************************************//
+	//                                                  End View                                                          //
+	// *******************************************************************************************************************//
+    
+	// *******************************************************************************************************************//
+	// 													Model 														      //
+	// *******************************************************************************************************************//
 
     // Constructor to create a schedule list item
     public MyShiftList( String time, String pos, String stat ) {
@@ -63,34 +103,6 @@ public class MyShiftList implements ListItem {
     		default:
     			status = " ";
     	}
-    }
-
-    // Correlates the passed in strings and images to the fields in the layout to
-    // return each individual shift block
-    @Override
-    public View getView(LayoutInflater inflater, View convertView) {
-        View view;
-        if (convertView == null) {
-            //view = (View) inflater.inflate(R.layout.schedule_list_items, null);
-            view = (View) inflater.inflate(R.layout.fragment_my_shift_list_item, null);
-            // Do some initialization
-        } else {
-            view = convertView;
-        }
-
-        TextView time = (TextView) view.findViewById(R.id.shift_hours);
-        TextView role = (TextView) view.findViewById(R.id.position);
-        TextView stat = (TextView) view.findViewById(R.id.status);
-       
-    	if( new String("No Shift").equals(shift) == false ) {
-          convertShift();
-    	}
-        
-        time.setText(displayShift);
-        role.setText(position);
-        stat.setText(status);
-
-        return view;
     }
     
     private void convertShift(){
@@ -138,5 +150,9 @@ public class MyShiftList implements ListItem {
     	// restructures the shift string
     	displayShift = tokens[0] + DASH + tokens[2];   	
     }
+    
+	// *******************************************************************************************************************//
+	// 													End Model 														  //
+	// *******************************************************************************************************************//
 
 }

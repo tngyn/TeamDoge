@@ -6,7 +6,6 @@ import com.teamdoge.restaurantapp.R;
 
 import android.content.Context;
 import android.graphics.Typeface;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +19,11 @@ public class ExpandableListAdapterTimePicker extends BaseExpandableListAdapter {
     // child data in format of header title, child title
     private List<List<String>> _listDataChild;
  
+    
+	// *******************************************************************************************************************//
+	// 													Model 														      //
+	// *******************************************************************************************************************//
+    
     public ExpandableListAdapterTimePicker(Context context, List<String> listDataHeader,
             List<List<String>> listChildData) {
         this._context = context;
@@ -29,32 +33,12 @@ public class ExpandableListAdapterTimePicker extends BaseExpandableListAdapter {
  
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-    	Log.d("ASD", "" + groupPosition + " " + childPosition + "ASD");
         return this._listDataChild.get(groupPosition).get(childPosition);
     }
  
     @Override
     public long getChildId(int groupPosition, int childPosition) {
         return childPosition;
-    }
- 
-    @Override
-    public View getChildView(int groupPosition, final int childPosition,
-            boolean isLastChild, View convertView, ViewGroup parent) {
- 
-        final String childText = (String) getChild(groupPosition, childPosition);
- 
-        if (convertView == null) {
-            LayoutInflater infalInflater = (LayoutInflater) this._context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = infalInflater.inflate(R.layout.list_item, null);
-        }
- 
-        TextView txtListChild = (TextView) convertView
-                .findViewById(R.id.lblListItem);
- 
-        txtListChild.setText(childText);
-        return convertView;
     }
  
     @Override
@@ -77,6 +61,24 @@ public class ExpandableListAdapterTimePicker extends BaseExpandableListAdapter {
     }
  
     @Override
+    public boolean hasStableIds() {
+        return false;
+    }
+ 
+    @Override
+    public boolean isChildSelectable(int groupPosition, int childPosition) {
+        return true;
+    }
+    
+	// *******************************************************************************************************************//
+	// 													End Model 														  //
+	// *******************************************************************************************************************//
+    
+	// *******************************************************************************************************************//
+	// 													  View 															  //
+	// *******************************************************************************************************************//
+    
+    @Override
     public View getGroupView(int groupPosition, boolean isExpanded,
             View convertView, ViewGroup parent) {
         String headerTitle = (String) getGroup(groupPosition);
@@ -93,14 +95,27 @@ public class ExpandableListAdapterTimePicker extends BaseExpandableListAdapter {
  
         return convertView;
     }
- 
+    
     @Override
-    public boolean hasStableIds() {
-        return false;
-    }
+    public View getChildView(int groupPosition, final int childPosition,
+            boolean isLastChild, View convertView, ViewGroup parent) {
  
-    @Override
-    public boolean isChildSelectable(int groupPosition, int childPosition) {
-        return true;
-    }
+        final String childText = (String) getChild(groupPosition, childPosition);
+ 
+        if (convertView == null) {
+            LayoutInflater infalInflater = (LayoutInflater) this._context
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = infalInflater.inflate(R.layout.list_item, null);
+        }
+ 
+        TextView txtListChild = (TextView) convertView
+                .findViewById(R.id.lblListItem);
+ 
+        txtListChild.setText(childText);
+        return convertView;
+    }    
+    
+	// *******************************************************************************************************************//
+	//                                                  End View                                                          //
+	// *******************************************************************************************************************//
 }
