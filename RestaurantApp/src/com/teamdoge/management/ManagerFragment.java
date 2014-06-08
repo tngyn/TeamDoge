@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
-import com.teamdoge.restaurantapp.DayShiftsManagementActivity;
 import com.teamdoge.restaurantapp.R;
 import com.teamdoge.restaurantapp.R.id;
 import com.teamdoge.restaurantapp.R.layout;
+import com.teamdoge.schedules.DayShiftsManagementActivity;
 
 import android.app.Activity;
 import android.content.Intent;

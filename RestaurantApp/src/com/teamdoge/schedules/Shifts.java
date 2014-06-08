@@ -1,4 +1,4 @@
-package com.teamdoge.restaurantapp;
+package com.teamdoge.schedules;
 
 import java.util.ArrayList;
 import java.util.Iterator;

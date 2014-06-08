@@ -57,7 +57,7 @@
             android:label="Forgot Password" >
         </activity>
         <activity
-            android:name="com.teamdoge.restaurantapp.DayShiftsManagementActivity"
+            android:name="com.teamdoge.schedules.DayShiftsManagementActivity"
             android:label="@string/title_activity_shift_management_actity" >
         </activity>
         <activity

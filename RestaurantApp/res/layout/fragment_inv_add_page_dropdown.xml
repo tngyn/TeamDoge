@@ -3,7 +3,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context="com.teamdoge.restaurantapp.InvAddPageDropdownFrag" >
+    tools:context="com.teamdoge.inventory.InvAddPageDropdownFrag" >
 
     <!-- TODO: Update blank fragment layout -->
 <!-- 

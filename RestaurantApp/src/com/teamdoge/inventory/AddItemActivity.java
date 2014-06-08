@@ -90,9 +90,8 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-import com.teamdoge.restaurantapp.InvAddPageDropdownFrag;
+import com.teamdoge.inventory.InvAddPageDropdownFrag.OnFragmentInteractionListener;
 import com.teamdoge.restaurantapp.R;
-import com.teamdoge.restaurantapp.InvAddPageDropdownFrag.OnFragmentInteractionListener;
 import com.teamdoge.restaurantapp.R.id;
 import com.teamdoge.restaurantapp.R.layout;
 
