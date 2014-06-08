@@ -6,8 +6,6 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import com.teamdoge.restaurantapp.R;
-import com.teamdoge.restaurantapp.R.id;
-import com.teamdoge.restaurantapp.R.layout;
 import com.teamdoge.schedules.DayShiftsManagementActivity;
 
 import android.app.Activity;
@@ -31,6 +29,7 @@ import android.widget.Toast;
 public class ManagerFragment extends Fragment {
 
 
+	@SuppressWarnings("unused")
 	private OnFragmentInteractionListener mListener;
 	private ArrayList<String> Days = new ArrayList<String>();
 	private Button b;
@@ -47,6 +46,9 @@ public class ManagerFragment extends Fragment {
 		// Required empty public constructor
 	}
 
+	// *******************************************************************************************************************//
+	// 													Model 														      //
+	// *******************************************************************************************************************//
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -58,9 +60,16 @@ public class ManagerFragment extends Fragment {
 		Days.add("Friday");
 		Days.add("Saturday");
 		Days.add("Sunday");
-
 	}
+	
+	// *******************************************************************************************************************//
+	// 													End Model 														  //
+	// *******************************************************************************************************************//
 
+	// *******************************************************************************************************************//
+	// 													  View 															  //
+	// *******************************************************************************************************************//
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -199,6 +208,10 @@ public class ManagerFragment extends Fragment {
 		}
 		return v;
 	}
+	
+	// *******************************************************************************************************************//
+	//                                                  End View                                                          //
+	// *******************************************************************************************************************//
 
 	@Override
 	public void onAttach(Activity activity) {
@@ -227,7 +240,6 @@ public class ManagerFragment extends Fragment {
 	 * >Communicating with Other Fragments</a> for more information.
 	 */
 	public interface OnFragmentInteractionListener {
-		// TODO: Update argument type and name
 		public void onFragmentInteraction();
 	}
 	

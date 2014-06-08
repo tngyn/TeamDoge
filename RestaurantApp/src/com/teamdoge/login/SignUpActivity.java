@@ -20,7 +20,6 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.NavUtils;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -54,6 +53,8 @@ public class SignUpActivity extends Activity {
 	private boolean keepGoing;
 	private boolean signup;
 	private String ownerAcc;
+	private String applicationId = "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8";
+	private String clientKey = "k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF";
 	ParseUser user = new ParseUser();
 	
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +65,7 @@ public class SignUpActivity extends Activity {
 		
 		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 		StrictMode.setThreadPolicy(policy); 
-		Parse.initialize(this, "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8", "k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF");
+		Parse.initialize(this, applicationId, clientKey);
 		super.onCreate(savedInstanceState);
 		this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		setContentView(R.layout.activity_sign_up);
@@ -107,24 +108,22 @@ public class SignUpActivity extends Activity {
 							try {
 								schedule.save();
 							} catch (ParseException e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 						}
 						else {
 							ownerAcc = ((EditText) mViewOwnerAcc).getText().toString();
-							ParseQuery query = ParseUser.getQuery();
+							ParseQuery<ParseUser> query = ParseUser.getQuery();
 							query.whereEqualTo("username",ownerAcc);
 							query.whereEqualTo("Acc_Type", "Owner");
 							try {
-								List tested = query.find();
+								List<ParseUser> tested = query.find();
 								if (tested.isEmpty()){
 									((EditText) mViewOwnerAcc).setError("Owner Does Not Exist");
 									((EditText) mViewOwnerAcc).requestFocus();
 									keepGoing = false;
 								}
 							} catch (ParseException e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 
@@ -222,7 +221,6 @@ public class SignUpActivity extends Activity {
 							    } else {
 							      //If there is error show a toast with the error
 							      Toast.makeText(getApplicationContext(),e.toString(), Toast.LENGTH_LONG).show();
-							      Log.d("error", e.toString());
 							      showProgress(false);
 							      signup = false;
 							    }
@@ -234,6 +232,16 @@ public class SignUpActivity extends Activity {
 				});
 	}
 
+	public boolean checkEmail() {
+		return (email.contains("@"));
+	}
+	public boolean checkPassword() {
+		return password.equals(rpassword);
+	}
+	
+	// *******************************************************************************************************************//
+	// 													Model 														      //
+	// *******************************************************************************************************************//
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -248,12 +256,15 @@ public class SignUpActivity extends Activity {
 	    }
 		return super.onOptionsItemSelected(item);
 	}
-	public boolean checkEmail() {
-		return (email.contains("@"));
-	}
-	public boolean checkPassword() {
-		return password.equals(rpassword);
-	}
+	
+	// *******************************************************************************************************************//
+	// 													End Model 														  //
+	// *******************************************************************************************************************//
+	
+	// *******************************************************************************************************************//
+	// 													  View 															  //
+	// *******************************************************************************************************************//
+
 	private void showProgress(final boolean show) {
 		// On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
 		// for very easy animations. If available, use these APIs to fade-in
@@ -291,6 +302,38 @@ public class SignUpActivity extends Activity {
 		}
 	}
 	
+	// *******************************************************************************************************************//
+	//                                                  End View                                                          //
+	// *******************************************************************************************************************//
+	
+	// *******************************************************************************************************************//
+	// 													Controller 														  //
+	// *******************************************************************************************************************//
+	
+	public class CustomOnItemSelectedListener implements OnItemSelectedListener {
+		 
+		  public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
+			 switch (pos) {
+			 case 0: 
+				 mViewOwnerAcc.setVisibility(View.GONE);
+			   break;
+			 case 1:
+				    mViewOwnerAcc.setVisibility(View.VISIBLE);
+			    break;
+			  default:
+				  break;
+			 }
+			}
+
+		@Override
+		public void onNothingSelected(AdapterView<?> arg0) {
+		}
+	}
+	
+	// *******************************************************************************************************************//
+	// 													End Controller 													  //
+	// *******************************************************************************************************************//
+	
 	/**
 	 * A placeholder fragment containing a simple view.
 	 */
@@ -307,30 +350,4 @@ public class SignUpActivity extends Activity {
 			return rootView;
 		}
 	}
-	public class CustomOnItemSelectedListener implements OnItemSelectedListener {
-		 
-		  public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
-			 switch (pos) {
-			 case 0: 
-				 mViewOwnerAcc.setVisibility(View.GONE);
-			   break;
-			 case 1:
-				    mViewOwnerAcc.setVisibility(View.VISIBLE);
-			    break;
-			  default:
-				  break;
-			 }
-			  
-
-			}
-
-		@Override
-		public void onNothingSelected(AdapterView<?> arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-		  }
-		 
-
-
 }

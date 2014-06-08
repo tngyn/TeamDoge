@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 import android.view.ViewGroup;
@@ -21,39 +19,60 @@ import com.teamdoge.restaurantapp.R;
 
 public class ForgotPasswordActivity extends Activity {
 
+	private String email;
+	private EditText eEmail;
 
-private String email;
-private EditText eEmail;
+	private String applicationId = "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8";
+	private String clientKey = "k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF";
 
 	@Override
-	
 	protected void onCreate(Bundle savedInstanceState) {
-		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-		StrictMode.setThreadPolicy(policy); 
-		
+		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+				.permitAll().build();
+		StrictMode.setThreadPolicy(policy);
+
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-		
-		Parse.initialize(this, "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8", "k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF");
+
+		Parse.initialize(this, applicationId, clientKey);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_forgot_password);
 		findViewById(R.id.recover_password_button).setOnClickListener(
 				new View.OnClickListener() {
 					@Override
 					public void onClick(View view) {
-						eEmail = (EditText) findViewById(R.id.recover_email); //Content of the Email Box
-						email = eEmail.getText().toString(); // String of the Email Box
-						ParseUser.requestPasswordResetInBackground(email, new RequestPasswordResetCallback() {
-							public void done(ParseException e) {
-								if (e == null) {
-									Toast.makeText(getApplicationContext(),"Link sent to email", Toast.LENGTH_LONG).show();
-							        Intent intent = new Intent(ForgotPasswordActivity.this, LoginActivity.class); // Intent to go back to loginActivity
-							        startActivity(intent);
-							        finish();
-								} else {
-									Toast.makeText(getApplicationContext(),e.toString(), Toast.LENGTH_LONG).show();
-								}
-							}
-						});
+						eEmail = (EditText) findViewById(R.id.recover_email); // Content
+																				// of
+																				// the
+																				// Email
+																				// Box
+						email = eEmail.getText().toString(); // String of the
+																// Email Box
+						ParseUser.requestPasswordResetInBackground(email,
+								new RequestPasswordResetCallback() {
+									public void done(ParseException e) {
+										if (e == null) {
+											Toast.makeText(
+													getApplicationContext(),
+													"Link sent to email",
+													Toast.LENGTH_LONG).show();
+											Intent intent = new Intent(
+													ForgotPasswordActivity.this,
+													LoginActivity.class); // Intent
+																			// to
+																			// go
+																			// back
+																			// to
+																			// loginActivity
+											startActivity(intent);
+											finish();
+										} else {
+											Toast.makeText(
+													getApplicationContext(),
+													e.toString(),
+													Toast.LENGTH_LONG).show();
+										}
+									}
+								});
 					}
 				});
 	}

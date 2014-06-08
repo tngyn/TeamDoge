@@ -1,9 +1,6 @@
 package com.teamdoge.inventory;
 
 import com.teamdoge.restaurantapp.R;
-import com.teamdoge.restaurantapp.R.layout;
-import com.teamdoge.restaurantapp.R.string;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -36,9 +33,6 @@ public class InvAddPageDropdownFrag extends DialogFragment {
 		public void onDialogPositiveClick(DialogFragment dialog);
 		public void onDialogNegativeClick(DialogFragment dialog);
 	}
-	
-	//TODO: We may not need this.
-	//private EditText newItemBox;
 
 	private OnFragmentInteractionListener mListener;
 

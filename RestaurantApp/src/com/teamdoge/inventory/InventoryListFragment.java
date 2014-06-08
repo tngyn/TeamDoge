@@ -13,7 +13,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -31,9 +30,6 @@ import com.parse.ParseUser;
 import com.teamdoge.management.ManagerFragment.OnFragmentInteractionListener;
 import com.teamdoge.restaurantapp.ExpandableListAdapter;
 import com.teamdoge.restaurantapp.R;
-import com.teamdoge.restaurantapp.R.id;
-import com.teamdoge.restaurantapp.R.layout;
-import com.teamdoge.restaurantapp.R.menu;
 
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass. Activities that
@@ -51,6 +47,9 @@ public class InventoryListFragment extends Fragment implements Runnable {
 	private Menu optionsMenu;
 
 	private OnFragmentInteractionListener mListener;
+	
+	private String applicationId = "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8";
+	private String clientKey = "k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF";
 
 	/*************** ExpandableView for Inventory ***********************/
 	List<String> groupList;
@@ -64,7 +63,6 @@ public class InventoryListFragment extends Fragment implements Runnable {
 	 * Use this factory method to create a new instance of this fragment using
 	 * the provided parameters.
 	 */
-	// TODO: Rename and change types and number of parameters
 	public static InventoryListFragment newInstance() {
 		InventoryListFragment fragment = new InventoryListFragment();
 		Bundle args = new Bundle();
@@ -79,19 +77,13 @@ public class InventoryListFragment extends Fragment implements Runnable {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Parse.initialize(getActivity(),
-				"0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8",
-				"k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF");
+		Parse.initialize(getActivity(), applicationId, clientKey);
 		setHasOptionsMenu(true);
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		// TextView textView = new TextView(getActivity());
-		// textView.setText(R.string.hello_blank_fragment);
-		// View v = inflater.inflate(R.layout.fragment_manager, container,
-		// false);
 		/*************** ExpandableView for Inventory ***********************/
 
 		View v = inflater.inflate(R.layout.activity_inventory_list, container,
@@ -109,7 +101,6 @@ public class InventoryListFragment extends Fragment implements Runnable {
 		return v;
 	}
 
-	// TODO: Rename method, update argument and hook method into UI event
 	public void onButtonPressed(Uri uri) {
 		if (mListener != null) {
 			mListener.onFragmentInteraction();
@@ -132,7 +123,32 @@ public class InventoryListFragment extends Fragment implements Runnable {
 		super.onDetach();
 		mListener = null;
 	}
+	
+	// *******************************************************************************************************************//
+	// 													Model 														      //
+	// *******************************************************************************************************************//
+	public void setRefreshActionButtonState(final boolean refreshing) {
+		if (optionsMenu != null) {
+			final MenuItem refreshItem = optionsMenu
+					.findItem(R.id.menu_refresh);
+			if (refreshItem != null) {
+				if (refreshing) {
+					refreshItem
+							.setActionView(R.layout.actionbar_indeterminate_progress);
+				} else {
+					refreshItem.setActionView(null);
+				}
+			}
+		}
+	}
+	// *******************************************************************************************************************//
+	// 													End Model 														  //
+	// *******************************************************************************************************************//
 
+	
+	// *******************************************************************************************************************//
+	// 													Controller 														  //
+	// *******************************************************************************************************************//
 	/**
 	 * This interface must be implemented by activities that contain this
 	 * fragment to allow an interaction in this fragment to be communicated to
@@ -156,6 +172,47 @@ public class InventoryListFragment extends Fragment implements Runnable {
 		}
 
 	};
+	
+	// *******************************************************************************************************************//
+	// 													End Controller 													  //
+	// *******************************************************************************************************************//
+	
+	// *******************************************************************************************************************//
+	// 													  View 															  //
+	// *******************************************************************************************************************//
+	private void createCollection() {
+		// preparing items in category(child)
+		// set a query to check the food items
+		ParseQuery<ParseObject> query = ParseQuery.getQuery("Food");
+		listInventory = new LinkedHashMap<String, List<String>>();
+		for (int i = 0; i < groupList.size(); i++) {
+			int index = 0;
+			// try to find a food with the same name as the one we entered.
+			query.whereEqualTo("category", groupList.get(i));
+			try {
+				foodNames = query.find();
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+
+			String[] category1 = new String[foodNames.size()];
+			String[] categoryWunits = new String[foodNames.size()];
+			if (foodNames.isEmpty() == false) {
+				for (ParseObject foodObj : foodNames) {
+					category1[index] = foodObj.getString("name");
+					categoryWunits[index] = foodObj.getString("name");
+					index++;
+				}
+
+				loadChild(categoryWunits);
+
+				listInventory.put(groupList.get(i).toString(), childList);
+			}
+		}
+	}
+	// *******************************************************************************************************************//
+	//                                                  End View                                                          //
+	// *******************************************************************************************************************//
 
 	private String getValue(int groupPos, int childPos) {
 		int c = 0;
@@ -197,52 +254,15 @@ public class InventoryListFragment extends Fragment implements Runnable {
 		try {
 			foods = query.find();
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		for (ParseObject food : foods) {
 			String category = food.getString("category");
 			if (groupList.contains(category) == false || groupList.isEmpty()) {
-				// Log.wtf("category", category);
 				groupList.add(category);
 			}
 		}
-		// Log.wtf("Array", ""+groupList.size());
 
-	}
-
-	private void createCollection() {
-		// preparing items in category(child)
-		// set a query to check the food items
-		ParseQuery<ParseObject> query = ParseQuery.getQuery("Food");
-		listInventory = new LinkedHashMap<String, List<String>>();
-		for (int i = 0; i < groupList.size(); i++) {
-			int index = 0;
-			// try to find a food with the same name as the one we entered.
-			query.whereEqualTo("category", groupList.get(i));
-			try {
-				foodNames = query.find();
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-			String[] category1 = new String[foodNames.size()];
-			String[] categoryWunits = new String[foodNames.size()];
-			if (foodNames.isEmpty() == false) {
-				// String[] category1 = new String[foodNames.size()];
-				for (ParseObject foodObj : foodNames) {
-					category1[index] = foodObj.getString("name");
-					categoryWunits[index] = foodObj.getString("name");
-					index++;
-				}
-
-				loadChild(categoryWunits);
-				//loadChild(category1);
-
-				listInventory.put(groupList.get(i).toString(), childList);
-			}
-		}
 	}
 
 	private void loadChild(String[] itemList) {
@@ -282,7 +302,6 @@ public class InventoryListFragment extends Fragment implements Runnable {
 
 
 	public void asyncCaller() {
-		Log.wtf("CMONNN", "INSIDE ASYNCCALLERRR");
 		setRefreshActionButtonState(true);
 		new MyAsyncTaskHelper().execute();
 	}
@@ -291,57 +310,33 @@ public class InventoryListFragment extends Fragment implements Runnable {
 
 		@Override
 		protected List<String> doInBackground(Void... params) {
-			// TODO Auto-generated method stub
-			Log.wtf("TESTINGGG", "IM IN DO IN BACKGROUND AFTER CREATING STUFF");
 
 			createGroupList();
 
 			createCollection();
 
-			Log.wtf("TESTINGGG", "IM IN DO IN BACKGROUND AFTER CREATING STUFF");
 			return groupList;
 		}
 
 		@Override
 		protected void onPostExecute(List<String> item) {
-			Log.wtf("TESTINGGG", "IM IN ON POST EXECUTE");
-			//dff
 			ExpandableListAdapter expListAdapter = new ExpandableListAdapter(
 					getActivity(), item, listInventory);
 
-			Log.wtf("TESTINGGG", "IM IN ON POST EXECUTE");
 			expListView.setAdapter(expListAdapter);
 
 			setRefreshActionButtonState(false);
-
 		}
-
 	}
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
-
 		android.os.Process
 				.setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
 
 		createGroupList();
 
 		createCollection();
-	}
-
-	public void setRefreshActionButtonState(final boolean refreshing) {
-	    if (optionsMenu != null) {
-	        final MenuItem refreshItem = optionsMenu
-	            .findItem(R.id.menu_refresh);
-	        if (refreshItem != null) {
-	            if (refreshing) {
-	                refreshItem.setActionView(R.layout.actionbar_indeterminate_progress);
-	            } else {
-	                refreshItem.setActionView(null);
-	            }
-	        }
-	    }
 	}
 
 }

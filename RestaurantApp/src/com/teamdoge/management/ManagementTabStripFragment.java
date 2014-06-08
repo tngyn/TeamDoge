@@ -11,7 +11,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +34,6 @@ public class ManagementTabStripFragment extends Fragment {
 	 * the provided parameters.
 	 * @return A new instance of fragment ManagementTabStripFragment.
 	 */
-	// TODO: Rename and change types and number of parameters
 	public static ManagementTabStripFragment newInstance() {
 		ManagementTabStripFragment fragment = new ManagementTabStripFragment();
 		Bundle args = new Bundle();
@@ -47,6 +45,9 @@ public class ManagementTabStripFragment extends Fragment {
 		// Required empty public constructor
 	}
 
+	// *******************************************************************************************************************//
+	// 													  View 															  //
+	// *******************************************************************************************************************//
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -69,19 +70,33 @@ public class ManagementTabStripFragment extends Fragment {
 		ViewPager pager = (ViewPager) view.findViewById(R.id.pager);
 		MyPagerAdapter adapter = new MyPagerAdapter(getChildFragmentManager());
 
-		Log.d("ASD", "I HASD");
 		tabs.setShouldExpand(true);
 		
 		pager.setAdapter(adapter);
 		tabs.setViewPager(pager);
 	}
+	
+	// *******************************************************************************************************************//
+	//                                                  End View                                                          //
+	// *******************************************************************************************************************//
+	
+	// *******************************************************************************************************************//
+	// 													Controller 														  //
+	// *******************************************************************************************************************//
 
-	// TODO: Rename method, update argument and hook method into UI event
 	public void onButtonPressed(Uri uri) {
 		if (mListener != null) {
 			mListener.onFragmentInteraction();
 		}
 	}
+	
+	// *******************************************************************************************************************//
+	// 													End Controller 													  //
+	// *******************************************************************************************************************//
+	
+	// *******************************************************************************************************************//
+	// 													Model 														      //
+	// *******************************************************************************************************************//
 
 	@Override
 	public void onAttach(Activity activity) {
@@ -115,11 +130,6 @@ public class ManagementTabStripFragment extends Fragment {
 		public MyPagerAdapter(android.support.v4.app.FragmentManager fm) {
 			super(fm);
 		}
-		
-		// Added spaces in titles to even out in tab bar.
-//		private final String[] TITLES = { "  My Shifts   ",
-//				"    Schedule    ",
-//				"Open Shifts" };
 
 		private String[] TITLES = { "Set Shifts", "Compile Schedules",
 				"Employees" };
@@ -153,6 +163,10 @@ public class ManagementTabStripFragment extends Fragment {
 			}
 		}
     }
+	
+	// *******************************************************************************************************************//
+	// 													End Model 														  //
+	// *******************************************************************************************************************//
 
 	   
 

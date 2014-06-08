@@ -16,8 +16,13 @@ public class ShiftList implements ListItem {
 	    public final String shift;
 	    public final String altShift;
 	    public final int weekDay;
-	    private final int i;
+	    @SuppressWarnings("unused")
+		private final int i;
 
+		// *******************************************************************************************************************//
+		// 													Model 														      //
+		// *******************************************************************************************************************//
+	    
 	    // Constructor to create a schedule list item
 	    public ShiftList(String n, String s, int weekDay, String altShifts) {
 	        this.name = n;
@@ -34,6 +39,15 @@ public class ShiftList implements ListItem {
 	        this.i = -1;
 	        this.altShift = "";
 	    }
+	    
+		// *******************************************************************************************************************//
+		// 													End Model 														  //
+		// *******************************************************************************************************************//
+	    
+		// *******************************************************************************************************************//
+		// 													  View 															  //
+		// *******************************************************************************************************************//
+	    
 	    // implementation needed for the TwoTextArrayAdapter
 	    @Override
 	    public int getViewType() {
@@ -57,4 +71,8 @@ public class ShiftList implements ListItem {
 	        shiftTime.setText(shift);
 	        return view;
 	    }
+	    
+		// *******************************************************************************************************************//
+		//                                                  End View                                                          //
+		// *******************************************************************************************************************//
 }

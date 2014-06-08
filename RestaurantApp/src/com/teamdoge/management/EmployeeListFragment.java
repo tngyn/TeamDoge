@@ -8,7 +8,6 @@ import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -37,14 +36,10 @@ public class EmployeeListFragment extends ListFragment {
     private String restaurantID;
     // List to hold all the employees
     private List<ListItem> items;
-    //private static List<ArrayList<String>> allEmployees;
     private static List<String> employeeNames;
     private static List<String> employeePositions;
     private static List<ParseObject> shiftList;
     private ParseObject shift;
-    //private static List<Integer> employeeImages;
-    //private static List<Integer> employeeHours;
-    //private static List<Integer> employeeTotalHours;
     
     private Menu optionsMenu;
 	
@@ -67,6 +62,11 @@ public class EmployeeListFragment extends ListFragment {
 		initParse();
 	}
 
+	
+	// *******************************************************************************************************************//
+	// 													Controller 														  //
+	// *******************************************************************************************************************//
+	
 	private void initParse() {
 		// Initializes connectivity to specific Parse database
 		Parse.initialize(getActivity(), parse_key1, parse_key2);
@@ -94,11 +94,9 @@ public class EmployeeListFragment extends ListFragment {
 				employeePositions.add( shift.getString("Acc_Type") );
 			}
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
 	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -156,20 +154,67 @@ public class EmployeeListFragment extends ListFragment {
 	}
 	
 	@Override
+	public void onResume() {		
+	    super.onResume();
+	}
+	
+	// *******************************************************************************************************************//
+	// 													End Controller 													  //
+	// *******************************************************************************************************************//	
+	
+	// *******************************************************************************************************************//
+	// 													  View 															  //
+	// *******************************************************************************************************************//
+	
+	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		
 		MyAsyncTaskHelper task = new MyAsyncTaskHelper();
 		task.execute();
-		Log.d("ASDASD","WHAT IS GOING ON!?!?!?!");
 		return super.onCreateView(inflater, container, savedInstanceState);	
 	}
 	
+	// *******************************************************************************************************************//
+	//                                                  End View                                                          //
+	// *******************************************************************************************************************//
+	
+	// *******************************************************************************************************************//
+	// 													Controller 														  //
+	// *******************************************************************************************************************//
+	
 	@Override
-	public void onResume() {		
-	    super.onResume();
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+	    switch (item.getItemId()) {
+
+	        case R.id.menu_refresh:
+	        	asyncCaller();
+	        	return true;
+	           
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
+
 	}
 	
+	public void setRefreshActionButtonState(final boolean refreshing) {
+	    if (optionsMenu != null) {
+	        final MenuItem refreshItem = optionsMenu
+	            .findItem(R.id.menu_refresh);
+	        if (refreshItem != null) {
+	            if (refreshing) {
+	                refreshItem.setActionView(R.layout.actionbar_indeterminate_progress);
+	            } else {
+	                refreshItem.setActionView(null);
+	            }
+	        }
+	    }
+	}
+	
+	// *******************************************************************************************************************//
+	// 													End Controller 													  //
+	// *******************************************************************************************************************//
 	
 	// Prepares the listview
 	private void createEmployeeList() {
@@ -213,34 +258,4 @@ public class EmployeeListFragment extends ListFragment {
 		this.optionsMenu = menu;
 		inflater.inflate(R.menu.refresh, menu);
 	}
-	
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-
-	    switch (item.getItemId()) {
-
-	        case R.id.menu_refresh:
-	        	asyncCaller();
-	        	return true;
-	           
-	        default:
-	            return super.onOptionsItemSelected(item);
-	    }
-
-	}
-	
-	public void setRefreshActionButtonState(final boolean refreshing) {
-	    if (optionsMenu != null) {
-	        final MenuItem refreshItem = optionsMenu
-	            .findItem(R.id.menu_refresh);
-	        if (refreshItem != null) {
-	            if (refreshing) {
-	                refreshItem.setActionView(R.layout.actionbar_indeterminate_progress);
-	            } else {
-	                refreshItem.setActionView(null);
-	            }
-	        }
-	    }
-	}
-
 }

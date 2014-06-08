@@ -3,7 +3,6 @@ package com.teamdoge.management;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import com.parse.Parse;
@@ -12,9 +11,6 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.ParseException;
 import com.teamdoge.restaurantapp.R;
-import com.teamdoge.restaurantapp.R.id;
-import com.teamdoge.restaurantapp.R.layout;
-import com.teamdoge.restaurantapp.R.menu;
 import com.teamdoge.schedules.*;
 
 import android.app.AlertDialog;
@@ -22,7 +18,6 @@ import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -138,13 +133,11 @@ public class ShiftsManagerFragment extends ListFragment {
 			dayShift.add("");
 		}
 
-		 // Log.d("FAFA", day[0]);
 		shiftTimeList = new ArrayList<List<String>>();
 		convertedShiftTimeList = new ArrayList<List<String>>();
 		for (int i = 0; i < day.length; i++) {
 		  shiftTimeList.add((List)shiftObject.getList(day[i]));
 		  convertedShiftTimeList.add((List)shiftObject.getList(day[i]));
-		  //Log.d("ASD", "" + i);
 		  convertedShiftTimeList.set(i,convertShifts(convertedShiftTimeList.get(i)));
 		}
 		shiftItems = new ArrayList<ListItem>();
@@ -166,7 +159,6 @@ public class ShiftsManagerFragment extends ListFragment {
 	
 	
 	private List<String> convertShifts(List<String> shift) {
-		//Log.d("ASD", "Calling converShift" + shift.size());
 		List<String> temp = new ArrayList<String>();
 		for( int i = 0; i < shift.size(); i++ ){
 			// tokenizes the string into two to get times
@@ -215,7 +207,6 @@ public class ShiftsManagerFragment extends ListFragment {
 	}
 	
 	public void asyncCaller() {
-		Log.wtf("CMONNN", "INSIDE ASYNCCALLERRR");
     	setRefreshActionButtonState(true);
 		new MyAsyncTaskHelper().execute();
 	}
@@ -224,11 +215,9 @@ public class ShiftsManagerFragment extends ListFragment {
 
 		@Override
 		protected List<ListItem> doInBackground(Void... params) {
-			// TODO Auto-generated method stub
 			createShiftList();
 			
-			return shiftItems;
-			
+			return shiftItems;			
 		}
 		
 		@Override
@@ -364,7 +353,6 @@ public class ShiftsManagerFragment extends ListFragment {
 				s.save();
 			}
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -393,9 +381,6 @@ public class ShiftsManagerFragment extends ListFragment {
 		    .setPositiveButton(R.string.Confirm, new DialogInterface.OnClickListener() {
 		    	@Override
 		    	public void onClick(DialogInterface dialog, int id) {
-		    		final Calendar c = Calendar.getInstance();
-		    		int hour = c.get(Calendar.HOUR_OF_DAY);
-		    		//startTime.toString()
 		    		TimePicker startTime = (TimePicker)layout.findViewById(R.id.startTimePicker);
 		    		TimePicker endTime = (TimePicker)layout.findViewById(R.id.endTimePicker);
 		    		DecimalFormat formatter = new DecimalFormat("00");
@@ -408,31 +393,25 @@ public class ShiftsManagerFragment extends ListFragment {
 		    		if (startTimeHour < endTimeHour && addNew) {
 		    			shiftTimeList.set(weekDay, addShift(totalStartTime + "-" + totalEndTime, weekDay));
 		    			shiftObject.put(day[weekDay], shiftTimeList.get(weekDay));
-		    			Log.d("work?", "" + day[weekDay]);
 		    			shiftObject.saveInBackground();
 		    			updateShifts(shiftTimeList.get(weekDay).size(), weekDay);
 		    		}
 		    		else if (startTimeHour == endTimeHour && startTimeMins < endTimeMins && addNew) {
 		    			shiftTimeList.set(weekDay, addShift(totalStartTime + "-" + totalEndTime, weekDay));
 		    			shiftObject.put(day[weekDay], shiftTimeList.get(weekDay));
-		    			Log.d("please work?	", "" + id);
 		    			shiftObject.saveInBackground();
 		    			updateShifts(shiftTimeList.get(weekDay).size(), weekDay);
 		    		}
 		    		else if (startTimeHour < endTimeHour) {
 		    			shiftTimeList.set(weekDay, editShift(totalStartTime + "-" + totalEndTime, weekDay));
 		    			shiftObject.put(day[weekDay], shiftTimeList.get(weekDay));
-		    			Log.d("work?D:", "" + day[weekDay]);
 		    			shiftObject.saveInBackground();
 		    		}
 		    		else if (startTimeHour == endTimeHour && startTimeMins < endTimeMins) {
 		    			shiftTimeList.set(weekDay, editShift(totalStartTime + "-" + totalEndTime, weekDay));
 		    			shiftObject.put(day[weekDay], shiftTimeList.get(weekDay));
-		    			Log.d("please work?:O	", "" + id);
 		    			shiftObject.saveInBackground();
 		    		}
-		    		Log.wtf("HEY THERE Jimmy McJimmathon", "Time is: " + totalStartTime);
-		    		Log.wtf("HEY THERE Mr. CLEAN", "Time is: " + totalEndTime);
 		    		onDialogPositiveClick("");
 		    	}
 		    })
@@ -456,7 +435,6 @@ public class ShiftsManagerFragment extends ListFragment {
 	}
 
 	public void onDialogPositiveClick(String stringy) {
-		Log.wtf("alsdkfjlksdjfj", "sadjflsdjlkfjsdkl00");
 	}
 	
 }

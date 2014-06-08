@@ -19,7 +19,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -55,6 +54,9 @@ public class LoginActivity extends Activity {
 	private View mLoginStatusView;
 	private TextView mLoginStatusMessageView;
 	private boolean remember;
+	
+	private String applicationId = "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8";
+	private String clientKey = "k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,15 +66,12 @@ public class LoginActivity extends Activity {
 		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 		StrictMode.setThreadPolicy(policy); 
 		this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        //Initialize Parse
-		Parse.initialize(this, "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8", "k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF");
+
+		Parse.initialize(this, applicationId, clientKey);
 		setContentView(R.layout.activity_login);
 		ParseUser user = ParseUser.getCurrentUser();
 		if (user != null) {
 			remember = user.getBoolean("Remember_Me");
-			
-			if (remember)
-				Log.d("ASD", "true");
 		}
 		if (user != null && remember) {
 			ParseQuery<ParseObject> shiftQuery = ParseQuery.getQuery("Shifts");
@@ -80,7 +79,6 @@ public class LoginActivity extends Activity {
 			try {
 				user.put("Acc_Type", shiftQuery.find().get(0).getString("Acc_Type"));
 			} catch (ParseException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			user.saveInBackground();
@@ -139,6 +137,12 @@ public class LoginActivity extends Activity {
 					}
 				});
 	}
+	
+	
+	// *******************************************************************************************************************//
+	// 													Model 														      //
+	// *******************************************************************************************************************//
+	
 	/**
 	 * Attempts to sign in or register the account specified by the login form.
 	 * If there are form errors (invalid email, missing fields, etc.), the
@@ -189,6 +193,14 @@ public class LoginActivity extends Activity {
 			
 		}
 	}
+	
+	// *******************************************************************************************************************//
+	// 													End Model 														  //
+	// *******************************************************************************************************************//
+	
+	// *******************************************************************************************************************//
+	// 													  View 															  //
+	// *******************************************************************************************************************//
 
 	/**
 	 * Shows the progress UI and hides the login form.
@@ -230,6 +242,14 @@ public class LoginActivity extends Activity {
 			mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
 		}
 	}
+	
+	// *******************************************************************************************************************//
+	//                                                  End View                                                          //
+	// *******************************************************************************************************************//
+	
+	// *******************************************************************************************************************//
+	// 													Controller 														  //
+	// *******************************************************************************************************************//
 
 	/**
 	 * Represents an asynchronous login/registration task used to authenticate
@@ -253,7 +273,6 @@ public class LoginActivity extends Activity {
 						try {
 							user.put("Acc_Type", shiftQuery.find().get(0).getString("Acc_Type"));
 						} catch (ParseException e1) {
-							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
 				    	user.saveInBackground(); 
@@ -271,14 +290,16 @@ public class LoginActivity extends Activity {
 				  }
 				});
 
-			// TODO: register the new account here.
 			return success;
 		}
+		
+		// *******************************************************************************************************************//
+		// 													End Controller 													  //
+		// *******************************************************************************************************************//
 
 		@Override
 		//Get rid of the loading animation
 		protected void onPostExecute(final Boolean success) {
-			
 			mAuthTask = null;
 		}
 
