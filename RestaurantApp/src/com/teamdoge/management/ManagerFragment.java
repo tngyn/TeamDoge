@@ -1,9 +1,14 @@
-package com.teamdoge.restaurantapp;
+package com.teamdoge.management;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
+
+import com.teamdoge.restaurantapp.R;
+import com.teamdoge.restaurantapp.R.id;
+import com.teamdoge.restaurantapp.R.layout;
+import com.teamdoge.schedules.DayShiftsManagementActivity;
 
 import android.app.Activity;
 import android.content.Intent;

@@ -1,4 +1,4 @@
-package com.teamdoge.restaurantapp;
+package com.teamdoge.schedules;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,6 +10,10 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.teamdoge.restaurantapp.R;
+import com.teamdoge.restaurantapp.SettingsListAdapter;
+import com.teamdoge.restaurantapp.R.id;
+import com.teamdoge.restaurantapp.R.layout;
 
 import android.app.Activity;
 import android.content.Context;

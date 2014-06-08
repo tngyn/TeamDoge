@@ -1,4 +1,4 @@
-package com.teamdoge.restaurantapp;
+package com.teamdoge.inventory;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -28,17 +28,22 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-import com.teamdoge.restaurantapp.ManagerFragment.OnFragmentInteractionListener;
+import com.teamdoge.management.ManagerFragment.OnFragmentInteractionListener;
+import com.teamdoge.restaurantapp.ExpandableListAdapter;
+import com.teamdoge.restaurantapp.R;
+import com.teamdoge.restaurantapp.R.id;
+import com.teamdoge.restaurantapp.R.layout;
+import com.teamdoge.restaurantapp.R.menu;
 
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass. Activities that
  * contain this fragment must implement the
- * {@link InventoryList.OnFragmentInteractionListener} interface to handle
- * interaction events. Use the {@link InventoryList#newInstance} factory method
+ * {@link InventoryListFragment.OnFragmentInteractionListener} interface to handle
+ * interaction events. Use the {@link InventoryListFragment#newInstance} factory method
  * to create an instance of this fragment.
  * 
  */
-public class InventoryList extends Fragment implements Runnable {
+public class InventoryListFragment extends Fragment implements Runnable {
 
 	private List<ParseObject> foodNames;
 
@@ -60,14 +65,14 @@ public class InventoryList extends Fragment implements Runnable {
 	 * the provided parameters.
 	 */
 	// TODO: Rename and change types and number of parameters
-	public static InventoryList newInstance() {
-		InventoryList fragment = new InventoryList();
+	public static InventoryListFragment newInstance() {
+		InventoryListFragment fragment = new InventoryListFragment();
 		Bundle args = new Bundle();
 		fragment.setArguments(args);
 		return fragment;
 	}
 
-	public InventoryList() {
+	public InventoryListFragment() {
 		// Required empty public constructor
 	}
 
@@ -264,7 +269,7 @@ public class InventoryList extends Fragment implements Runnable {
 			return true;
 
 		case R.id.item_add:
-			Intent intent = new Intent(getActivity(), Add_item.class);
+			Intent intent = new Intent(getActivity(), AddItemActivity.class);
 			startActivity(intent);
 			return true;
 

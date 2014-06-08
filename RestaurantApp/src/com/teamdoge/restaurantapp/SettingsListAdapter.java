@@ -2,6 +2,8 @@ package com.teamdoge.restaurantapp;
 
 import java.util.ArrayList;
 
+import com.teamdoge.schedules.Shifts;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;

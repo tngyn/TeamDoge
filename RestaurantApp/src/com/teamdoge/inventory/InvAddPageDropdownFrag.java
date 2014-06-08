@@ -1,4 +1,8 @@
-package com.teamdoge.restaurantapp;
+package com.teamdoge.inventory;
+
+import com.teamdoge.restaurantapp.R;
+import com.teamdoge.restaurantapp.R.layout;
+import com.teamdoge.restaurantapp.R.string;
 
 import android.app.Activity;
 import android.app.AlertDialog;

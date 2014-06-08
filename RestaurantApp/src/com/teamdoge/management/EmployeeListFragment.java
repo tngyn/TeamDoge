@@ -1,4 +1,4 @@
-package com.teamdoge.restaurantprofile;
+package com.teamdoge.management;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +10,9 @@ import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -20,6 +23,7 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.teamdoge.restaurantapp.R;
 import com.teamdoge.schedules.EmployeeList;
 import com.teamdoge.schedules.ListItem;
 import com.teamdoge.schedules.TwoTextArrayAdapter;
@@ -42,6 +46,7 @@ public class EmployeeListFragment extends ListFragment {
     //private static List<Integer> employeeHours;
     //private static List<Integer> employeeTotalHours;
     
+    private Menu optionsMenu;
 	
 	
 	public static EmployeeListFragment newInstance() {
@@ -58,7 +63,7 @@ public class EmployeeListFragment extends ListFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+		setHasOptionsMenu(true);
 		initParse();
 	}
 
@@ -98,48 +103,56 @@ public class EmployeeListFragment extends ListFragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+			
+		if (user.equals("Owner")) { 
 		
 		OnItemLongClickListener listener = new OnItemLongClickListener() {
-			@Override
-			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
-				int position, final long id) {
-				AlertDialog.Builder box = 
-						new AlertDialog.Builder(getActivity());
-				box.setTitle("Set Manager");
-				if (employeePositions.get((int) id).equals("Manager")) {
-					box.setMessage( "Change Manager to Employee?" );
-				}
-				else {
-					box.setMessage("Change Employee to Manager?");
-				}
-				box.setNegativeButton( "No", new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int whichButton) {
-						dialog.dismiss();
-					}
-				});
-				box.setPositiveButton( "Yes", new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int whichButton) {
-						if (employeePositions.get((int)id).equals("Manager")) {
-							shift = shiftList.get((int)id);
-							shift.put("Acc_Type", "Employee");
-							shift.saveInBackground();
-						}
-						else {
-							shift = shiftList.get((int)id);
-							shift.put("Acc_Type", "Manager");
-							shift.saveInBackground();
-						}
-					}
-				});
-				AlertDialog alert = box.create();
-				alert.show();
-	
-				
 			
-				return false;
-			}
+				@Override
+				public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+					int position, final long id) {
+					AlertDialog.Builder box = 
+							new AlertDialog.Builder(getActivity());
+					box.setTitle("Set Manager");
+					if (employeePositions.get((int) id).equals("Manager")) {
+						box.setMessage( "Change Manager to Employee?" );
+					}
+					else {
+						box.setMessage("Change Employee to Manager?");
+					}
+					box.setNegativeButton( "No", new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int whichButton) {
+							dialog.dismiss();
+						}
+					});
+					box.setPositiveButton( "Yes", new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int whichButton) {
+							if (employeePositions.get((int)id).equals("Manager")) {
+								shift = shiftList.get((int)id);
+								shift.put("Acc_Type", "Employee");
+								shift.saveInBackground();
+								asyncCaller();
+							}
+							else {
+								shift = shiftList.get((int)id);
+								shift.put("Acc_Type", "Manager");
+								shift.saveInBackground();
+								asyncCaller();
+							}
+							asyncCaller();
+						}
+					});
+					AlertDialog alert = box.create();
+					alert.show();
+		
+					
+				
+					return false;
+				}
 		};
+		
 			getListView().setOnItemLongClickListener(listener);
+		}
 	}
 	
 	@Override
@@ -170,6 +183,11 @@ public class EmployeeListFragment extends ListFragment {
 		
 	}
 	
+	public void asyncCaller() {
+    	setRefreshActionButtonState(true);
+		new MyAsyncTaskHelper().execute();
+	}
+	
 	private class MyAsyncTaskHelper extends AsyncTask<Void, Void, List<ListItem>> {
 
 		@Override
@@ -185,8 +203,44 @@ public class EmployeeListFragment extends ListFragment {
 		protected void onPostExecute(List<ListItem> items) {
 			TwoTextArrayAdapter adapter = new TwoTextArrayAdapter(getActivity().getBaseContext(), items);
 			setListAdapter(adapter);
+			setRefreshActionButtonState(false);
 		}
 		
+	}
+	
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		this.optionsMenu = menu;
+		inflater.inflate(R.menu.refresh, menu);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+	    switch (item.getItemId()) {
+
+	        case R.id.menu_refresh:
+	        	asyncCaller();
+	        	return true;
+	           
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
+
+	}
+	
+	public void setRefreshActionButtonState(final boolean refreshing) {
+	    if (optionsMenu != null) {
+	        final MenuItem refreshItem = optionsMenu
+	            .findItem(R.id.menu_refresh);
+	        if (refreshItem != null) {
+	            if (refreshing) {
+	                refreshItem.setActionView(R.layout.actionbar_indeterminate_progress);
+	            } else {
+	                refreshItem.setActionView(null);
+	            }
+	        }
+	    }
 	}
 
 }

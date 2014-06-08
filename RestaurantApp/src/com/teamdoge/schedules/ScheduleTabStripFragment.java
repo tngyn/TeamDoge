@@ -1,9 +1,13 @@
-package com.teamdoge.restaurantapp;
+package com.teamdoge.schedules;
 
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.parse.Parse;
 import com.parse.ParseUser;
+import com.teamdoge.restaurantapp.R;
+import com.teamdoge.restaurantapp.SuperAwesomeCardFragment;
+import com.teamdoge.restaurantapp.R.id;
+import com.teamdoge.restaurantapp.R.layout;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,21 +20,21 @@ import android.view.ViewGroup;
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass. Activities that
  * contain this fragment must implement the
- * {@link PageSlidingTabStripFragment.OnFragmentInteractionListener} interface
+ * {@link ScheduleTabStripFragment.OnFragmentInteractionListener} interface
  * to handle interaction events. Use the
- * {@link PageSlidingTabStripFragment#newInstance} factory method to create an
+ * {@link ScheduleTabStripFragment#newInstance} factory method to create an
  * instance of this fragment.
  * 
  */
-public class PageSlidingTabStripFragment extends Fragment {
+public class ScheduleTabStripFragment extends Fragment {
 	
 	ParseUser user;
 	
-	public static final String TAG = PageSlidingTabStripFragment.class
+	public static final String TAG = ScheduleTabStripFragment.class
 			.getSimpleName();
 
-	public static PageSlidingTabStripFragment newInstance() {
-		return new PageSlidingTabStripFragment();
+	public static ScheduleTabStripFragment newInstance() {
+		return new ScheduleTabStripFragment();
 	}
 
 	@Override

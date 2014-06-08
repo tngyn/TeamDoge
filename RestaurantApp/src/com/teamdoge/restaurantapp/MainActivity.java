@@ -4,10 +4,13 @@ import android.content.Intent;
 import android.content.res.Configuration;
 
 import com.parse.Parse;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
+import com.teamdoge.inventory.InventoryListFragment;
 import com.teamdoge.login.LoginActivity;
-import com.teamdoge.restaurantapp.ManagerFragment.OnFragmentInteractionListener;
-import com.teamdoge.restaurantprofile.RestaurantProfileFragment;
+import com.teamdoge.management.ManagementTabStripFragment;
+import com.teamdoge.management.ManagerFragment.OnFragmentInteractionListener;
+import com.teamdoge.schedules.ScheduleTabStripFragment;
 import com.teamdoge.userprofile.View_Profile;
 
 import android.os.Bundle;
@@ -36,6 +39,7 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 	private String[] mDrawerSections;
 
 	static ParseUser user;
+	static ParseObject shiftUser;
 	private static String accountType;
 	
 	ProgressBar bar;
@@ -44,10 +48,10 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 	private Boolean isFrag1Visible;
 	private Boolean isFrag2Visible;
 	private Boolean isFrag3Visible;
-	private PageSlidingTabStripFragment frag0 ;
-	private InventoryList frag1;
+	private ScheduleTabStripFragment frag0 ;
+	private InventoryListFragment frag1;
 	private View_Profile frag2;
-	private RestaurantProfileFragment frag3;
+	private ManagementTabStripFragment frag3;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -383,8 +387,8 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 
 	private void initFragments() {
 		
-		frag0 = PageSlidingTabStripFragment.newInstance();
-		frag1 = InventoryList.newInstance();
+		frag0 = ScheduleTabStripFragment.newInstance();
+		frag1 = InventoryListFragment.newInstance();
 		frag2 = View_Profile.newInstance();
 		
 		isFrag0Visible = true;
@@ -397,7 +401,7 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 		ft.add(R.id.content, frag2);
 		
 		if (accountType.equals("Owner") || accountType.equals("Manager")) {
-			frag3 = RestaurantProfileFragment.newInstance();
+			frag3 = ManagementTabStripFragment.newInstance();
 			isFrag3Visible = false;
 			ft.add(R.id.content, frag3);
 			ft.hide(frag3);

@@ -10,7 +10,7 @@ import com.parse.ParseUser;
 import com.teamdoge.userprofile.ExpandableListAdapterTimePicker;
 import com.teamdoge.restaurantapp.R;
 import com.teamdoge.restaurantapp.SettingsListAdapter;
-import com.teamdoge.restaurantapp.Shifts;
+import com.teamdoge.schedules.Shifts;
 
 import android.app.Activity;
 import android.content.Context;

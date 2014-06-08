@@ -1,4 +1,4 @@
-package com.teamdoge.restaurantapp;
+package com.teamdoge.schedules;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -27,10 +27,10 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-import com.teamdoge.schedules.ListHeader;
-import com.teamdoge.schedules.ListItem;
-import com.teamdoge.schedules.OpenShiftList;
-import com.teamdoge.schedules.TwoTextArrayAdapter;
+import com.teamdoge.restaurantapp.R;
+import com.teamdoge.restaurantapp.R.id;
+import com.teamdoge.restaurantapp.R.layout;
+import com.teamdoge.restaurantapp.R.menu;
 
 public class OpenShiftFragment extends ListFragment {
 	
