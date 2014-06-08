@@ -309,7 +309,13 @@ public class EditItemActivity extends FragmentActivity implements
 
 		// position we'll set the selection to
 		int position = 0;
-
+		
+		// if the newCategory is empty, we don't do add anything to the 0'th
+		// position
+		// otherwise we set the newCategory as the 0'th position.
+		if (newCategory != "") {
+			categorydataAdapter.add(newCategory);
+		}
 		added = setAdapterList("category");
 
 		for (String units : added)

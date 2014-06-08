@@ -84,6 +84,10 @@ public class ShiftsManagerFragment extends ListFragment {
 		// Required empty public constructor
 	}
 	
+	// *******************************************************************************************************************//
+	// 													  View 															  //
+	// *******************************************************************************************************************//
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -101,23 +105,236 @@ public class ShiftsManagerFragment extends ListFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		
-//		createScheduleList();
-		
-
-//		TwoTextArrayAdapter adapter = new TwoTextArrayAdapter(getActivity().getBaseContext(), items);
-//        setListAdapter(adapter);
-		
-//		MyAsyncTaskHelper task = new MyAsyncTaskHelper();
-//		task.execute();
-       
-		//new MyAsyncTaskHelper().execute();
 		createShiftList();
 		TwoTextArrayAdapter adapter = new TwoTextArrayAdapter(getActivity().getBaseContext(), shiftItems);
         setListAdapter(adapter);
         setRefreshActionButtonState(false);
 		return super.onCreateView(inflater, container, savedInstanceState);		
 	}
+	
+	public void showNewTimesDialog(int index) {
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+		LayoutInflater inflater = getActivity().getLayoutInflater();	
+
+		final View layout = inflater.inflate(R.layout.fragment_shift_manager_dialog, null);
+
+		TimePicker startTime = (TimePicker)layout.findViewById(R.id.startTimePicker);
+		TimePicker endTime = (TimePicker)layout.findViewById(R.id.endTimePicker);
+		ShiftList shiftList;
+		shiftList =  (ShiftList) shiftItems.get(index);
+		if (!addNew) {
+			shift = shiftList.altShift;
+			String[] tokens = shift.split("[-|\\:]");
+			startTime.setCurrentHour(Integer.parseInt(tokens[0]));
+			startTime.setCurrentMinute(Integer.parseInt(tokens[1]));
+			endTime.setCurrentHour(Integer.parseInt(tokens[2]));
+			endTime.setCurrentMinute(Integer.parseInt(tokens[3]));
+		}
+		weekDay = shiftList.weekDay;
+		builder.setView(layout)
+		    .setPositiveButton(R.string.Confirm, new DialogInterface.OnClickListener() {
+		    	@Override
+		    	public void onClick(DialogInterface dialog, int id) {
+		    		TimePicker startTime = (TimePicker)layout.findViewById(R.id.startTimePicker);
+		    		TimePicker endTime = (TimePicker)layout.findViewById(R.id.endTimePicker);
+		    		DecimalFormat formatter = new DecimalFormat("00");
+		    		int startTimeHour = startTime.getCurrentHour();
+		    		int startTimeMins = startTime.getCurrentMinute();
+		    		totalStartTime = formatter.format(startTimeHour) + ":" + formatter.format(startTimeMins);
+		    		int endTimeHour = endTime.getCurrentHour();
+		    		int endTimeMins = endTime.getCurrentMinute();
+		    		totalEndTime = formatter.format(endTimeHour) + ":" + formatter.format(endTimeMins);
+		    		if (startTimeHour < endTimeHour && addNew) {
+		    			shiftTimeList.set(weekDay, addShift(totalStartTime + "-" + totalEndTime, weekDay));
+		    			shiftObject.put(day[weekDay], shiftTimeList.get(weekDay));
+		    			shiftObject.saveInBackground();
+		    			updateShifts(shiftTimeList.get(weekDay).size(), weekDay);
+		    			addNew = false;
+		    		}
+		    		else if (startTimeHour == endTimeHour && startTimeMins < endTimeMins && addNew) {
+		    			shiftTimeList.set(weekDay, addShift(totalStartTime + "-" + totalEndTime, weekDay));
+		    			shiftObject.put(day[weekDay], shiftTimeList.get(weekDay));
+		    			shiftObject.saveInBackground();
+		    			updateShifts(shiftTimeList.get(weekDay).size(), weekDay);
+		    			addNew = false;
+		    		}
+		    		else if (startTimeHour < endTimeHour) {
+		    			shiftTimeList.set(weekDay, editShift(totalStartTime + "-" + totalEndTime, weekDay));
+		    			shiftObject.put(day[weekDay], shiftTimeList.get(weekDay));
+		    			shiftObject.saveInBackground();
+		    		}
+		    		else if (startTimeHour == endTimeHour && startTimeMins < endTimeMins) {
+		    			shiftTimeList.set(weekDay, editShift(totalStartTime + "-" + totalEndTime, weekDay));
+		    			shiftObject.put(day[weekDay], shiftTimeList.get(weekDay));
+		    			shiftObject.saveInBackground();
+		    		}
+		    	}
+		    })
+		    .setNegativeButton(R.string.Delete, new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+	    			shiftTimeList.set(weekDay, deleteShift(weekDay));
+	    			shiftObject.put(day[weekDay], shiftTimeList.get(weekDay));
+	    			shiftObject.saveInBackground();
+	    			updateShifts(shiftTimeList.get(weekDay).size(), weekDay);
+				}
+			})
+			.setNeutralButton(R.string.Cancel, new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					//we do nothing since we don't actually need functionality here.
+				}
+			});
+
+		builder.show();
+	}
+	
+	// *******************************************************************************************************************//
+	//                                                  End View                                                          //
+	// *******************************************************************************************************************//
+	
+	// *******************************************************************************************************************//
+	// 													Controller 														  //
+	// *******************************************************************************************************************//
+	
+	public void onListItemClick(ListView l, View v, int position, long id) {
+		boolean keepGoing = true;
+		addNew = false;
+		for (int i = 0; i < headerID.length; i++) {
+			if (headerID[i] == id) {
+				keepGoing = false;
+			}
+			if (headerID[i] -1 == id) {
+				addNew = true;
+			}
+			if (id == shiftItems.size() - 1)
+				addNew = true;
+		}
+		if (keepGoing)
+		  showNewTimesDialog((int)id);
+	}
+	
+	private List<String> addShift(String shift, int day) {
+		List<String> temp = new ArrayList<String>();
+		boolean added = false;
+		for (int i = 0; i < shiftTimeList.get(day).size(); i++) {
+			String[] tokens = shift.split("[-|\\:]");
+			String[] altTokes = shiftTimeList.get(day).get(i).split("[-|\\:]");
+			if (Integer.parseInt(tokens[0]) < Integer.parseInt(altTokes[0]) && !added) {
+				temp.add(shift);
+				added = true;
+			}
+			else if (Integer.parseInt(tokens[0]) == Integer.parseInt(altTokes[0]) && Integer.parseInt(tokens[1]) < Integer.parseInt(altTokes[1]) && !added) {
+				temp.add(shift);
+				added = true;
+			}
+			temp.add(shiftTimeList.get(day).get(i));
+			if (i == shiftTimeList.get(day).size() -1 && !added) {
+				temp.add(shift);
+			}
+		}
+			
+		return temp;
+		
+	}
+	
+	private List<String> editShift(String shifts, int day) {
+		List<String> temp = new ArrayList<String>();
+		boolean added = false;
+		int index = shiftTimeList.get(day).indexOf(shift);
+		for (int i = 0; i < shiftTimeList.get(day).size(); i++) {
+			if (i == index)
+				i++;
+			if (i ==  shiftTimeList.get(day).size())
+				break;
+			String[] tokens = shifts.split("[-|\\:]");
+			String[] altTokes = shiftTimeList.get(day).get(i).split("[-|\\:]");
+			if (Integer.parseInt(tokens[0]) < Integer.parseInt(altTokes[0]) && !added) {
+				temp.add(shifts);
+				added = true;
+			}
+			else if (Integer.parseInt(tokens[0]) == Integer.parseInt(altTokes[0]) && Integer.parseInt(tokens[1]) < Integer.parseInt(altTokes[1]) && !added) {
+				temp.add(shifts);
+				added = true;
+			}
+			temp.add(shiftTimeList.get(day).get(i));
+			if (i == shiftTimeList.get(day).size() -1 && !added) {
+				temp.add(shifts);
+			}
+		}
+		return temp;
+		
+	}
+	public List<String> deleteShift( int day) {
+		List<String> temp = new ArrayList<String>();
+		int index = shiftTimeList.get(day).indexOf(shift);
+		for (int i = 0; i < shiftTimeList.get(day).size(); i++) {
+			if (i == index)
+				i++;
+			if (i ==  shiftTimeList.get(day).size())
+				break;
+			temp.add(shiftTimeList.get(day).get(i));
+		}
+		return temp;
+	}
+	
+	public void updateShifts(int size, int days) {
+		ParseQuery<ParseObject> query = ParseQuery.getQuery("Shifts");
+		query.whereEqualTo("Id", restaurantID);
+		List<String> list = new ArrayList<String>();
+		for (int i = 0; i < size; i++)
+			list.add("0");
+		try {
+			List<ParseObject> sL = query.find();
+			for (int i = 0;i < sL.size(); i++) {
+				ParseObject s = sL.get(i);
+				s.put(day[days], list);
+				s.save();
+			}
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+	    switch (item.getItemId()) {
+
+	        case R.id.menu_refresh:
+	        	asyncCaller();
+	        	return true;
+	           
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
+
+	}
+	
+	public void setRefreshActionButtonState(final boolean refreshing) {
+	    if (optionsMenu != null) {
+	        final MenuItem refreshItem = optionsMenu
+	            .findItem(R.id.menu_refresh);
+	        if (refreshItem != null) {
+	            if (refreshing) {
+	                refreshItem.setActionView(R.layout.actionbar_indeterminate_progress);
+	            } else {
+	                refreshItem.setActionView(null);
+	            }
+	        }
+	    }
+	}
+	
+	// *******************************************************************************************************************//
+	// 													End Controller 													  //
+	// *******************************************************************************************************************//
+	
+	// *******************************************************************************************************************//
+	// 													Model 														      //
+	// *******************************************************************************************************************//
 	
 	@SuppressWarnings("unchecked")
 	private void createShiftList() {
@@ -206,6 +423,10 @@ public class ShiftsManagerFragment extends ListFragment {
 		return temp;
 	}
 	
+	// *******************************************************************************************************************//
+	// 													End Model 														  //
+	// *******************************************************************************************************************//
+	
 	public void asyncCaller() {
     	setRefreshActionButtonState(true);
 		new MyAsyncTaskHelper().execute();
@@ -233,213 +454,5 @@ public class ShiftsManagerFragment extends ListFragment {
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		this.optionsMenu = menu;
 		inflater.inflate(R.menu.refresh, menu);
-	}
-	
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-
-	    switch (item.getItemId()) {
-
-	        case R.id.menu_refresh:
-	        	asyncCaller();
-	        	return true;
-	           
-	        default:
-	            return super.onOptionsItemSelected(item);
-	    }
-
-	}
-	
-	public void setRefreshActionButtonState(final boolean refreshing) {
-	    if (optionsMenu != null) {
-	        final MenuItem refreshItem = optionsMenu
-	            .findItem(R.id.menu_refresh);
-	        if (refreshItem != null) {
-	            if (refreshing) {
-	                refreshItem.setActionView(R.layout.actionbar_indeterminate_progress);
-	            } else {
-	                refreshItem.setActionView(null);
-	            }
-	        }
-	    }
-	}
-	
-	public void onListItemClick(ListView l, View v, int position, long id) {
-		boolean keepGoing = true;
-		addNew = false;
-		for (int i = 0; i < headerID.length; i++) {
-			if (headerID[i] == id) {
-				keepGoing = false;
-			}
-			if (headerID[i] -1 == id) {
-				addNew = true;
-			}
-			if (id == shiftItems.size() - 1)
-				addNew = true;
-		}
-		if (keepGoing)
-		  showNewTimesDialog((int)id);
-	}
-	private List<String> addShift(String shift, int day) {
-		List<String> temp = new ArrayList<String>();
-		boolean added = false;
-		for (int i = 0; i < shiftTimeList.get(day).size(); i++) {
-			String[] tokens = shift.split("[-|\\:]");
-			String[] altTokes = shiftTimeList.get(day).get(i).split("[-|\\:]");
-			if (Integer.parseInt(tokens[0]) < Integer.parseInt(altTokes[0]) && !added) {
-				temp.add(shift);
-				added = true;
-			}
-			else if (Integer.parseInt(tokens[0]) == Integer.parseInt(altTokes[0]) && Integer.parseInt(tokens[1]) < Integer.parseInt(altTokes[1]) && !added) {
-				temp.add(shift);
-				added = true;
-			}
-			temp.add(shiftTimeList.get(day).get(i));
-			if (i == shiftTimeList.get(day).size() -1 && !added) {
-				temp.add(shift);
-			}
-		}
-			
-		return temp;
-		
-	}
-	private List<String> editShift(String shifts, int day) {
-		List<String> temp = new ArrayList<String>();
-		boolean added = false;
-		int index = shiftTimeList.get(day).indexOf(shift);
-		for (int i = 0; i < shiftTimeList.get(day).size(); i++) {
-			if (i == index)
-				i++;
-			if (i ==  shiftTimeList.get(day).size())
-				break;
-			String[] tokens = shifts.split("[-|\\:]");
-			String[] altTokes = shiftTimeList.get(day).get(i).split("[-|\\:]");
-			if (Integer.parseInt(tokens[0]) < Integer.parseInt(altTokes[0]) && !added) {
-				temp.add(shifts);
-				added = true;
-			}
-			else if (Integer.parseInt(tokens[0]) == Integer.parseInt(altTokes[0]) && Integer.parseInt(tokens[1]) < Integer.parseInt(altTokes[1]) && !added) {
-				temp.add(shifts);
-				added = true;
-			}
-			temp.add(shiftTimeList.get(day).get(i));
-			if (i == shiftTimeList.get(day).size() -1 && !added) {
-				temp.add(shifts);
-			}
-		}
-		return temp;
-		
-	}
-	public List<String> deleteShift( int day) {
-		List<String> temp = new ArrayList<String>();
-		int index = shiftTimeList.get(day).indexOf(shift);
-		for (int i = 0; i < shiftTimeList.get(day).size(); i++) {
-			if (i == index)
-				i++;
-			if (i ==  shiftTimeList.get(day).size())
-				break;
-			temp.add(shiftTimeList.get(day).get(i));
-		}
-		return temp;
-	}
-	public void updateShifts(int size, int days) {
-		ParseQuery<ParseObject> query = ParseQuery.getQuery("Shifts");
-		query.whereEqualTo("Id", restaurantID);
-		List<String> list = new ArrayList<String>();
-		for (int i = 0; i < size; i++)
-			list.add("0");
-		try {
-			List<ParseObject> sL = query.find();
-			for (int i = 0;i < sL.size(); i++) {
-				ParseObject s = sL.get(i);
-				s.put(day[days], list);
-				s.save();
-			}
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-	}
-	public void showNewTimesDialog(int index) {
-
-		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
-		LayoutInflater inflater = getActivity().getLayoutInflater();	
-
-		final View layout = inflater.inflate(R.layout.fragment_shift_manager_dialog, null);
-
-		TimePicker startTime = (TimePicker)layout.findViewById(R.id.startTimePicker);
-		TimePicker endTime = (TimePicker)layout.findViewById(R.id.endTimePicker);
-		ShiftList shiftList;
-		shiftList =  (ShiftList) shiftItems.get(index);
-		if (!addNew) {
-			shift = shiftList.altShift;
-			String[] tokens = shift.split("[-|\\:]");
-			startTime.setCurrentHour(Integer.parseInt(tokens[0]));
-			startTime.setCurrentMinute(Integer.parseInt(tokens[1]));
-			endTime.setCurrentHour(Integer.parseInt(tokens[2]));
-			endTime.setCurrentMinute(Integer.parseInt(tokens[3]));
-		}
-		weekDay = shiftList.weekDay;
-		builder.setView(layout)
-		    .setPositiveButton(R.string.Confirm, new DialogInterface.OnClickListener() {
-		    	@Override
-		    	public void onClick(DialogInterface dialog, int id) {
-		    		TimePicker startTime = (TimePicker)layout.findViewById(R.id.startTimePicker);
-		    		TimePicker endTime = (TimePicker)layout.findViewById(R.id.endTimePicker);
-		    		DecimalFormat formatter = new DecimalFormat("00");
-		    		int startTimeHour = startTime.getCurrentHour();
-		    		int startTimeMins = startTime.getCurrentMinute();
-		    		totalStartTime = formatter.format(startTimeHour) + ":" + formatter.format(startTimeMins);
-		    		int endTimeHour = endTime.getCurrentHour();
-		    		int endTimeMins = endTime.getCurrentMinute();
-		    		totalEndTime = formatter.format(endTimeHour) + ":" + formatter.format(endTimeMins);
-		    		if (startTimeHour < endTimeHour && addNew) {
-		    			shiftTimeList.set(weekDay, addShift(totalStartTime + "-" + totalEndTime, weekDay));
-		    			shiftObject.put(day[weekDay], shiftTimeList.get(weekDay));
-		    			shiftObject.saveInBackground();
-		    			updateShifts(shiftTimeList.get(weekDay).size(), weekDay);
-		    			addNew = false;
-		    		}
-		    		else if (startTimeHour == endTimeHour && startTimeMins < endTimeMins && addNew) {
-		    			shiftTimeList.set(weekDay, addShift(totalStartTime + "-" + totalEndTime, weekDay));
-		    			shiftObject.put(day[weekDay], shiftTimeList.get(weekDay));
-		    			shiftObject.saveInBackground();
-		    			updateShifts(shiftTimeList.get(weekDay).size(), weekDay);
-		    			addNew = false;
-		    		}
-		    		else if (startTimeHour < endTimeHour) {
-		    			shiftTimeList.set(weekDay, editShift(totalStartTime + "-" + totalEndTime, weekDay));
-		    			shiftObject.put(day[weekDay], shiftTimeList.get(weekDay));
-		    			shiftObject.saveInBackground();
-		    		}
-		    		else if (startTimeHour == endTimeHour && startTimeMins < endTimeMins) {
-		    			shiftTimeList.set(weekDay, editShift(totalStartTime + "-" + totalEndTime, weekDay));
-		    			shiftObject.put(day[weekDay], shiftTimeList.get(weekDay));
-		    			shiftObject.saveInBackground();
-		    		}
-		    		onDialogPositiveClick("");
-		    	}
-		    })
-		    .setNegativeButton(R.string.Delete, new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-	    			shiftTimeList.set(weekDay, deleteShift(weekDay));
-	    			shiftObject.put(day[weekDay], shiftTimeList.get(weekDay));
-	    			shiftObject.saveInBackground();
-	    			updateShifts(shiftTimeList.get(weekDay).size(), weekDay);
-				}
-			})
-			.setNeutralButton(R.string.Cancel, new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					//we do nothing since we don't actually need functionality here.
-				}
-			});
-
-		builder.show();
-	}
-
-	public void onDialogPositiveClick(String stringy) {
-	}
-	
+	}	
 }
