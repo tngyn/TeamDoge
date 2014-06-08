@@ -6,5 +6,12 @@
           android:icon="@drawable/ic_action_edit"
           android:title="edit"
           android:showAsAction="ifRoom"  />
+    
+    <item android:id="@+id/menu_refresh"
+         android:icon="@drawable/ic_action_refresh"
+         android:title="@+sstring/menuitem_refresh"
+         android:alphabeticShortcut="r"
+         android:orderInCategory="1"
+         android:showAsAction="always" />
 
 </menu>

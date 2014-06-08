@@ -1,11 +1,15 @@
 package com.teamdoge.userprofile;
 
+import java.util.List;
+
 import com.parse.Parse;
 
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,6 +24,8 @@ import com.parse.ParseFile;
 import com.parse.ParseImageView;
 import com.parse.ParseUser;
 import com.teamdoge.restaurantapp.R;
+import com.teamdoge.schedules.ListItem;
+import com.teamdoge.schedules.TwoTextArrayAdapter;
 
 
 
@@ -33,6 +39,8 @@ public class View_Profile extends Fragment {
 	private TextView userUserNameText;
 	private Button shiftsButton;
 	private ParseImageView profile_pic;
+	
+	private Menu optionsMenu;
 	
 	// new fragement creation
 	public static View_Profile newInstance() {
@@ -69,10 +77,31 @@ public class View_Profile extends Fragment {
 		shiftsButton = (Button) view.findViewById(R.id.button1);
 		
 		
+		
+		parseFetch(view);
+		setTextViews();
+
+		
+		
+
+		// shift selector	
+		shiftsButton.setOnClickListener(
+		new View.OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			Intent intent = new Intent(getActivity(), ShiftSelectorActivity.class);
+			startActivity(intent);
+				}
+			});
+		
+	}
+
+
+
+	private void parseFetch(View view) {
 		// Load the profile picture from parse
 		// note the image must be stored as a .bmp
 		profile_pic = (ParseImageView) view.findViewById(R.id.profile_pic);
-		Parse.initialize(getActivity(), "0yjygXOUQ9x0ZiMSNUV7ZaWxYpSNm9txqpCZj6H8", "k5iKrdOVYp9PyYDjFSay2W2YODzM64D5TqlGqxNF");
 		ParseFile photoFile = ParseUser.getCurrentUser().getParseFile("Profile_Pic");
 	    if (photoFile != null) {
 	    	profile_pic.setParseFile(photoFile);
@@ -85,6 +114,11 @@ public class View_Profile extends Fragment {
 	    	});
 	    }
 		
+	}
+
+
+
+	private void setTextViews() {
 		// pull values from data base
 		ParseUser user = ParseUser.getCurrentUser();
 		String tempUserName = user.getUsername();
@@ -99,20 +133,6 @@ public class View_Profile extends Fragment {
 		userEmailText.setText(tempEmail);
 		userAcctText.setText(accountType);
 		userPNumberText.setText(tempPhone);
-		
-		
-		
-
-		// shift selector	
-		shiftsButton.setOnClickListener(
-		new View.OnClickListener() {
-		@Override
-		public void onClick(View v) {
-			Intent intent = new Intent(getActivity(), ShiftSelectorActivity.class);
-			startActivity(intent);
-				}
-			});
-		
 	}
 	
 	@Override
@@ -128,10 +148,32 @@ public class View_Profile extends Fragment {
         	startActivity(intent);
         	return true;
         }
+        else if (item.getItemId() == R.id.menu_refresh) {
+        	setRefreshActionButtonState(true);
+        	parseFetch(getView());
+    		setTextViews();
+    		setRefreshActionButtonState(false);
+        	return true;
+        }
            
         	else
             return super.onOptionsItemSelected(item);
 	
     }
+	
+	
+	public void setRefreshActionButtonState(final boolean refreshing) {
+	    if (optionsMenu != null) {
+	        final MenuItem refreshItem = optionsMenu
+	            .findItem(R.id.menu_refresh);
+	        if (refreshItem != null) {
+	            if (refreshing) {
+	                refreshItem.setActionView(R.layout.actionbar_indeterminate_progress);
+	            } else {
+	                refreshItem.setActionView(null);
+	            }
+	        }
+	    }
+	}
 }
 
