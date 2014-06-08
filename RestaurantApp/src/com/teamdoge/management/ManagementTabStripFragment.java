@@ -123,7 +123,8 @@ public class ManagementTabStripFragment extends Fragment {
 //				"Open Shifts" };
 
 		private String[] TITLES = { "Set Shifts", "Compile Schedules",
-		"Employees" };
+				"Employees" };
+
 		
 		@Override
 		public CharSequence getPageTitle(int position) {
@@ -139,16 +140,15 @@ public class ManagementTabStripFragment extends Fragment {
 		@Override
 		public Fragment getItem(int position) {
 			switch(position) {
-//			
-//			case 0:
-//				ShiftsManagerFragment m = new ShiftsManagerFragment();
-//				return m;
+			
 			case 0:
+
 				ShiftsManagerFragment frag0 = new ShiftsManagerFragment();
+
 				return frag0;
 			case 1:
-				ManagerFragment frag2 = new ManagerFragment();
-				return frag2;
+				ManagerFragment frag1 = new ManagerFragment();
+				return frag1;
 			case 2:
 				EmployeeListFragment frag = EmployeeListFragment.newInstance();
 				return frag;
