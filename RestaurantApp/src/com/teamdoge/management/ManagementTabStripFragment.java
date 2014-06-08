@@ -3,6 +3,7 @@ package com.teamdoge.management;
 import com.teamdoge.management.ManagerFragment.OnFragmentInteractionListener;
 import com.teamdoge.restaurantapp.R;
 import com.teamdoge.restaurantapp.SuperAwesomeCardFragment;
+import com.teamdoge.schedules.ShiftsManagerFragment;
 import com.astuetz.PagerSlidingTabStrip;
 
 import android.support.v4.app.FragmentPagerAdapter;
@@ -121,9 +122,6 @@ public class ManagementTabStripFragment extends Fragment {
 //				"    Schedule    ",
 //				"Open Shifts" };
 
-//		private String[] TITLES = { "Set Shifts", "Compile Schedules",
-//				"Employees" };
-		
 		private String[] TITLES = { "Set Shifts", "Compile Schedules",
 		"Employees" };
 		
