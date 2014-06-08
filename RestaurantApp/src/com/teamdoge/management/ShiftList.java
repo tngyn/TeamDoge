@@ -27,10 +27,10 @@ public class ShiftList implements ListItem {
 	        this.i = 0;
 	    }
 	    
-	    public ShiftList(String n, String w) {
+	    public ShiftList(String n, int w) {
 	        this.name = n;
 	        this.shift = "";
-	        this.weekDay = 0;
+	        this.weekDay = w;
 	        this.i = -1;
 	        this.altShift = "";
 	    }

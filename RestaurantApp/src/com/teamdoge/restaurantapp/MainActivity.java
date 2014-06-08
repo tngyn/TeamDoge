@@ -63,14 +63,6 @@ public class MainActivity extends FragmentActivity implements OnFragmentInteract
 		user = ParseUser.getCurrentUser();
 	    accountType = user.getString("Acc_Type");
 
-		if (accountType.equals("Owner")) {
-			Toast.makeText(getApplicationContext(),"it works", Toast.LENGTH_LONG).show();
-			Log.d("works", "works");
-		}
-		else {
-			Toast.makeText(getApplicationContext(),accountType, Toast.LENGTH_LONG).show();
-		}
-
 		initFragments();
 
 		getWindow().setSoftInputMode(

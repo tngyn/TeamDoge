@@ -165,7 +165,6 @@ public class ShiftSelectorActivity extends Activity {
 					@Override
 					public void onClick(View view) {
 					  for (int i = 0; i < listDataHeader.size(); i++) {
-					      Toast.makeText(getApplicationContext(),"Scheduled Compiled", Toast.LENGTH_LONG).show();
 						  shiftObject.put(listDataHeader.get(i), (userList.get(i)));
 						  shiftObject.saveInBackground();
 						  
