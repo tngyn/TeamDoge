@@ -147,11 +147,11 @@ public class ManagementTabStripFragment extends Fragment {
 				ShiftsManagerFragment frag0 = new ShiftsManagerFragment();
 				return frag0;
 			case 1:
-				EmployeeListFragment frag = EmployeeListFragment.newInstance();
-				return frag;
-			case 2:
 				ManagerFragment frag2 = new ManagerFragment();
 				return frag2;
+			case 2:
+				EmployeeListFragment frag = EmployeeListFragment.newInstance();
+				return frag;
 			default:
 				return SuperAwesomeCardFragment.newInstance(position);
 			}
