@@ -124,7 +124,7 @@ public class ManagementTabStripFragment extends Fragment {
 //		private String[] TITLES = { "Set Shifts", "Compile Schedules",
 //				"Employees" };
 		
-		private String[] TITLES = { "Compile Schedules",
+		private String[] TITLES = { "Set Shifts", "Compile Schedules",
 		"Employees" };
 		
 		@Override
@@ -146,11 +146,14 @@ public class ManagementTabStripFragment extends Fragment {
 //				ShiftsManagerFragment m = new ShiftsManagerFragment();
 //				return m;
 			case 0:
-				ManagerFragment frag0 = new ManagerFragment();
+				ShiftsManagerFragment frag0 = new ShiftsManagerFragment();
 				return frag0;
 			case 1:
 				EmployeeListFragment frag = EmployeeListFragment.newInstance();
 				return frag;
+			case 2:
+				ManagerFragment frag2 = new ManagerFragment();
+				return frag2;
 			default:
 				return SuperAwesomeCardFragment.newInstance(position);
 			}
